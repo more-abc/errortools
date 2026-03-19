@@ -27,17 +27,11 @@ from _errortools.classes.warn import (
     ResourceUsageWarning,
     RuntimeBehaviourWarning,
     ConfigurationWarning)
-from _errortools.classes.methods import (
+from _errortools.methods import (
     ErrorSetAttrMixin,
     ErrorAttrCheckMixin,
     ErrorAttrDeletionMixin,
     ErrorAttrMixin)
-
-SafeIgnoreErrors: bool = True
-"""If True, just import plugin `safe_ignore` for use `ignore` and `ignore_subclass` more safe."""
-
-if SafeIgnoreErrors is True:
-    from _errortools.plugins import safe_ignore
 
 __all__ = [
     # functions
@@ -68,9 +62,7 @@ __all__ = [
     "ErrorAttrMixin",
     "ErrorAttrDeletionMixin",
     "ErrorAttrCheckMixin",
-    "ErrorSetAttrMixin",
-    # setting vars
-    "SafeIgnoreErrors"
+    "ErrorSetAttrMixin"
 ]
 
-__version__ = "0.19.343"
+__version__ = "0.19.357"

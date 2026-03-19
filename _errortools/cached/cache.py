@@ -9,7 +9,7 @@ from typing import (
     overload,
 )
 
-from _errortools.classes.wrapper import ErrorCacheWrapper
+from _errortools.cached.wrapper import ErrorCacheWrapper
 
 _T = TypeVar("_T", bound=Callable[..., Any])
 
