@@ -2,7 +2,10 @@ from typing import Any, Literal, Union, Type
 from abc import ABC, abstractmethod
 
 from .tools.error_msg import ErrorAttrableRaiseNotImplementedErrorMessage as ErrorAttrNotImplementedMsg
-from .methods import ErrorAttrMixin, ErrorAttrCheckMixin, ErrorAttrDeletionMixin, ErrorSetAttrMixin
+from .methods import (ErrorAttrMixin, 
+                      ErrorAttrCheckMixin, 
+                      ErrorAttrDeletionMixin, 
+                      ErrorSetAttrMixin)
 
 def _check_methods(C: Type[Any], *methods: str) -> Union[bool, Literal[NotImplemented]]:  # type: ignore
     """Check methods in `C`. If has, return `True`, else `NotImplemented`.
@@ -146,3 +149,151 @@ ErrorAttrable.register(ErrorAttrMixin)
 ErrorAttrable.register(ErrorAttrDeletionMixin)
 ErrorAttrable.register(ErrorAttrCheckMixin)
 ErrorAttrable.register(ErrorSetAttrMixin)
+
+
+# ----------------------------------------------------------------------
+# ErrorCodeable
+# ----------------------------------------------------------------------
+
+class ErrorCodeable(ABC):
+    """Abstract Base Class for exceptions that carry a machine-readable error code.
+
+    Follows the ``collections.abc`` pattern: any class that exposes both a
+    ``code`` class attribute (``int``) and a ``default_detail`` class attribute
+    (``str``) is recognised as a virtual subclass automatically, without
+    explicit inheritance.
+
+    Concrete subclasses **must** implement:
+        - ``code``         — integer error code (class variable)
+        - ``default_detail`` — fallback human-readable message (class variable)
+
+    Example:
+
+        >>> class PaymentError(ErrorCodeable, Exception):
+        ...     code = 6001
+        ...     default_detail = "Payment failed."
+        >>> issubclass(PaymentError, ErrorCodeable)
+        True
+    """
+
+    __slots__ = ()
+
+    @classmethod
+    def __subclasshook__(cls, C: type[Any]) -> Union[bool, Literal[NotImplemented]]:  # type: ignore
+        """Recognise any class that defines ``code`` and ``default_detail``."""
+        if cls is ErrorCodeable:
+            return _check_methods(C, "code", "default_detail")
+        return NotImplemented
+
+    @property
+    @abstractmethod
+    def code(self) -> int:
+        """Integer error code identifying this exception type."""
+        ...
+
+    @property
+    @abstractmethod
+    def default_detail(self) -> str:
+        """Fallback human-readable message used when no detail is provided."""
+        ...
+
+
+# ----------------------------------------------------------------------
+# Warnable
+# ----------------------------------------------------------------------
+
+class Warnable(ABC):
+    """Abstract Base Class for warning classes that can emit themselves.
+
+    Any class that exposes an ``emit`` classmethod is recognised as a
+    virtual subclass automatically via ``__subclasshook__``.
+
+    Concrete subclasses **must** implement:
+        - ``emit(cls, detail, stacklevel)`` — issue the warning via ``warnings.warn``
+
+    Example:
+
+        >>> class SlowWarning(Warnable, Warning):
+        ...     default_detail = "This operation is slow."
+        ...     @classmethod
+        ...     def emit(cls, detail=None, stacklevel=2):
+        ...         import warnings
+        ...         warnings.warn(cls(detail), stacklevel=stacklevel)
+        >>> issubclass(SlowWarning, Warnable)
+        True
+    """
+
+    __slots__ = ()
+
+    @classmethod
+    def __subclasshook__(cls, C: type[Any]) -> Union[bool, Literal[NotImplemented]]:  # type: ignore
+        """Recognise any class that defines an ``emit`` classmethod."""
+        if cls is Warnable:
+            return _check_methods(C, "emit")
+        return NotImplemented
+
+    @classmethod
+    @abstractmethod
+    def emit(cls, detail: str | None = None, stacklevel: int = 2) -> None:
+        """Issue this warning via ``warnings.warn``.
+
+        Args:
+            detail: Optional message override.
+            stacklevel: Passed to ``warnings.warn``; ``2`` points at the
+                caller of ``emit``.
+        """
+        ...
+
+
+# ----------------------------------------------------------------------
+# Raiseable
+# ----------------------------------------------------------------------
+
+class Raiseable(ABC):
+    """Abstract Base Class for objects that know how to raise themselves.
+
+    Concrete subclasses **must** implement ``raise_it()``, which should
+    raise ``self`` (or a derived exception).  Any class that exposes a
+    ``raise_it`` method is recognised as a virtual subclass automatically.
+
+    Example:
+    
+        >>> class MyError(Raiseable, Exception):
+        ...     def raise_it(self):
+        ...         raise self
+        >>> e = MyError("oops")
+        >>> e.raise_it()
+        Traceback (most recent call last):
+            ...
+        MyError: oops
+    """
+
+    __slots__ = ()
+
+    @classmethod
+    def __subclasshook__(cls, C: type[Any]) -> Union[bool, Literal[NotImplemented]]:  # type: ignore
+        """Recognise any class that defines a ``raise_it`` method."""
+        if cls is Raiseable:
+            return _check_methods(C, "raise_it")
+        return NotImplemented
+
+    @abstractmethod
+    def raise_it(self) -> None:
+        """Raise this object as an exception.
+
+        Raises:
+            self: Or a derived exception wrapping this object.
+        """
+        ...
+
+
+# ----------------------------------------------------------------------
+# Register existing concrete classes as virtual subclasses
+# ----------------------------------------------------------------------
+
+# Import here to avoid circular imports at module load time
+from .classes.errorcodes import BaseErrorCodes  # noqa: E402
+from .classes.warn import BaseWarning  # noqa: E402
+
+ErrorCodeable.register(BaseErrorCodes)
+Warnable.register(BaseWarning)

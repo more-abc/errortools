@@ -36,6 +36,10 @@ from _errortools.methods import (
     ErrorAttrCheckMixin,
     ErrorAttrDeletionMixin,
     ErrorAttrMixin)
+from _errortools.abc import (ErrorAttrable, 
+                             ErrorCodeable, 
+                             Warnable, 
+                             Raiseable)
 
 __all__ = [
     # functions
@@ -71,7 +75,11 @@ __all__ = [
     "ErrorAttrCheckMixin",
     "ErrorSetAttrMixin",
     "TracebackConfig",
-    "ColorCodes"
+    "ColorCodes",
+    "ErrorAttrable",
+    "ErrorCodeable",
+    "Warnable",
+    "Raiseable"
 ]
 
-__version__ = "0.23"
+__version__ = "0.23.21"
