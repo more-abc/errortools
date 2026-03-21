@@ -15,6 +15,7 @@ from _errortools.cached.cache import error_cache
 from _errortools._types import TracebackType, FrameType
 from _errortools._traceback import use_traceback
 from _errortools.traceback._config import TracebackConfig
+from _errortools.traceback._color_codes import ColorCodes
 from _errortools.classes.errorcodes import (
     BaseErrorCodes,
     InvalidInputError,
@@ -69,7 +70,8 @@ __all__ = [
     "ErrorAttrDeletionMixin",
     "ErrorAttrCheckMixin",
     "ErrorSetAttrMixin",
-    "TracebackConfig"
+    "TracebackConfig",
+    "ColorCodes"
 ]
 
-__version__ = "0.22.160"
+__version__ = "0.23"
