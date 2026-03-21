@@ -2,9 +2,9 @@ from typing import Any, Literal, Union, Type
 from abc import ABC, abstractmethod
 
 from .tools.error_msg import ErrorAttrableRaiseNotImplementedErrorMessage as ErrorAttrNotImplementedMsg
-from .methods import ErrorAttrMixin
+from .methods import ErrorAttrMixin, ErrorAttrCheckMixin, ErrorAttrDeletionMixin, ErrorSetAttrMixin
 
-def check_methods(C: Type[Any], *methods: str) -> Union[bool, Literal[NotImplemented]]:  # type: ignore
+def _check_methods(C: Type[Any], *methods: str) -> Union[bool, Literal[NotImplemented]]:  # type: ignore
     """Check methods in `C`. If has, return `True`, else `NotImplemented`.
     
     from `_collections_abc.py`. 
@@ -27,13 +27,13 @@ class ErrorAttrable(ABC):
     Abstract Base Class (ABC) for classes supporting custom attribute error handling.
     
     This class follows the design pattern of `collections.abc` (e.g., Iterable, Mapping):
-    - Uses `__subclasshook__` + `check_methods` to validate subclass compliance
-    - Enforces implementation of `__errorattr__` via abstract method
-    - Implements `__getattr__` to forward missing attribute access to `__errorattr__`
+    - Uses `__subclasshook__` + `_check_methods` to validate subclass compliance
+    - Enforces implementation of attribute error handling methods via abstract methods
+    - Implements native attribute magic methods to forward errors to custom handlers
     
     Core behavior:
-        When accessing a non-existent attribute, `__getattr__` automatically invokes
-        the custom `__errorattr__` method (implemented by subclasses) to handle the error.
+        When attribute operations (get/delete/check/set) fail, the corresponding native
+        magic methods automatically invoke custom error handling methods implemented by subclasses.
     """
     __slots__ = ()
 
@@ -42,9 +42,8 @@ class ErrorAttrable(ABC):
         """
         Check if a class is a subclass of ErrorAttrable (per `collections.abc` style).
         
-        This method enables `issubclass()` to recognize classes that implement `__errorattr__`
-        (even if they don't explicitly inherit from ErrorAttrable), matching the behavior of
-        standard ABCs like `collections.abc.Iterable`.
+        This method enables `issubclass()` to recognize classes that implement the core
+        __errorattr__ method (base requirement), matching the behavior of standard ABCs.
         
         Args:
             C: The class to check for compliance with ErrorAttrable interface
@@ -53,43 +52,97 @@ class ErrorAttrable(ABC):
             True if C implements __errorattr__, NotImplemented otherwise
         """
         if cls is ErrorAttrable:
-            return check_methods(C, "__errorattr__")
+            return _check_methods(C, "__errorattr__")
         return NotImplemented
 
     def __getattr__(self, name: str) -> Any:
         """
         Native magic method: Automatically invoked for missing attribute access.
         
-        Forwards the attribute lookup failure to the custom `__errorattr__` method,
-        which must be implemented by subclasses (enforced by abstractmethod).
-        
-        Args:
-            name: Name of the missing attribute being accessed
-        
-        Returns:
-            Any: Result from the subclass's __errorattr__ implementation
-        
-        Raises:
-            NotImplementedError: If __errorattr__ is not implemented (fallback)
+        Forwards the attribute lookup failure to the custom `__errorattr__` method.
         """
         return self.__errorattr__(name)
 
     @abstractmethod
     def __errorattr__(self, name: str) -> Any:
         """
-        Abstract method for custom missing attribute handling (MUST be implemented by subclasses).
-        
-        Subclasses should override this method to define personalized behavior for
-        missing attribute access (e.g., return default values, raise descriptive errors).
+        Abstract method for custom missing attribute handling (MUST be implemented).
         
         Args:
             name: Name of the missing attribute being accessed
         
         Raises:
-            NotImplementedError: If not overridden (enforced by @abstractmethod)
-            AttributeError: Recommended error type for missing attributes (standard practice)
+            NotImplementedError: If not overridden
+            AttributeError: Recommended error type for missing attributes
         """
         raise NotImplementedError(ErrorAttrNotImplementedMsg)
-    
-# first one!
+
+    def __delattr__(self, name: str) -> None:
+        """
+        Native magic method: Automatically invoked for attribute deletion errors.
+        
+        Forwards to __errordelattr__ if implemented, else raises standard error.
+        """
+        if hasattr(self, '__errordelattr__'):
+            self.__errordelattr__(name)
+        else:
+            super().__delattr__(name)
+
+    def __errordelattr__(self, name: str) -> None:
+        """
+        Custom handler for attribute deletion errors (OPTIONAL to implement).
+        
+        Args:
+            name: Name of the attribute being deleted
+        """
+        raise NotImplementedError(ErrorAttrNotImplementedMsg)
+
+    def __contains__(self, name: str) -> bool:
+        """
+        Alternative to __hasattr__: Check if attribute exists (customizable).
+        
+        Forwards to __errorhasattr__ if implemented, else uses standard check.
+        """
+        if hasattr(self, '__errorhasattr__'):
+            return self.__errorhasattr__(name)
+        else:
+            return hasattr(super(), name)
+
+    def __errorhasattr__(self, name: str) -> bool:
+        """
+        Custom handler for attribute existence checks (OPTIONAL to implement).
+        
+        Args:
+            name: Name of the attribute to check
+        
+        Returns:
+            bool: True if attribute exists (custom logic), False otherwise
+        """
+        raise NotImplementedError(ErrorAttrNotImplementedMsg)
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        """
+        Native magic method: Automatically invoked for attribute setting errors.
+        
+        Forwards to __errorsetattr__ if implemented, else uses standard setting.
+        """
+        if hasattr(self, '__errorsetattr__'):
+            self.__errorsetattr__(name, value)
+        else:
+            super().__setattr__(name, value)
+
+    def __errorsetattr__(self, name: str, value: Any) -> None:
+        """
+        Custom handler for attribute setting errors (OPTIONAL to implement).
+        
+        Args:
+            name: Name of the attribute to set
+            value: Value to assign to the attribute
+        """
+        raise NotImplementedError(ErrorAttrNotImplementedMsg)
+
+# register four Mixin's
 ErrorAttrable.register(ErrorAttrMixin)
+ErrorAttrable.register(ErrorAttrDeletionMixin)
+ErrorAttrable.register(ErrorAttrCheckMixin)
+ErrorAttrable.register(ErrorSetAttrMixin)

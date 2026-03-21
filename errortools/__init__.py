@@ -12,6 +12,9 @@ from _errortools.ignore import (ignore,
 from _errortools.groups import (BaseGroup,
                     GroupErrors)
 from _errortools.cached.cache import error_cache
+from _errortools._types import TracebackType, FrameType
+from _errortools._traceback import use_traceback
+from _errortools.traceback._config import TracebackConfig
 from _errortools.classes.errorcodes import (
     BaseErrorCodes,
     InvalidInputError,
@@ -43,6 +46,9 @@ __all__ = [
     "ignore_subclass",
     "ignore_warns",
     "error_cache",
+    "TracebackType",
+    "FrameType",
+    "use_traceback",
     # classes
     "GroupErrors",
     "BaseGroup",
@@ -62,7 +68,8 @@ __all__ = [
     "ErrorAttrMixin",
     "ErrorAttrDeletionMixin",
     "ErrorAttrCheckMixin",
-    "ErrorSetAttrMixin"
+    "ErrorSetAttrMixin",
+    "TracebackConfig"
 ]
 
-__version__ = "0.19.357"
+__version__ = "0.22.160"

@@ -5,6 +5,9 @@ from contextlib import contextmanager
 from functools import singledispatch
 import warnings
 
+from .tools._warps import is_base_subclass
+from .tools.error_msg import IgnoreNotExceptionSubclassMessage 
+
 __all__ = [
     "ignore",
     "ignore_subclass",
@@ -29,6 +32,9 @@ def ignore(*errors: type[Exception]) -> Iterator[None]:
         ...     _ = d["missing"]   # would normally raise KeyError
         ... # no exception — execution continues here
     """
+    for error in errors:
+        if not is_base_subclass(error=error, baseerror=Exception):
+            raise ValueError(IgnoreNotExceptionSubclassMessage)
     try:
         yield
     except errors:
