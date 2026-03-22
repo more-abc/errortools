@@ -1,4 +1,4 @@
-from typing import Any, Literal, Union, Type
+from typing import Any, Literal, Union
 from abc import ABC, abstractmethod
 
 from .tools.error_msg import ErrorAttrableRaiseNotImplementedErrorMessage as ErrorAttrNotImplementedMsg
@@ -7,7 +7,7 @@ from .methods import (ErrorAttrMixin,
                       ErrorAttrDeletionMixin, 
                       ErrorSetAttrMixin)
 
-def _check_methods(C: Type[Any], *methods: str) -> Union[bool, Literal[NotImplemented]]:  # type: ignore
+def _check_methods(C: type[Any], *methods: str) -> Union[bool, Literal[NotImplemented]]:  # type: ignore
     """Check methods in `C`. If has, return `True`, else `NotImplemented`.
     
     from `_collections_abc.py`. 
