@@ -189,13 +189,13 @@ class ErrorCodeable(ABC):
     @abstractmethod
     def code(self) -> int:
         """Integer error code identifying this exception type."""
-        ...
+        pass
 
     @property
     @abstractmethod
     def default_detail(self) -> str:
         """Fallback human-readable message used when no detail is provided."""
-        ...
+        pass
 
 
 # ----------------------------------------------------------------------
@@ -242,7 +242,7 @@ class Warnable(ABC):
             stacklevel: Passed to ``warnings.warn``; ``2`` points at the
                 caller of ``emit``.
         """
-        ...
+        pass
 
 
 # ----------------------------------------------------------------------
@@ -284,7 +284,7 @@ class Raiseable(ABC):
         Raises:
             self: Or a derived exception wrapping this object.
         """
-        ...
+        pass
 
 
 # ----------------------------------------------------------------------
@@ -292,8 +292,30 @@ class Raiseable(ABC):
 # ----------------------------------------------------------------------
 
 # Import here to avoid circular imports at module load time
-from .classes.errorcodes import BaseErrorCodes  # noqa: E402
-from .classes.warn import BaseWarning  # noqa: E402
+from .classes.errorcodes import (BaseErrorCodes,
+                                 NotFoundError,
+                                 AccessDeniedError,
+                                 InvalidInputError,
+                                 ConfigurationError,
+                                 RuntimeFailure,
+                                 TimeoutFailure)  # noqa: E402
+from .classes.warn import (BaseWarning,
+                           DeprecatedWarning,
+                           PerformanceWarning,
+                           ConfigurationWarning,
+                           ResourceUsageWarning,
+                           RuntimeBehaviourWarning)  # noqa: E402
 
 ErrorCodeable.register(BaseErrorCodes)
+ErrorCodeable.register(NotFoundError)
+ErrorCodeable.register(AccessDeniedError)
+ErrorCodeable.register(InvalidInputError)
+ErrorCodeable.register(ConfigurationError)
+ErrorCodeable.register(RuntimeFailure)
+ErrorCodeable.register(TimeoutFailure)
 Warnable.register(BaseWarning)
+Warnable.register(DeprecatedWarning)
+Warnable.register(PerformanceWarning)
+Warnable.register(ConfigurationWarning)
+Warnable.register(ResourceUsageWarning)
+Warnable.register(RuntimeBehaviourWarning)
