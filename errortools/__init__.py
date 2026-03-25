@@ -1,5 +1,5 @@
 """
-errortools - a toolset for working with Python exceptions.
+errortools - a toolset for working with Python exceptions and warnings.
 """
 
 from _errortools.raises import (raises, 
@@ -14,8 +14,6 @@ from _errortools.groups import (BaseGroup,
 from _errortools.cached.cache import error_cache
 from _errortools._types import TracebackType, FrameType
 from _errortools._traceback import use_traceback
-from _errortools.traceback._config import TracebackConfig
-from _errortools.traceback._color_codes import ColorCodes
 from _errortools.classes.errorcodes import (
     BaseErrorCodes,
     InvalidInputError,
@@ -74,12 +72,11 @@ __all__ = [
     "ErrorAttrDeletionMixin",
     "ErrorAttrCheckMixin",
     "ErrorSetAttrMixin",
-    "TracebackConfig",
-    "ColorCodes",
     "ErrorAttrable",
     "ErrorCodeable",
     "Warnable",
     "Raiseable"
 ]
 
-__version__ = "0.23.22"
+__version__ = "0.24"
+__description__ = "errortools - a toolset for working with Python exceptions and warnings"

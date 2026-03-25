@@ -15,7 +15,7 @@ pip install errortools
 
 ## Quick Examples
 ```python
-from errortools import ignore, reraise, error_cache
+from errortools import ignore, reraise
 
 # Silently ignore KeyError
 with ignore(KeyError):
