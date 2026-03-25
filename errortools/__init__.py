@@ -13,7 +13,6 @@ from _errortools.groups import (BaseGroup,
                     GroupErrors)
 from _errortools.cached.cache import error_cache
 from _errortools._types import TracebackType, FrameType
-from _errortools._traceback import use_traceback
 from _errortools.classes.errorcodes import (
     BaseErrorCodes,
     InvalidInputError,
@@ -51,7 +50,6 @@ __all__ = [
     "error_cache",
     "TracebackType",
     "FrameType",
-    "use_traceback",
     # classes
     "GroupErrors",
     "BaseGroup",
@@ -78,5 +76,5 @@ __all__ = [
     "Raiseable"
 ]
 
-__version__ = "0.24"
+__version__ = "0.24.03"
 __description__ = "errortools - a toolset for working with Python exceptions and warnings"
