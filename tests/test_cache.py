@@ -4,10 +4,10 @@ import pytest
 
 from _errortools.cached.cache import error_cache
 
-
 # =============================================================================
 # Helpers
 # =============================================================================
+
 
 def _make_counter_func(raise_on=None):
     """Return a function that counts calls and optionally raises."""
@@ -19,13 +19,14 @@ def _make_counter_func(raise_on=None):
             raise ValueError(f"bad value: {x}")
         return x * 2
 
-    f.call_count = call_count # type: ignore
+    f.call_count = call_count  # type: ignore
     return f
 
 
 # =============================================================================
 # error_cache — basic decoration patterns
 # =============================================================================
+
 
 class TestErrorCacheDecorator:
     def test_bare_decorator(self):
@@ -56,7 +57,7 @@ class TestErrorCacheDecorator:
         def my_func(x):
             return x
 
-        assert my_func.__name__ == "my_func" # type: ignore
+        assert my_func.__name__ == "my_func"  # type: ignore
 
     def test_wrapped_attribute(self):
         def inner(x):
@@ -69,6 +70,7 @@ class TestErrorCacheDecorator:
 # =============================================================================
 # error_cache — caching on exception
 # =============================================================================
+
 
 class TestErrorCacheCaching:
     def test_exception_is_cached(self):
@@ -104,7 +106,7 @@ class TestErrorCacheCaching:
         with pytest.raises(RuntimeError):
             f(99)
 
-        f.get_cached_error(99)   # counts as a hit
+        f.get_cached_error(99)  # counts as a hit
         info = f.cache_info()
         assert "hits=1" in info
 
@@ -123,7 +125,7 @@ class TestErrorCacheCaching:
 
         assert f.get_cached_error(7) is not None  # cached
 
-        result = f(7)   # second call succeeds → cache entry removed
+        result = f(7)  # second call succeeds → cache entry removed
         assert result == 14
         assert f.get_cached_error(7) is None
 
@@ -178,6 +180,7 @@ class TestErrorCacheCaching:
 # error_cache — LRU eviction
 # =============================================================================
 
+
 class TestErrorCacheLRU:
     def test_lru_eviction_respects_maxsize(self):
         @error_cache(maxsize=2)
@@ -208,6 +211,7 @@ class TestErrorCacheLRU:
 # =============================================================================
 # error_cache — cache_info() format
 # =============================================================================
+
 
 class TestCacheInfo:
     def test_cache_info_format(self):

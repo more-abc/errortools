@@ -9,8 +9,9 @@ __all__ = [
     "AccessDeniedError",
     "ConfigurationError",
     "RuntimeFailure",
-    "TimeoutFailure"
+    "TimeoutFailure",
 ]
+
 
 class BaseErrorCodes(ErrorToolsBaseException):
     """A base exception with class-level error code and default detail.
@@ -64,7 +65,7 @@ class BaseErrorCodes(ErrorToolsBaseException):
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}(detail={self.detail!r}, code={self.code!r})"
-    
+
     # ------------------------------------------------------------------
     # Factory classmethods
     # ------------------------------------------------------------------
@@ -103,6 +104,7 @@ class BaseErrorCodes(ErrorToolsBaseException):
 # ----------------------------------------------------------------------
 # Predefined subclasses — general application categories
 # ----------------------------------------------------------------------
+
 
 class InvalidInputError(BaseErrorCodes):
     """1001 — Input failed validation or is of the wrong type/format."""

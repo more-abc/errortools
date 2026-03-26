@@ -6,12 +6,8 @@ from collections.abc import Iterable, Iterator
 
 from .tools._warps import warp_list_product, is_base_subclass
 
-__all__ = [
-    "raises",
-    "assert_raises",
-    "raises_all",
-    "reraise"
-]
+__all__ = ["raises", "assert_raises", "raises_all", "reraise"]
+
 
 def raises(
     errors: Iterable[type[Exception]],
@@ -92,8 +88,7 @@ def assert_raises(
             ) from exc
         return exc
     raise AssertionError(
-        f"{func!r} did not raise; expected one of "
-        f"{[e.__name__ for e in expected]}"
+        f"{func!r} did not raise; expected one of " f"{[e.__name__ for e in expected]}"
     )
 
 
@@ -136,7 +131,7 @@ def raises_all(
     for error, _ in pairs:
         if not is_base_subclass(error=error, baseerror=baseerror):
             raise TypeError(f"{error!r} is not a subclass of {baseerror.__name__}")
-    raise ExceptionGroup(group_msg, [error(msg) for error, msg in pairs]) 
+    raise ExceptionGroup(group_msg, [error(msg) for error, msg in pairs])
 
 
 @contextmanager
@@ -166,6 +161,6 @@ def reraise(
         ValueError: 'missing key'
     """
     try:
-        yield 
+        yield
     except catch as exc:
         raise raise_as(str(exc)) from exc

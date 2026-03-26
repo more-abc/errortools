@@ -5,10 +5,10 @@ import pytest
 
 from _errortools.ignore import ignore, ignore_subclass, ignore_warns
 
-
 # =============================================================================
 # ignore()
 # =============================================================================
+
 
 class TestIgnore:
     def test_suppresses_specified_exception(self):
@@ -54,6 +54,7 @@ class TestIgnore:
 # ignore_subclass()
 # =============================================================================
 
+
 class TestIgnoreSubclass:
     def test_suppresses_exact_base(self):
         with ignore_subclass(KeyError):
@@ -76,6 +77,7 @@ class TestIgnoreSubclass:
 
     def test_multiple_subclass_levels(self):
         """Deeply nested subclass should still be suppressed."""
+
         class MyError(LookupError):
             pass
 
@@ -89,6 +91,7 @@ class TestIgnoreSubclass:
 # =============================================================================
 # ignore_warns()
 # =============================================================================
+
 
 class TestIgnoreWarns:
     def test_suppresses_specified_warning(self):

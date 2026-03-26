@@ -2,15 +2,9 @@
 errortools - a toolset for working with Python exceptions and warnings.
 """
 
-from _errortools.raises import (raises, 
-                     assert_raises, 
-                     raises_all,
-                     reraise)
-from _errortools.ignore import (ignore,
-                     ignore_subclass,
-                     ignore_warns)
-from _errortools.groups import (BaseGroup,
-                    GroupErrors)
+from _errortools.raises import raises, assert_raises, raises_all, reraise
+from _errortools.ignore import ignore, ignore_subclass, ignore_warns
+from _errortools.groups import BaseGroup, GroupErrors
 from _errortools.cached.cache import error_cache
 from _errortools._types import TracebackType, FrameType
 from _errortools.classes.errorcodes import (
@@ -20,29 +14,31 @@ from _errortools.classes.errorcodes import (
     AccessDeniedError,
     ConfigurationError,
     RuntimeFailure,
-    TimeoutFailure)
+    TimeoutFailure,
+)
 from _errortools.classes.warn import (
     BaseWarning,
     DeprecatedWarning,
     PerformanceWarning,
     ResourceUsageWarning,
     RuntimeBehaviourWarning,
-    ConfigurationWarning)
+    ConfigurationWarning,
+)
 from _errortools.methods import (
     ErrorSetAttrMixin,
     ErrorAttrCheckMixin,
     ErrorAttrDeletionMixin,
-    ErrorAttrMixin)
-from _errortools.abc import (ErrorAttrable, 
-                             ErrorCodeable, 
-                             Warnable, 
-                             Raiseable)
-from _errortools._version import (__version__,
-                                  __version_tuple__,
-                                  __commit_id__,
-                                  version, 
-                                  version_tuple, 
-                                  commit_id)
+    ErrorAttrMixin,
+)
+from _errortools.abc import ErrorAttrable, ErrorCodeable, Warnable, Raiseable
+from _errortools._version import (
+    __version__,
+    __version_tuple__,
+    __commit_id__,
+    version,
+    version_tuple,
+    commit_id,
+)
 
 __all__ = [
     # functions
@@ -86,7 +82,9 @@ __all__ = [
     "__commit_id__",
     "version",
     "version_tuple",
-    "commit_id"
+    "commit_id",
 ]
 
-__description__ = "errortools - a toolset for working with Python exceptions and warnings"
+__description__ = (
+    "errortools - a toolset for working with Python exceptions and warnings"
+)

@@ -11,10 +11,10 @@ from _errortools.classes.warn import (
     ConfigurationWarning,
 )
 
-
 # =============================================================================
 # BaseWarning — basic behaviour
 # =============================================================================
+
 
 class TestBaseWarning:
     def test_is_warning_subclass(self):
@@ -59,38 +59,60 @@ class TestBaseWarning:
 # Predefined warning subclasses — default details
 # =============================================================================
 
+
 class TestPredefinedWarnings:
-    @pytest.mark.parametrize("cls, expected_default", [
-        (DeprecatedWarning,         "This feature is deprecated."),
-        (PerformanceWarning,        "This operation may be slow."),
-        (ResourceUsageWarning,      "Inefficient resource usage detected."),
-        (RuntimeBehaviourWarning,   "Unexpected runtime behaviour."),
-        (ConfigurationWarning,      "Suboptimal configuration detected."),
-    ])
+    @pytest.mark.parametrize(
+        "cls, expected_default",
+        [
+            (DeprecatedWarning, "This feature is deprecated."),
+            (PerformanceWarning, "This operation may be slow."),
+            (ResourceUsageWarning, "Inefficient resource usage detected."),
+            (RuntimeBehaviourWarning, "Unexpected runtime behaviour."),
+            (ConfigurationWarning, "Suboptimal configuration detected."),
+        ],
+    )
     def test_default_detail(self, cls, expected_default):
         w = cls()
         assert w.detail == expected_default
 
-    @pytest.mark.parametrize("cls", [
-        DeprecatedWarning, PerformanceWarning, ResourceUsageWarning,
-        RuntimeBehaviourWarning, ConfigurationWarning,
-    ])
+    @pytest.mark.parametrize(
+        "cls",
+        [
+            DeprecatedWarning,
+            PerformanceWarning,
+            ResourceUsageWarning,
+            RuntimeBehaviourWarning,
+            ConfigurationWarning,
+        ],
+    )
     def test_custom_detail(self, cls):
         w = cls("override")
         assert w.detail == "override"
 
-    @pytest.mark.parametrize("cls", [
-        DeprecatedWarning, PerformanceWarning, ResourceUsageWarning,
-        RuntimeBehaviourWarning, ConfigurationWarning,
-    ])
+    @pytest.mark.parametrize(
+        "cls",
+        [
+            DeprecatedWarning,
+            PerformanceWarning,
+            ResourceUsageWarning,
+            RuntimeBehaviourWarning,
+            ConfigurationWarning,
+        ],
+    )
     def test_is_base_warning_subclass(self, cls):
         assert issubclass(cls, BaseWarning)
         assert issubclass(cls, Warning)
 
-    @pytest.mark.parametrize("cls", [
-        DeprecatedWarning, PerformanceWarning, ResourceUsageWarning,
-        RuntimeBehaviourWarning, ConfigurationWarning,
-    ])
+    @pytest.mark.parametrize(
+        "cls",
+        [
+            DeprecatedWarning,
+            PerformanceWarning,
+            ResourceUsageWarning,
+            RuntimeBehaviourWarning,
+            ConfigurationWarning,
+        ],
+    )
     def test_emit(self, cls):
         with pytest.warns(cls):
             cls.emit(stacklevel=1)
@@ -99,6 +121,7 @@ class TestPredefinedWarnings:
 # =============================================================================
 # Factory classmethods on BaseWarning
 # =============================================================================
+
 
 class TestWarningFactoryMethods:
     def test_deprecated_factory(self):

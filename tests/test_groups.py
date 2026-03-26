@@ -4,10 +4,10 @@ import pytest
 
 from _errortools.classes.base.group import GroupErrors, BaseGroup
 
-
 # =============================================================================
 # GroupErrors — collect / raise_group / clear
 # =============================================================================
+
 
 class TestGroupErrors:
     def test_starts_empty(self):
@@ -40,7 +40,7 @@ class TestGroupErrors:
         e = ValueError("v")
         g.collect(e)
         snapshot = g.errors
-        snapshot.clear()          # mutating the copy must not affect the group
+        snapshot.clear()  # mutating the copy must not affect the group
         assert len(g) == 1
 
     def test_raise_group_raises_exception_group(self):
@@ -104,6 +104,7 @@ class TestGroupErrors:
 # =============================================================================
 # BaseGroup — abstract interface
 # =============================================================================
+
 
 class TestBaseGroupAbstract:
     def test_base_group_has_abstract_methods(self):

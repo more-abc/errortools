@@ -18,9 +18,11 @@ from _errortools.abc import ErrorCodeable, Warnable, Raiseable
 # ErrorCodeable ABC Tests
 # =============================================================================
 
+
 class TestErrorCodeable:
     def test_subclasshook_recognises_classes_with_code_and_default_detail(self):
         """__subclasshook__ recognises classes with 'code' and 'default_detail' attributes."""
+
         # Valid class implementing required attributes
         class ValidError(ErrorCodeable):
             # Class-level constants
@@ -53,6 +55,7 @@ class TestErrorCodeable:
 
     def test_concrete_subclass_implements_required_properties(self):
         """Concrete subclasses must implement 'code' and 'default_detail' properties."""
+
         class NotFoundError(ErrorCodeable, Exception):
             # Use different names for class vars to avoid property name collision
             ERROR_CODE = 404
@@ -78,8 +81,9 @@ class TestErrorCodeable:
             from _errortools.classes.errorcodes import (
                 NotFoundError,
                 AccessDeniedError,
-                InvalidInputError
+                InvalidInputError,
             )
+
             assert issubclass(NotFoundError, ErrorCodeable)
             assert issubclass(AccessDeniedError, ErrorCodeable)
             assert issubclass(InvalidInputError, ErrorCodeable)
@@ -91,6 +95,7 @@ class TestErrorCodeable:
 # =============================================================================
 # Warnable ABC Tests
 # =============================================================================
+
 
 # Define warning class at module level (avoids local class identity issues)
 class DeprecatedFeatureWarning(Warnable, Warning):
@@ -108,9 +113,11 @@ class DeprecatedFeatureWarning(Warnable, Warning):
         msg = detail or cls.default_detail
         warnings.warn(cls(msg), stacklevel=stacklevel)
 
+
 class TestWarnable:
     def test_subclasshook_recognises_classes_with_emit_classmethod(self):
         """__subclasshook__ recognises classes with 'emit' classmethod."""
+
         # Valid warning class with emit method
         class ValidWarning(Warnable, Warning):
             default_detail = "Deprecated feature usage"
@@ -139,11 +146,11 @@ class TestWarnable:
         """Concrete Warnable subclass's emit() method issues proper warnings."""
         # Use module-level warning class (avoids local class identity issues)
         WarningClass = DeprecatedFeatureWarning
-        
+
         # Test default message - capture warnings and verify manually
         with pytest.warns(WarningClass) as record:
             WarningClass.emit()
-        
+
         # Verify warning type and message
         assert len(record) == 1
         assert isinstance(record[0].message, WarningClass)
@@ -153,7 +160,7 @@ class TestWarnable:
         custom_msg = "Use new_feature() instead"
         with pytest.warns(WarningClass) as record:
             WarningClass.emit(detail=custom_msg)
-        
+
         # Verify custom message
         assert len(record) == 1
         assert isinstance(record[0].message, WarningClass)
@@ -165,8 +172,9 @@ class TestWarnable:
             from _errortools.classes.warn import (
                 DeprecatedWarning,
                 PerformanceWarning,
-                ConfigurationWarning
+                ConfigurationWarning,
             )
+
             assert issubclass(DeprecatedWarning, Warnable)
             assert issubclass(PerformanceWarning, Warnable)
             assert issubclass(ConfigurationWarning, Warnable)
@@ -179,9 +187,11 @@ class TestWarnable:
 # Raiseable ABC Tests
 # =============================================================================
 
+
 class TestRaiseable:
     def test_subclasshook_recognises_classes_with_raise_it_method(self):
         """__subclasshook__ recognises classes with 'raise_it' instance method."""
+
         # Valid exception class with raise_it method
         class ValidRaiseableError(Raiseable, Exception):
             def raise_it(self) -> None:
@@ -204,6 +214,7 @@ class TestRaiseable:
 
     def test_raise_it_method_raises_self(self):
         """Concrete Raiseable subclass's raise_it() method raises the instance itself."""
+
         class CustomError(Raiseable, Exception):
             def __init__(self, message: str):
                 self.message = message
@@ -212,7 +223,7 @@ class TestRaiseable:
                 raise self
 
         error_instance = CustomError("Something went wrong")
-        
+
         with pytest.raises(CustomError) as excinfo:
             error_instance.raise_it()
 
@@ -221,6 +232,7 @@ class TestRaiseable:
 
     def test_raise_it_can_raise_wrapped_exceptions(self):
         """Raiseable can be implemented to raise wrapped/derived exceptions."""
+
         class WrappedError(Raiseable, Exception):
             def __init__(self, original_msg: str):
                 self.original_msg = original_msg
@@ -229,7 +241,7 @@ class TestRaiseable:
                 raise RuntimeError(f"Wrapped: {self.original_msg}") from self
 
         error_instance = WrappedError("Original failure")
-        
+
         with pytest.raises(RuntimeError) as excinfo:
             error_instance.raise_it()
 

@@ -10,8 +10,9 @@ __all__ = [
     "PerformanceWarning",
     "ResourceUsageWarning",
     "RuntimeBehaviourWarning",
-    "ConfigurationWarning"
+    "ConfigurationWarning",
 ]
+
 
 class BaseWarning(ErrorToolsBaseWarning):
     """A base warning with a default detail message.
@@ -91,6 +92,7 @@ class BaseWarning(ErrorToolsBaseWarning):
 # ----------------------------------------------------------------------
 # Predefined subclasses
 # ----------------------------------------------------------------------
+
 
 class DeprecatedWarning(BaseWarning):
     """A feature or API is deprecated and may be removed in future."""

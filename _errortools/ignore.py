@@ -6,13 +6,14 @@ from functools import singledispatch
 import warnings
 
 from .tools._warps import is_base_subclass
-from .tools.error_msg import IgnoreNotExceptionSubclassMessage 
+from .tools.error_msg import IgnoreNotExceptionSubclassMessage
 
 __all__ = [
     "ignore",
     "ignore_subclass",
     "ignore_warns",
 ]
+
 
 @singledispatch
 @contextmanager
@@ -40,6 +41,7 @@ def ignore(*errors: type[Exception]) -> Iterator[None]:
     except errors:
         pass
 
+
 @singledispatch
 @contextmanager
 def ignore_subclass(base: type[Exception]) -> Iterator[None]:
@@ -64,6 +66,7 @@ def ignore_subclass(base: type[Exception]) -> Iterator[None]:
     except Exception as exc:
         if not issubclass(type(exc), base):
             raise
+
 
 @contextmanager
 def ignore_warns(*categories: type[Warning]) -> Iterator[None]:

@@ -9,6 +9,7 @@ __all__ = [
     "GroupErrors",
 ]
 
+
 class BaseGroup(ErrorToolsBaseException):
     """Abstract base for exception collector groups.
 
@@ -63,7 +64,9 @@ class BaseGroup(ErrorToolsBaseException):
         return bool(self.errors)
 
     def __repr__(self) -> str:
-        return f"{type(self).__name__}(group_msg={self.group_msg!r}, errors={len(self)})"
+        return (
+            f"{type(self).__name__}(group_msg={self.group_msg!r}, errors={len(self)})"
+        )
 
 
 class GroupErrors(BaseGroup):
@@ -74,7 +77,7 @@ class GroupErrors(BaseGroup):
     collected without raising.
 
     Example:
-    
+
         >>> g = GroupErrors("validation failed")
         >>> g.collect(TypeError("expected str"))
         >>> g.collect(ValueError("value out of range"))
@@ -114,4 +117,4 @@ class GroupErrors(BaseGroup):
             ExceptionGroup: Containing every exception added via `collect`.
         """
         if self._errors:
-            raise ExceptionGroup(self.group_msg, self._errors)  
+            raise ExceptionGroup(self.group_msg, self._errors)

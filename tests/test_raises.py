@@ -4,10 +4,10 @@ import pytest
 
 from _errortools.raises import raises, assert_raises, raises_all, reraise
 
-
 # =============================================================================
 # raises()
 # =============================================================================
+
 
 class TestRaises:
     def test_raises_single_error_single_msg(self):
@@ -44,6 +44,7 @@ class TestRaises:
 
     def test_raises_with_custom_exception(self):
         """Custom exception classes should work."""
+
         class MyError(Exception):
             pass
 
@@ -59,6 +60,7 @@ class TestRaises:
 # =============================================================================
 # assert_raises()
 # =============================================================================
+
 
 class TestAssertRaises:
     def test_catches_expected_exception(self):
@@ -87,6 +89,7 @@ class TestAssertRaises:
 
     def test_forwards_args_and_kwargs(self):
         """Positional and keyword args must be forwarded to func."""
+
         def f(a, b, c=None):
             if c is None:
                 raise RuntimeError("c missing")
@@ -103,6 +106,7 @@ class TestAssertRaises:
 # =============================================================================
 # raises_all()
 # =============================================================================
+
 
 class TestRaisesAll:
     def test_raises_exception_group(self):
@@ -148,6 +152,7 @@ class TestRaisesAll:
 # =============================================================================
 # reraise()
 # =============================================================================
+
 
 class TestReraise:
     def test_reraises_as_new_type(self):

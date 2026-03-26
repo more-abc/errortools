@@ -12,10 +12,10 @@ from _errortools.classes.errorcodes import (
     ConfigurationError,
 )
 
-
 # =============================================================================
 # BaseErrorCodes — basic behaviour
 # =============================================================================
+
 
 class TestBaseErrorCodes:
     def test_is_exception_subclass(self):
@@ -62,33 +62,51 @@ class TestBaseErrorCodes:
 # Predefined error subclasses
 # =============================================================================
 
+
 class TestPredefinedErrorCodes:
-    @pytest.mark.parametrize("cls, expected_code, expected_default", [
-        (InvalidInputError,   1001, "Invalid input."),
-        (AccessDeniedError,   2001, "Access denied."),
-        (NotFoundError,       3001, "Resource not found."),
-        (RuntimeFailure,      4001, "Runtime failure."),
-        (TimeoutFailure,      4002, "Operation timed out."),
-        (ConfigurationError,  5001, "Configuration error."),
-    ])
+    @pytest.mark.parametrize(
+        "cls, expected_code, expected_default",
+        [
+            (InvalidInputError, 1001, "Invalid input."),
+            (AccessDeniedError, 2001, "Access denied."),
+            (NotFoundError, 3001, "Resource not found."),
+            (RuntimeFailure, 4001, "Runtime failure."),
+            (TimeoutFailure, 4002, "Operation timed out."),
+            (ConfigurationError, 5001, "Configuration error."),
+        ],
+    )
     def test_code_and_default(self, cls, expected_code, expected_default):
         err = cls()
         assert err.code == expected_code
         assert err.detail == expected_default
 
-    @pytest.mark.parametrize("cls", [
-        InvalidInputError, AccessDeniedError, NotFoundError,
-        RuntimeFailure, TimeoutFailure, ConfigurationError,
-    ])
+    @pytest.mark.parametrize(
+        "cls",
+        [
+            InvalidInputError,
+            AccessDeniedError,
+            NotFoundError,
+            RuntimeFailure,
+            TimeoutFailure,
+            ConfigurationError,
+        ],
+    )
     def test_custom_detail(self, cls):
         err = cls("my detail")
         assert err.detail == "my detail"
         assert f"[{cls.code}] my detail" == str(err)
 
-    @pytest.mark.parametrize("cls", [
-        InvalidInputError, AccessDeniedError, NotFoundError,
-        RuntimeFailure, TimeoutFailure, ConfigurationError,
-    ])
+    @pytest.mark.parametrize(
+        "cls",
+        [
+            InvalidInputError,
+            AccessDeniedError,
+            NotFoundError,
+            RuntimeFailure,
+            TimeoutFailure,
+            ConfigurationError,
+        ],
+    )
     def test_is_base_subclass(self, cls):
         assert issubclass(cls, BaseErrorCodes)
         assert issubclass(cls, Exception)
@@ -97,6 +115,7 @@ class TestPredefinedErrorCodes:
 # =============================================================================
 # Factory classmethods on BaseErrorCodes
 # =============================================================================
+
 
 class TestFactoryMethods:
     def test_invalid_input_factory(self):

@@ -16,10 +16,10 @@ from _errortools.methods.errorhasattr import ErrorAttrCheckMixin
 from _errortools.methods.errorsetattr import ErrorSetAttrMixin
 from _errortools.abc import ErrorAttrable
 
-
 # =============================================================================
 # ErrorAttrMixin
 # =============================================================================
+
 
 class TestErrorAttrMixin:
     def test_access_missing_attr_raises_attribute_error(self):
@@ -47,7 +47,7 @@ class TestErrorAttrMixin:
 
     def test_custom_errorattr_override(self):
         class Custom(ErrorAttrMixin):
-            def __errorattr__(self, name): # type: ignore
+            def __errorattr__(self, name):  # type: ignore
                 return f"custom:{name}"
 
         obj = Custom()
@@ -58,7 +58,7 @@ class TestErrorAttrMixin:
             pass
 
         obj = Obj()
-        obj.value = 99       # type: ignore # set an instance attribute
+        obj.value = 99  # type: ignore # set an instance attribute
         assert obj.value == 99
 
 
@@ -66,14 +66,15 @@ class TestErrorAttrMixin:
 # ErrorAttrDeletionMixin
 # =============================================================================
 
+
 class TestErrorAttrDeletionMixin:
     def test_delete_existing_attr_works(self):
         class Obj(ErrorAttrDeletionMixin):
             pass
 
         obj = Obj()
-        obj.x = 1 # type: ignore
-        del obj.x           # should succeed
+        obj.x = 1  # type: ignore
+        del obj.x  # should succeed
         assert not hasattr(obj, "x")
 
     def test_delete_missing_attr_raises_attribute_error(self):
@@ -96,17 +97,18 @@ class TestErrorAttrDeletionMixin:
         deleted = []
 
         class Custom(ErrorAttrDeletionMixin):
-            def __errordelattr__(self, name): # type: ignore
+            def __errordelattr__(self, name):  # type: ignore
                 deleted.append(name)
 
         obj = Custom()
-        del obj.ghost          # triggers custom handler
+        del obj.ghost  # triggers custom handler
         assert "ghost" in deleted
 
 
 # =============================================================================
 # ErrorAttrCheckMixin
 # =============================================================================
+
 
 class TestErrorAttrCheckMixin:
     def test_existing_attr_returns_true(self):
@@ -146,8 +148,8 @@ class TestErrorAttrCheckMixin:
             pass
 
         obj = Obj()
-        obj.p = 1 # type: ignore
-        obj.q = 2 # type: ignore
+        obj.p = 1  # type: ignore
+        obj.q = 2  # type: ignore
         result = obj.__errorhasattr__("p", "q")
         assert result == {"p": True, "q": True}
 
@@ -156,6 +158,7 @@ class TestErrorAttrCheckMixin:
 # ErrorSetAttrMixin
 # =============================================================================
 
+
 class TestErrorSetAttrMixin:
     def test_normal_assignment_works(self):
         class Obj(ErrorSetAttrMixin):
@@ -163,7 +166,7 @@ class TestErrorSetAttrMixin:
 
         obj = Obj()
         obj.value = 42
-        assert obj.value == 42 # type: ignore
+        assert obj.value == 42  # type: ignore
 
     def test_forbidden_attr_raises_attribute_error(self):
         class Obj(ErrorSetAttrMixin):
@@ -186,7 +189,7 @@ class TestErrorSetAttrMixin:
             _forbidden_attrs = ["locked"]
 
         obj = Obj()
-        obj.allowed = "ok"   # should not raise
+        obj.allowed = "ok"  # should not raise
         assert obj.allowed == "ok"  # type: ignore
 
     def test_custom_errorsetattr_override(self):
@@ -207,6 +210,7 @@ class TestErrorSetAttrMixin:
 # ErrorAttrable ABC
 # =============================================================================
 
+
 class TestErrorAttrableABC:
     def test_mixin_classes_registered(self):
         """All four mixin classes should be virtual subclasses."""
@@ -217,6 +221,7 @@ class TestErrorAttrableABC:
 
     def test_subclasshook_recognises_errorattr(self):
         """Any class with __errorattr__ is recognised as ErrorAttrable."""
+
         class HasErrorAttr:
             def __errorattr__(self, name):
                 raise AttributeError(name)
@@ -225,6 +230,7 @@ class TestErrorAttrableABC:
 
     def test_subclasshook_rejects_without_errorattr(self):
         """Classes without __errorattr__ are NOT ErrorAttrable."""
+
         class NoErrorAttr:
             pass
 
@@ -237,6 +243,7 @@ class TestErrorAttrableABC:
 
     def test_concrete_implementation(self):
         """A concrete subclass that implements __errorattr__ can be instantiated."""
+
         class Concrete(ErrorAttrable):
             def __errorattr__(self, name):
                 raise AttributeError(f"no attr: {name}")

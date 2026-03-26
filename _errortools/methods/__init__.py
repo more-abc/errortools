@@ -7,5 +7,5 @@ __all__ = [
     "ErrorAttrMixin",
     "ErrorAttrDeletionMixin",
     "ErrorAttrCheckMixin",
-    "ErrorSetAttrMixin"
+    "ErrorSetAttrMixin",
 ]

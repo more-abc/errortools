@@ -3,19 +3,22 @@ from collections.abc import Hashable, Callable
 from typing import Any, Generic, TypeVar, Optional, TypeAlias
 
 _T = TypeVar("_T", bound=Callable[..., Any])
-_Key: TypeAlias = tuple[str, tuple[Hashable, ...], tuple[tuple[Hashable, Hashable], ...]]
+_Key: TypeAlias = tuple[
+    str, tuple[Hashable, ...], tuple[tuple[Hashable, Hashable], ...]
+]
+
 
 class ErrorCacheWrapper(Generic[_T]):
     """Wrapper class for error-cached functions (mimics lru_cache's wrapper style)."""
-    
+
     def __init__(self, func: _T, maxsize: Optional[int] = 128) -> None:
         self.__wrapped__ = func  # Required for inspect module compatibility
         self._func_name = func.__name__
-        
+
         # LRU cache with maxsize support (OrderedDict preserves access order)
         self._maxsize = maxsize if (maxsize is None or maxsize > 0) else None
         self._cache: OrderedDict[_Key, Exception] = OrderedDict()
-        
+
         # Cache statistics (1:1 with lru_cache)
         self._hits = 0
         self._misses = 0
@@ -30,7 +33,7 @@ class ErrorCacheWrapper(Generic[_T]):
             # Cache exception and enforce LRU eviction
             self._cache[cache_key] = exc
             self._misses += 1
-            
+
             # Evict least recently used if maxsize is exceeded
             if self._maxsize is not None and len(self._cache) > self._maxsize:
                 self._cache.popitem(last=False)  # FIFO = LRU for insert order
@@ -40,7 +43,9 @@ class ErrorCacheWrapper(Generic[_T]):
             self._cache.pop(cache_key, None)
             return result
 
-    def _make_key(self, args: tuple[Hashable, ...], kwargs: dict[str, Hashable]) -> _Key:
+    def _make_key(
+        self, args: tuple[Hashable, ...], kwargs: dict[str, Hashable]
+    ) -> _Key:
         """Generate a unique hashable key (consistent with lru_cache's logic)."""
         sorted_kwargs = tuple(sorted(kwargs.items()))
         return (self._func_name, args, sorted_kwargs)
@@ -69,4 +74,3 @@ class ErrorCacheWrapper(Generic[_T]):
             f"ErrorCacheInfo(hits={self._hits}, misses={self._misses}, "
             f"maxsize={self._maxsize}, currsize={len(self._cache)})"
         )
-
