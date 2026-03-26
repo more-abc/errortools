@@ -1,6 +1,6 @@
 """Error messages."""
 
-from typing import TypeAlias
+from typing_extensions import TypeAlias
 
 # Good!
 ErrorMsg: TypeAlias = str

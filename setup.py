@@ -41,4 +41,7 @@ setup(
     include_package_data=True,
     python_requires=">=3.8",
     install_requires=load_requirements(),
+    extras_require={
+        "dev": load_requirements("requirements-dev.txt"),
+    }
 )
