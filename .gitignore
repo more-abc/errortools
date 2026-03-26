@@ -1,5 +1,12 @@
+# Python
 .venv/
 __pycache__/
-.mypy_cache/
-.pytest_cache/
 *.pyc
+
+# mypy
+.mypy_cache/
+
+# Pytest
+.pytest_cache/
+htmlcov/
+.coverage
