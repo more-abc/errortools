@@ -37,6 +37,12 @@ from _errortools.abc import (ErrorAttrable,
                              ErrorCodeable, 
                              Warnable, 
                              Raiseable)
+from _errortools._version import (__version__,
+                                  __version_tuple__,
+                                  __commit_id__,
+                                  version, 
+                                  version_tuple, 
+                                  commit_id)
 
 __all__ = [
     # functions
@@ -73,8 +79,14 @@ __all__ = [
     "ErrorAttrable",
     "ErrorCodeable",
     "Warnable",
-    "Raiseable"
+    "Raiseable",
+    # metadata
+    "__version__",
+    "__version_tuple__",
+    "__commit_id__",
+    "version",
+    "version_tuple",
+    "commit_id"
 ]
 
-__version__ = "0.24.03"
 __description__ = "errortools - a toolset for working with Python exceptions and warnings"
