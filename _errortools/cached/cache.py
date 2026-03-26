@@ -13,15 +13,15 @@ from _errortools.cached.wrapper import ErrorCacheWrapper
 
 _T = TypeVar("_T", bound=Callable[..., Any])
 
+# fmt: off
+@overload
+def error_cache(func: _T) -> ErrorCacheWrapper[_T]:
+    ...
 
 @overload
-def error_cache(func: _T) -> ErrorCacheWrapper[_T]: ...
-
-
-@overload
-def error_cache(
-    maxsize: Optional[int] = 128,
-) -> Callable[[_T], ErrorCacheWrapper[_T]]: ...
+def error_cache(maxsize: Optional[int] = 128) -> Callable[[_T], ErrorCacheWrapper[_T]]:
+    ...
+# fmt: on
 
 
 def error_cache(  # type: ignore
