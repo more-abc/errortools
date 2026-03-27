@@ -43,5 +43,5 @@ setup(
     install_requires=load_requirements(),
     extras_require={
         "dev": load_requirements("requirements-dev.txt"),
-    }
+    },
 )
