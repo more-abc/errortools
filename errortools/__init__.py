@@ -31,6 +31,7 @@ from _errortools.methods import (
     ErrorAttrMixin,
 )
 from _errortools.abc import ErrorAttrable, ErrorCodeable, Warnable, Raiseable
+from _errortools.descriptor.errormsg import ErrorMsg
 from _errortools._version import (
     __version__,
     __version_tuple__,
@@ -76,6 +77,7 @@ __all__ = [
     "ErrorCodeable",
     "Warnable",
     "Raiseable",
+    "ErrorMsg",
     # metadata
     "__version__",
     "__version_tuple__",

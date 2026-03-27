@@ -26,4 +26,6 @@ with reraise(KeyError, ValueError):
     raise KeyError("x")  # Raises ValueError instead
 ```
 
-- **Go explore more great stuff in code!**
+- **Go explore more great stuff in code!** 
+
+***NOTES***: explore many many new things!

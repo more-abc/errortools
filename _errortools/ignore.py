@@ -2,7 +2,6 @@
 
 from collections.abc import Iterator
 from contextlib import contextmanager
-from functools import singledispatch
 import warnings
 
 from .tools._warps import is_base_subclass
@@ -15,7 +14,6 @@ __all__ = [
 ]
 
 
-@singledispatch
 @contextmanager
 def ignore(*errors: type[Exception]) -> Iterator[None]:
     """Context manager that silently suppresses the given exception types.
@@ -42,7 +40,6 @@ def ignore(*errors: type[Exception]) -> Iterator[None]:
         pass
 
 
-@singledispatch
 @contextmanager
 def ignore_subclass(base: type[Exception]) -> Iterator[None]:
     """Context manager that suppresses any exception whose type is a subclass of *base*.
