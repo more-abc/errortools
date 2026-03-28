@@ -19,7 +19,7 @@ setup(
     description=__description__,
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/aiwonderland/errortools",
+    url="https://github.com/more-abc/errortools",
     author="Evan Yang",
     author_email="quantbit@126.com",
     license="MIT",
