@@ -1,6 +1,12 @@
 from setuptools import setup, find_packages
 
-from errortools import __version__, __description__
+from errortools import (__version__, 
+                        __description__, 
+                        __author__, 
+                        __author_email__,
+                        __license__,
+                        __url__,
+                        __title__)
 
 
 def load_requirements(path: str = "requirements.txt") -> list:
@@ -14,15 +20,15 @@ def load_requirements(path: str = "requirements.txt") -> list:
 
 
 setup(
-    name="errortools",
+    name=__title__,
     version=__version__,
     description=__description__,
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/more-abc/errortools",
-    author="Evan Yang",
-    author_email="quantbit@126.com",
-    license="MIT",
+    url=__url__,
+    author=__author__,
+    author_email=__author_email__,
+    license=__license__,
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",

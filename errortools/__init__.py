@@ -40,6 +40,15 @@ from _errortools._version import (
     version_tuple,
     commit_id,
 )
+from _errortools._metadata import (
+    __author__,
+    __author_email__,
+    __copyright__,
+    __description__,
+    __license__,
+    __title__,
+    __url__
+)
 
 __all__ = [
     # functions
@@ -85,8 +94,12 @@ __all__ = [
     "version",
     "version_tuple",
     "commit_id",
+    "__author__",
+    "__author_email__",
+    "__copyright__",
+    "__description__",
+    "__license__",
+    "__title__",
+    "__url__"
 ]
 
-__description__ = (
-    "errortools - a toolset for working with Python exceptions and warnings"
-)
