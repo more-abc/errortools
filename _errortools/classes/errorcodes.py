@@ -71,32 +71,32 @@ class BaseErrorCodes(ErrorToolsBaseException):
     # ------------------------------------------------------------------
 
     @classmethod
-    def invalid_input(cls, detail: str | None = None) -> "InvalidInputError":
+    def invalid_input(cls, detail: str | None = None) -> InvalidInputError:
         """Return an `InvalidInputError` (1001) instance."""
         return InvalidInputError(detail)
 
     @classmethod
-    def not_found(cls, detail: str | None = None) -> "NotFoundError":
+    def not_found(cls, detail: str | None = None) -> NotFoundError:
         """Return a `NotFoundError` (3001) instance."""
         return NotFoundError(detail)
 
     @classmethod
-    def access_denied(cls, detail: str | None = None) -> "AccessDeniedError":
+    def access_denied(cls, detail: str | None = None) -> AccessDeniedError:
         """Return an `AccessDeniedError` (2001) instance."""
         return AccessDeniedError(detail)
 
     @classmethod
-    def configuration_error(cls, detail: str | None = None) -> "ConfigurationError":
+    def configuration_error(cls, detail: str | None = None) -> ConfigurationError:
         """Return a `ConfigurationError` (5001) instance."""
         return ConfigurationError(detail)
 
     @classmethod
-    def runtime_failure(cls, detail: str | None = None) -> "RuntimeFailure":
+    def runtime_failure(cls, detail: str | None = None) -> RuntimeFailure:
         """Return a `RuntimeFailure` (4001) instance."""
         return RuntimeFailure(detail)
 
     @classmethod
-    def timeout_failure(cls, detail: str | None = None) -> "TimeoutFailure":
+    def timeout_failure(cls, detail: str | None = None) -> TimeoutFailure:
         """Return a `TimeoutFailure` (4002) instance."""
         return TimeoutFailure(detail)
 

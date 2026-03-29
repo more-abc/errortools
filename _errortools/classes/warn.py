@@ -64,27 +64,27 @@ class BaseWarning(ErrorToolsBaseWarning):
     # ------------------------------------------------------------------
 
     @classmethod
-    def deprecated(cls, detail: str | None = None) -> "DeprecatedWarning":
+    def deprecated(cls, detail: str | None = None) -> DeprecatedWarning:
         """Return a `DeprecatedWarning` instance."""
         return DeprecatedWarning(detail)
 
     @classmethod
-    def performance(cls, detail: str | None = None) -> "PerformanceWarning":
+    def performance(cls, detail: str | None = None) -> PerformanceWarning:
         """Return a `PerformanceWarning` instance."""
         return PerformanceWarning(detail)
 
     @classmethod
-    def resource(cls, detail: str | None = None) -> "ResourceUsageWarning":
+    def resource(cls, detail: str | None = None) -> ResourceUsageWarning:
         """Return a `ResourceUsageWarning` instance."""
         return ResourceUsageWarning(detail)
 
     @classmethod
-    def runtime(cls, detail: str | None = None) -> "RuntimeBehaviourWarning":
+    def runtime(cls, detail: str | None = None) -> RuntimeBehaviourWarning:
         """Return a `RuntimeBehaviourWarning` instance."""
         return RuntimeBehaviourWarning(detail)
 
     @classmethod
-    def configuration(cls, detail: str | None = None) -> "ConfigurationWarning":
+    def configuration(cls, detail: str | None = None) -> ConfigurationWarning:
         """Return a `ConfigurationWarning` instance."""
         return ConfigurationWarning(detail)
 
