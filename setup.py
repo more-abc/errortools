@@ -1,12 +1,14 @@
 from setuptools import setup, find_packages
 
-from errortools import (__version__, 
-                        __description__, 
-                        __author__, 
-                        __author_email__,
-                        __license__,
-                        __url__,
-                        __title__)
+from errortools import (
+    __version__,
+    __description__,
+    __author__,
+    __author_email__,
+    __license__,
+    __url__,
+    __title__,
+)
 
 
 def load_requirements(path: str = "requirements.txt") -> list:

@@ -47,7 +47,7 @@ from _errortools._metadata import (
     __description__,
     __license__,
     __title__,
-    __url__
+    __url__,
 )
 
 __all__ = [
@@ -100,6 +100,5 @@ __all__ = [
     "__description__",
     "__license__",
     "__title__",
-    "__url__"
+    "__url__",
 ]
-
