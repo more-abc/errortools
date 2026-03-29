@@ -3,6 +3,12 @@
 __pycache__/
 *.pyc
 
+# build
+dist/
+errortools.egg-info/
+pypi_token.txt 
+# HaHaHa
+
 # mypy
 .mypy_cache/
 
