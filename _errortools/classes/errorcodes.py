@@ -1,5 +1,7 @@
 """Base exception classes with general-purpose error code support."""
 
+from __future__ import annotations
+
 from .base.base import ErrorToolsBaseException
 
 __all__ = [

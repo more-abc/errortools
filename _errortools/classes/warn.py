@@ -1,5 +1,7 @@
 """Base warning classes."""
 
+from __future__ import annotations
+
 import warnings
 
 from .base.base import ErrorToolsBaseWarning

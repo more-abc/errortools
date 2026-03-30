@@ -1,16 +1,15 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="errortools",          
-    version="1.0.0",            
+    name="errortools",
+    version="1.0.0",
     description="A toolset for working with Python exceptions and warnings",
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/more-abc/errortools",  
+    url="https://github.com/more-abc/errortools",
     author="Evan Yang",
     author_email="quantbit@126.com",
     license="MIT",
-    
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
@@ -23,9 +22,7 @@ setup(
         "Operating System :: OS Independent",
         "Typing :: Typed",
     ],
-    
     packages=find_packages(),
-    
     package_data={"errortools": ["py.typed"]},
     include_package_data=True,
     python_requires=">=3.8",

@@ -1,8 +1,9 @@
-"""Tests for _errortools/error_msg.py — ErrorMsg descriptor."""
+"""Tests for _errortools/descriptor — ErrorMsg/NonBlankErrorMsg descriptor."""
 
 import pytest
 
 from _errortools.descriptor.errormsg import ErrorMsg
+from _errortools.descriptor.nonblankmsg import NonBlankErrorMsg
 
 # =============================================================================
 # ErrorMsg Descriptor
@@ -64,3 +65,98 @@ class TestErrorMsg:
 
         assert MyClass.data == msg_text
         assert MyClass().data == msg_text
+
+
+# =============================================================================
+# NonBlankErrorMsg Descriptor
+# =============================================================================
+
+
+class TestNonBlankErrorMsg:
+    def test_accepts_valid_non_blank_string(self):
+        """Accessing the attribute returns the validated and stripped string."""
+
+        class MyClass:
+            msg = NonBlankErrorMsg("Error message")
+
+        obj = MyClass()
+        obj.msg = "  Valid error message  "
+        assert obj.msg == "Valid error message"
+
+    def test_raises_value_error_for_blank_string(self):
+        """Empty or whitespace-only string raises ValueError."""
+
+        class MyClass:
+            msg = NonBlankErrorMsg("Error message")
+
+        obj = MyClass()
+        with pytest.raises(
+            ValueError,
+            match="Error message can't be blank, must provide a valid error message",
+        ):
+            obj.msg = ""
+
+        with pytest.raises(
+            ValueError,
+            match="Error message can't be blank, must provide a valid error message",
+        ):
+            obj.msg = "   "
+
+        with pytest.raises(
+            ValueError,
+            match="Error message can't be blank, must provide a valid error message",
+        ):
+            obj.msg = "\t\n  \t"
+
+    def test_raises_value_error_for_non_string_type(self):
+        """Non-string value raises ValueError."""
+
+        class MyClass:
+            msg = NonBlankErrorMsg("Error message")
+
+        obj = MyClass()
+        with pytest.raises(ValueError, match="Error message must be a string type"):
+            obj.msg = None
+
+        with pytest.raises(ValueError, match="Error message must be a string type"):
+            obj.msg = 123
+
+        with pytest.raises(ValueError, match="Error message must be a string type"):
+            obj.msg = []
+
+    def test_strips_whitespace_from_valid_input(self):
+        """Value is automatically stripped before storage."""
+
+        class MyClass:
+            msg = NonBlankErrorMsg("Error message")
+
+        obj = MyClass()
+        obj.msg = "  Hello World  "
+        assert obj.msg == "Hello World"
+        assert obj.msg != "  Hello World  "
+
+    def test_deletion_raises_attribute_error(self):
+        """Attempting to delete the attribute raises AttributeError."""
+
+        class MyClass:
+            msg = NonBlankErrorMsg("Error message")
+
+        obj = MyClass()
+        with pytest.raises(
+            AttributeError, match="Deletion of this attribute is not allowed!"
+        ):
+            del obj.msg
+
+    def test_multiple_instances_work_independently(self):
+        """Different instances store and validate their own values."""
+
+        class MyClass:
+            error1 = NonBlankErrorMsg("First error")
+            error2 = NonBlankErrorMsg("Second error")
+
+        obj = MyClass()
+        obj.error1 = "  Database connection failed  "
+        obj.error2 = "  Invalid input parameter  "
+
+        assert obj.error1 == "Database connection failed"
+        assert obj.error2 == "Invalid input parameter"
