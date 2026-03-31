@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+from typing import Any, Optional
+import traceback
+import uuid
+
 from .base.base import ErrorToolsBaseException
 
 __all__ = [
@@ -34,6 +38,10 @@ class BaseErrorCodes(ErrorToolsBaseException):
     Attributes:
         code: Integer error code for this exception class.  Defaults to ``-1``.
         default_detail: Fallback message used when no *detail* is supplied.
+        trace_id: Unique UUID for this error instance.
+        context: Dictionary for request/user/business context data.
+        cause: Optional root cause exception.
+        chain: Full list of nested exceptions in the error chain.
 
     Example:
         >>> class PaymentError(BaseErrorCodes):
@@ -60,17 +68,73 @@ class BaseErrorCodes(ErrorToolsBaseException):
                 `default_detail` when ``None``.
         """
         self.detail = detail if detail is not None else self.default_detail
+        self.trace_id: str = uuid.uuid4().hex
+        self.context: dict[str, Any] = {}
+        self.cause: Optional[BaseErrorCodes] = None
         super().__init__(self.detail)
 
     def __str__(self) -> str:
         return f"[{self.code}] {self.detail}"
 
     def __repr__(self) -> str:
-        return f"{type(self).__name__}(detail={self.detail!r}, code={self.code!r})"
+        return (
+            f"{type(self).__name__}(detail={self.detail!r}, "
+            f"code={self.code!r}, trace_id={self.trace_id!r})"
+        )
 
-    # ------------------------------------------------------------------
-    # Factory classmethods
-    # ------------------------------------------------------------------
+    def with_context(self, **kwargs: Any) -> "BaseErrorCodes":
+        """Attach key-value context to this error.
+
+        Example:
+
+            >>> e = InvalidInputError().with_context(user_id=123, field="email")
+            >>> e.context
+            {'user_id': 123, 'field': 'email'}
+        """
+        self.context.update(kwargs)
+        return self
+
+    def with_cause(self, cause: Exception) -> "BaseErrorCodes":
+        """Set a root cause exception and preserve the chain.
+
+        Example:
+
+            >>> try:
+            ...     1 / 0
+            ... except Exception as exc:
+            ...     raise RuntimeFailure().with_cause(exc)
+        """
+        if isinstance(cause, BaseErrorCodes):
+            self.cause = cause
+        self.__cause__ = cause
+        return self
+
+    @property
+    def chain(self) -> list[dict[str, Any]]:
+        """Return the full chain of exceptions from root to leaf."""
+        chain = []
+        exc: Optional[BaseErrorCodes] = self
+        while exc:
+            chain.append(
+                {
+                    "type": exc.__class__.__name__,
+                    "code": exc.code,
+                    "detail": exc.detail,
+                    "trace_id": exc.trace_id,
+                    "context": exc.context,
+                }
+            )
+            exc = exc.cause if isinstance(exc, BaseErrorCodes) else None
+        return chain
+
+    @property
+    def traceback(self) -> str:
+        """Return a clean, safe short traceback string."""
+        tb = self.__traceback__
+        if not tb:
+            return "no traceback"
+        lines = traceback.format_tb(tb, limit=4)
+        return " | ".join(line.strip() for line in lines if line.strip())
 
     @classmethod
     def invalid_input(cls, detail: str | None = None) -> InvalidInputError:

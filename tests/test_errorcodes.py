@@ -148,3 +148,93 @@ class TestFactoryMethods:
     def test_factory_with_none_uses_default(self):
         err = BaseErrorCodes.invalid_input(None)
         assert err.detail == InvalidInputError.default_detail
+
+
+# =============================================================================
+# Trace & context tracking (Exception Link Tracing Tests)
+# =============================================================================
+
+
+class TestErrorTracing:
+    def test_has_trace_id(self):
+        err = BaseErrorCodes()
+        assert isinstance(err.trace_id, str)
+        assert len(err.trace_id) == 32
+
+    def test_trace_id_unique(self):
+        err1 = BaseErrorCodes()
+        err2 = BaseErrorCodes()
+        assert err1.trace_id != err2.trace_id
+
+    def test_context_default_empty_dict(self):
+        err = BaseErrorCodes()
+        assert err.context == {}
+        assert isinstance(err.context, dict)
+
+    def test_with_context_adds_data(self):
+        err = InvalidInputError().with_context(user_id=123, request="abc")
+        assert err.context["user_id"] == 123
+        assert err.context["request"] == "abc"
+
+    def test_with_context_chained_multiple(self):
+        err = BaseErrorCodes().with_context(a=1).with_context(b=2)
+        assert err.context == {"a": 1, "b": 2}
+
+    def test_with_cause_sets_cause_attr(self):
+        cause = ValueError("root")
+        err = RuntimeFailure().with_cause(cause)
+        assert err.__cause__ is cause
+        assert err.cause is None
+
+    def test_with_cause_preserves_typed_cause(self):
+        cause = InvalidInputError("bad input")
+        err = RuntimeFailure().with_cause(cause)
+        assert err.cause is cause
+        assert err.__cause__ is cause
+
+    def test_chain_includes_self(self):
+        err = BaseErrorCodes()
+        chain = err.chain
+        assert len(chain) == 1
+        assert chain[0]["type"] == "BaseErrorCodes"
+        assert chain[0]["code"] == -1
+
+    def test_chain_includes_cause_hierarchy(self):
+        root = NotFoundError("missing")
+        middle = AccessDeniedError().with_cause(root)
+        top = RuntimeFailure().with_cause(middle)
+
+        chain = top.chain
+        assert len(chain) == 3
+        assert chain[0]["type"] == "RuntimeFailure"
+        assert chain[1]["type"] == "AccessDeniedError"
+        assert chain[2]["type"] == "NotFoundError"
+
+    def test_traceback_returns_safe_string(self):
+        try:
+            raise InvalidInputError()
+        except InvalidInputError as e:
+            tb_str = e.traceback
+            assert isinstance(tb_str, str)
+            assert len(tb_str) > 0
+
+    def test_repr_includes_trace_id(self):
+        err = BaseErrorCodes()
+        r = repr(err)
+        assert "trace_id" in r
+        assert err.trace_id in r
+
+    def test_all_subclasses_inherit_tracing(self):
+        for cls in [
+            InvalidInputError,
+            AccessDeniedError,
+            NotFoundError,
+            RuntimeFailure,
+            TimeoutFailure,
+            ConfigurationError,
+        ]:
+            err = cls()
+            assert hasattr(err, "trace_id")
+            assert hasattr(err, "context")
+            assert hasattr(err, "chain")
+            assert hasattr(err, "with_context")

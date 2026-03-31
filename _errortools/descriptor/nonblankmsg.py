@@ -21,14 +21,13 @@ class NonBlankErrorMsg:
         >>> err = ApiError("   ")  # doctest: +SKIP
         ValueError: Error message can't be blank, must provide a valid error message
     """
+
     __slots__ = ("_message",)
 
     def __init__(self, message: str) -> None:
         self._message = message
 
-    def __get__(
-        self, instance: Optional[object], owner: type[object]
-    ) -> str:
+    def __get__(self, instance: Optional[object], owner: type[object]) -> str:
         if instance is None:
             return self._message
         return instance.__dict__[self._message]  # type: ignore
@@ -46,6 +45,8 @@ class NonBlankErrorMsg:
 
         stripped_value = value.strip()
         if not stripped_value:
-            raise ValueError(f"{name} can't be blank, must provide a valid error message")
+            raise ValueError(
+                f"{name} can't be blank, must provide a valid error message"
+            )
 
         return stripped_value
