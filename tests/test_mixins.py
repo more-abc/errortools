@@ -14,6 +14,9 @@ from _errortools.methods.errorattr import ErrorAttrMixin
 from _errortools.methods.errordelattr import ErrorAttrDeletionMixin
 from _errortools.methods.errorhasattr import ErrorAttrCheckMixin
 from _errortools.methods.errorsetattr import ErrorSetAttrMixin
+
+# NOTE: To maintain compatibility, I won't
+# move its test code to a separate file for now.
 from _errortools.abc import ErrorAttrable
 
 # =============================================================================

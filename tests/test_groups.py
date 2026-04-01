@@ -2,7 +2,7 @@
 
 import pytest
 
-from _errortools.classes.base.group import GroupErrors, BaseGroup
+from _errortools.classes.group import GroupErrors, BaseGroup
 
 # =============================================================================
 # GroupErrors — collect / raise_group / clear

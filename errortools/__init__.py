@@ -2,12 +2,21 @@
 errortools - a toolset for working with Python exceptions and warnings.
 """
 
-from _errortools.raises import raises, assert_raises, raises_all, reraise
-from _errortools.ignore import ignore, ignore_subclass, ignore_warns
-from _errortools.groups import BaseGroup, GroupErrors
+from _errortools.raises import (raises, 
+                                assert_raises, 
+                                raises_all, 
+                                reraise)
+from _errortools.ignore import (ignore, 
+                                ignore_subclass, 
+                                ignore_warns)
+from _errortools.classes.group import (BaseGroup, 
+                                       GroupErrors)
 from _errortools.cached.cache import error_cache
-from _errortools._types import TracebackType, FrameType
+from _errortools._types import (TracebackType, 
+                                FrameType)
 from _errortools.classes.errorcodes import (
+    PureBaseException,
+    ContextException,
     BaseErrorCodes,
     InvalidInputError,
     NotFoundError,
@@ -30,7 +39,20 @@ from _errortools.methods import (
     ErrorAttrDeletionMixin,
     ErrorAttrMixin,
 )
-from _errortools.abc import ErrorAttrable, ErrorCodeable, Warnable, Raiseable
+from _errortools.abc import (ErrorAttrable, 
+                             ErrorCodeable, 
+                             Warnable, 
+                             Raiseable)
+from _errortools.typing import (
+    AnyErrorCode,
+    BaseErrorCodesType,
+    PureBaseExceptionType,
+    ContextExceptionType,
+    RuntimeError_,
+    LookupError_,
+    InputError,
+    AccessError
+)
 from _errortools.descriptor.errormsg import ErrorMsg
 from _errortools.descriptor.nonblankmsg import NonBlankErrorMsg
 from _errortools._version import (
@@ -89,6 +111,17 @@ __all__ = [
     "Raiseable",
     "ErrorMsg",
     "NonBlankErrorMsg",
+    "PureBaseException",
+    "ContextException",
+    # for type hints
+    "PureBaseExceptionType",
+    "ContextExceptionType",
+    "BaseErrorCodesType",
+    "AnyErrorCode",
+    "InputError",
+    "AccessError",
+    "LookupError_",
+    "RuntimeError_",
     # metadata
     "__version__",
     "__version_tuple__",

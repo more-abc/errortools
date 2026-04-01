@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import warnings
 
-from .base.base import ErrorToolsBaseWarning
-
 __all__ = [
     "BaseWarning",
     "DeprecatedWarning",
@@ -16,7 +14,7 @@ __all__ = [
 ]
 
 
-class BaseWarning(ErrorToolsBaseWarning):
+class BaseWarning(Warning):
     """A base warning with a default detail message.
 
     Subclass and override `default_detail` to define domain-specific

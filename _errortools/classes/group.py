@@ -1,8 +1,6 @@
 """Base and concrete group classes for collecting and raising exceptions together."""
 
-from abc import abstractmethod
-
-from .base import ErrorToolsBaseException
+from abc import abstractmethod, ABC
 
 __all__ = [
     "BaseGroup",
@@ -10,7 +8,7 @@ __all__ = [
 ]
 
 
-class BaseGroup(ErrorToolsBaseException):
+class BaseGroup(Exception, ABC):
     """Abstract base for exception collector groups.
 
     Defines the interface that all group implementations must satisfy:

@@ -4,7 +4,7 @@ from contextlib import contextmanager
 from typing import Callable, Any
 from collections.abc import Iterable, Iterator
 
-from .tools._warps import warp_list_product, is_base_subclass
+from .tools._warps import _warp_list_product, is_base_subclass
 
 __all__ = ["raises", "assert_raises", "raises_all", "reraise"]
 
@@ -36,7 +36,7 @@ def raises(
             ...
         ValueError: invalid input
     """
-    pairs = warp_list_product(errors, msgs)
+    pairs = _warp_list_product(errors, msgs)
     if not pairs:
         return
     for error, _ in pairs:
@@ -125,7 +125,7 @@ def raises_all(
             ...
         ExceptionGroup: multiple errors (2 sub-exceptions)
     """
-    pairs = warp_list_product(errors, msgs)
+    pairs = _warp_list_product(errors, msgs)
     if not pairs:
         return
     for error, _ in pairs:

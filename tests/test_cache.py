@@ -1,4 +1,4 @@
-"""Tests for _errortools/cached/ — error_cache decorator and ErrorCacheWrapper."""
+"""Tests for _errortools/cached — error_cache decorator and ErrorCacheWrapper."""
 
 import pytest
 

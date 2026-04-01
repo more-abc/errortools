@@ -34,7 +34,8 @@ class TestIgnore:
     def test_rejects_non_exception_subclass(self):
         """Passing a non-Exception type should raise ValueError."""
         with pytest.raises((ValueError, TypeError)):
-            with ignore(int):  # int is not an Exception subclass
+            with ignore(int):  # type: ignore
+                # int is not an Exception subclass
                 pass
 
     def test_subclass_suppressed_when_parent_listed(self):

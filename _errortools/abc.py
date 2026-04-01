@@ -10,32 +10,33 @@ from .methods import (
     ErrorAttrDeletionMixin,
     ErrorSetAttrMixin,
 )
-from .classes.errorcodes import (
-    BaseErrorCodes,
-    NotFoundError,
-    AccessDeniedError,
-    InvalidInputError,
-    ConfigurationError,
-    RuntimeFailure,
-    TimeoutFailure,
-)
-from .classes.warn import (
-    BaseWarning,
-    DeprecatedWarning,
-    PerformanceWarning,
-    ConfigurationWarning,
-    ResourceUsageWarning,
-    RuntimeBehaviourWarning,
-)
+
+# these don't have `raise_it` abstractmethod!
+# from .classes.errorcodes import (
+#     BaseErrorCodes,
+#     NotFoundError,
+#     AccessDeniedError,
+#     InvalidInputError,
+#     ConfigurationError,
+#     RuntimeFailure,
+#     TimeoutFailure,
+# )
+# from .classes.warn import (
+#     BaseWarning,
+#     DeprecatedWarning,
+#     PerformanceWarning,
+#     ConfigurationWarning,
+#     ResourceUsageWarning,
+#     RuntimeBehaviourWarning,
+# )
 
 
 def _check_methods(C: type[Any], *methods: str) -> Union[bool, Literal[NotImplemented]]:  # type: ignore
-    """Check methods in `C`. If has, return `True`, else `NotImplemented`.
-    from `_collections_abc.py`.
-    Copyright 2007 Google, Inc. All Rights Reserved.
-    Licensed to PSF under a Contributor Agreement.
-    """
-    mro: tuple[type[Any], ...] = C.__mro__
+    """Check methods in `C`. If has, return `True`, else `NotImplemented`."""
+    # from `_collections_abc.py`.
+    # Copyright 2007 Google, Inc. All Rights Reserved.
+    # Licensed to PSF under a Contributor Agreement.
+    mro: tuple[type[Any], ...] = C.__mro__  # Added type hints for mro var
     for method in methods:
         for B in mro:
             if method in B.__dict__:
@@ -318,16 +319,17 @@ class Raiseable(ABC):
 # Register existing concrete classes as virtual subclasses
 # ----------------------------------------------------------------------
 
-ErrorCodeable.register(BaseErrorCodes)
-ErrorCodeable.register(NotFoundError)
-ErrorCodeable.register(AccessDeniedError)
-ErrorCodeable.register(InvalidInputError)
-ErrorCodeable.register(ConfigurationError)
-ErrorCodeable.register(RuntimeFailure)
-ErrorCodeable.register(TimeoutFailure)
-Warnable.register(BaseWarning)
-Warnable.register(DeprecatedWarning)
-Warnable.register(PerformanceWarning)
-Warnable.register(ConfigurationWarning)
-Warnable.register(ResourceUsageWarning)
-Warnable.register(RuntimeBehaviourWarning)
+# these don't have `raise_it` abstractmethod!
+# ErrorCodeable.register(BaseErrorCodes)
+# ErrorCodeable.register(NotFoundError)
+# ErrorCodeable.register(AccessDeniedError)
+# ErrorCodeable.register(InvalidInputError)
+# ErrorCodeable.register(ConfigurationError)
+# ErrorCodeable.register(RuntimeFailure)
+# ErrorCodeable.register(TimeoutFailure)
+# Warnable.register(BaseWarning)
+# Warnable.register(DeprecatedWarning)
+# Warnable.register(PerformanceWarning)
+# Warnable.register(ConfigurationWarning)
+# Warnable.register(ResourceUsageWarning)
+# Warnable.register(RuntimeBehaviourWarning)

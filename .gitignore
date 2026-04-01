@@ -16,3 +16,6 @@ pypi_token.txt
 .pytest_cache/
 htmlcov/
 .coverage
+
+# Settings
+.vscode/
