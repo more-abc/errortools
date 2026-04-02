@@ -1,34 +1,19 @@
 from typing import Any, Literal, Union
 from abc import ABC, abstractmethod
+import copy
+import shutil
+import csv
+import configparser
 
-from .tools.error_msg import (
+from ..tools.error_msg import (
     ErrorAttrableRaiseNotImplementedErrorMessage as ErrorAttrNotImplementedMsg,
 )
-from .methods import (
+from ..methods import (
     ErrorAttrMixin,
     ErrorAttrCheckMixin,
     ErrorAttrDeletionMixin,
     ErrorSetAttrMixin,
 )
-
-# these don't have `raise_it` abstractmethod!
-# from .classes.errorcodes import (
-#     BaseErrorCodes,
-#     NotFoundError,
-#     AccessDeniedError,
-#     InvalidInputError,
-#     ConfigurationError,
-#     RuntimeFailure,
-#     TimeoutFailure,
-# )
-# from .classes.warn import (
-#     BaseWarning,
-#     DeprecatedWarning,
-#     PerformanceWarning,
-#     ConfigurationWarning,
-#     ResourceUsageWarning,
-#     RuntimeBehaviourWarning,
-# )
 
 
 def _check_methods(C: type[Any], *methods: str) -> Union[bool, Literal[NotImplemented]]:  # type: ignore
@@ -315,21 +300,37 @@ class Raiseable(ABC):
         pass
 
 
-# ----------------------------------------------------------------------
-# Register existing concrete classes as virtual subclasses
-# ----------------------------------------------------------------------
+class Error(Exception, ABC):
+    """Abstract Base Class for module-level Error exceptions.
 
-# these don't have `raise_it` abstractmethod!
-# ErrorCodeable.register(BaseErrorCodes)
-# ErrorCodeable.register(NotFoundError)
-# ErrorCodeable.register(AccessDeniedError)
-# ErrorCodeable.register(InvalidInputError)
-# ErrorCodeable.register(ConfigurationError)
-# ErrorCodeable.register(RuntimeFailure)
-# ErrorCodeable.register(TimeoutFailure)
-# Warnable.register(BaseWarning)
-# Warnable.register(DeprecatedWarning)
-# Warnable.register(PerformanceWarning)
-# Warnable.register(ConfigurationWarning)
-# Warnable.register(ResourceUsageWarning)
-# Warnable.register(RuntimeBehaviourWarning)
+    Any class named **"Error"** (like copy.Error, shutil.Error, csv.Error)
+    is automatically recognised as a virtual subclass of this ABC.
+
+    Virtual subclasses do NOT need to explicitly inherit from this class.
+
+    Example:
+
+        >>> import copy
+        >>> import shutil
+        >>> isinstance(copy.Error(), Error)
+        True
+        >>> isinstance(shutil.Error(), Error)
+        True
+        >>> class MyError:
+        ...     __name__ = "Error"
+        >>> isinstance(MyError(), Error)
+        True
+    """
+    __slots__ = ()
+
+    @classmethod
+    def __subclasshook__(cls, subclass: type[Any]) -> bool:
+        if cls is Error:
+            return subclass.__name__ == "Error"
+        return NotImplemented
+    
+
+Error.register(copy.Error)
+Error.register(shutil.Error)
+Error.register(csv.Error)
+Error.register(configparser.Error)

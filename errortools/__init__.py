@@ -2,17 +2,17 @@
 errortools - a toolset for working with Python exceptions and warnings.
 """
 
-from _errortools.raises import (raises, 
-                                assert_raises, 
-                                raises_all, 
+from _errortools.raises import (raises,
+                                assert_raises,
+                                raises_all,
                                 reraise)
-from _errortools.ignore import (ignore, 
-                                ignore_subclass, 
+from _errortools.ignore import (ignore,
+                                ignore_subclass,
                                 ignore_warns)
-from _errortools.classes.group import (BaseGroup, 
+from _errortools.classes.group import (BaseGroup,
                                        GroupErrors)
 from _errortools.cached.cache import error_cache
-from _errortools._types import (TracebackType, 
+from _errortools._types import (TracebackType,
                                 FrameType)
 from _errortools.classes.errorcodes import (
     PureBaseException,
@@ -39,10 +39,11 @@ from _errortools.methods import (
     ErrorAttrDeletionMixin,
     ErrorAttrMixin,
 )
-from _errortools.abc import (ErrorAttrable, 
-                             ErrorCodeable, 
-                             Warnable, 
-                             Raiseable)
+from _errortools.classes.abc import (ErrorAttrable,
+                                     ErrorCodeable,
+                                     Warnable,
+                                     Raiseable,
+                                     Error)
 from _errortools.typing import (
     AnyErrorCode,
     BaseErrorCodesType,
@@ -113,6 +114,7 @@ __all__ = [
     "NonBlankErrorMsg",
     "PureBaseException",
     "ContextException",
+    "Error",
     # for type hints
     "PureBaseExceptionType",
     "ContextExceptionType",

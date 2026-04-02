@@ -17,7 +17,7 @@ from _errortools.methods.errorsetattr import ErrorSetAttrMixin
 
 # NOTE: To maintain compatibility, I won't
 # move its test code to a separate file for now.
-from _errortools.abc import ErrorAttrable
+from _errortools.classes.abc import ErrorAttrable
 
 # =============================================================================
 # ErrorAttrMixin

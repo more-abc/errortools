@@ -4,13 +4,18 @@ Covers:
   - ErrorCodeable (ABC for exceptions with machine-readable error codes)
   - Warnable (ABC for warning classes that can emit themselves)
   - Raiseable (ABC for objects that can raise themselves as exceptions)
+  - Error (ABC for module-level Error exceptions named "Error")
 """
 
 import pytest
 import warnings
+import copy
+import shutil
+import csv
+import configparser
 
 # Import the ABC classes to test
-from _errortools.abc import ErrorCodeable, Warnable, Raiseable
+from _errortools.classes.abc import ErrorCodeable, Warnable, Raiseable, Error
 
 # NOTE: Tests for `ErrorAttrable` was in `test_mixin.py`.
 
@@ -247,3 +252,60 @@ class TestRaiseable:
 
         assert "Wrapped: Original failure" in str(excinfo.value)
         assert excinfo.value.__cause__ == error_instance
+
+# =============================================================================
+# Error ABC Tests
+# =============================================================================
+
+class TestError:
+    def test_subclasshook_recognises_classes_named_Error(self):
+        """__subclasshook__ recognises any class with __name__ == "Error"."""
+
+        # Valid class named exactly "Error"
+        class Error:
+            pass
+
+        # Invalid class with different name
+        class CustomError(Exception):
+            pass
+
+        # Invalid class with different __name__
+        class NotAnError:
+            __name__ = "MyError"
+
+        assert issubclass(Error, Error)
+        assert not issubclass(CustomError, Error)
+        assert not issubclass(NotAnError, Error)
+
+    def test_standard_library_Error_classes_are_recognised(self):
+        """Standard library module.Error classes are recognised as virtual subclasses."""
+        # All these classes are named "Error" → automatically matched
+        assert issubclass(copy.Error, Error)
+        assert issubclass(shutil.Error, Error)
+        assert issubclass(csv.Error, Error)
+        assert issubclass(configparser.Error, Error)
+
+        # Verify instances pass isinstance checks
+        assert isinstance(copy.Error(), Error)
+        assert isinstance(shutil.Error(), Error)
+        assert isinstance(csv.Error(), Error)
+        assert isinstance(configparser.Error(), Error)
+
+    def test_registered_classes_are_recognised_as_subclasses(self):
+        """Explicitly registered classes are recognised as Error subclasses."""
+        # These are already registered in the ABC
+        assert issubclass(copy.Error, Error)
+        assert issubclass(shutil.Error, Error)
+
+    def test_subclasshook_returns_not_implemented_for_non_base_class(self):
+        """__subclasshook__ returns NotImplemented for non-base Error checks."""
+        # Create a subclass to test hook behavior
+        class MyError(Error):
+            __name__ = "Error"
+            __slots__ = ()
+
+        # Subclass hook should ignore MyError checks
+        class TestClass:
+            __name__ = "Error"
+
+        assert issubclass(TestClass, MyError) is False
