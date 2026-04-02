@@ -3,10 +3,15 @@
 import warnings
 import pytest
 
-from _errortools.ignore import ignore, ignore_subclass, ignore_warns
+from _errortools.ignore import (
+    ignore,
+    ignore_subclass,
+    ignore_warns,
+)
+from _errortools.wrappers.ignore import IgnoredError, ErrorIgnoreWrapper
 
 # =============================================================================
-# ignore()
+# ignore() (ErrorIgnoreWrapper)
 # =============================================================================
 
 
@@ -14,7 +19,6 @@ class TestIgnore:
     def test_suppresses_specified_exception(self):
         with ignore(KeyError):
             raise KeyError("should be suppressed")
-        # execution reaches here
 
     def test_suppresses_multiple_types(self):
         with ignore(KeyError, ValueError):
@@ -32,14 +36,11 @@ class TestIgnore:
         assert result == [1]
 
     def test_rejects_non_exception_subclass(self):
-        """Passing a non-Exception type should raise ValueError."""
-        with pytest.raises((ValueError, TypeError)):
+        with pytest.raises(TypeError):
             with ignore(int):  # type: ignore
-                # int is not an Exception subclass
                 pass
 
     def test_subclass_suppressed_when_parent_listed(self):
-        """A subclass of a listed type should also be suppressed."""
         with ignore(LookupError):
             raise KeyError("KeyError ⊆ LookupError")
 
@@ -49,6 +50,60 @@ class TestIgnore:
             raise ValueError("ignored")
         sentinel.append("after")
         assert sentinel == ["after"]
+
+    # ------------------------------
+    # 新增：IgnoredError 属性测试
+    # ------------------------------
+    def test_ignore_captures_error_attributes(self):
+        with ignore(NameError) as error:
+            raise NameError("test error")
+
+        assert isinstance(error, IgnoredError)
+        assert error.name == "NameError"
+        assert error.be_ignore is True
+        assert error.count == 1
+        assert error.traceback is not None
+        assert isinstance(error.exception, NameError)
+
+    def test_ignore_no_error_has_default_attributes(self):
+        with ignore(KeyError) as error:
+            pass
+
+        assert error.name is None
+        assert error.be_ignore is False
+        assert error.count == 0
+        assert error.traceback is None
+        assert error.exception is None
+
+    def test_ignore_multiple_uses_reset_state(self):
+        with ignore(KeyError) as e1:
+            raise KeyError()
+        with ignore(KeyError) as e2:
+            pass
+
+        assert e1.be_ignore is True
+        assert e2.be_ignore is False
+
+    def test_ignore_as_decorator(self):
+        @ignore(ZeroDivisionError)
+        def func():
+            return 1 / 0
+
+        func()
+
+    def test_ignore_decorator_with_exception_info(self):
+        ig = ignore(ValueError)
+
+        @ig
+        def func():
+            raise ValueError("decorator test")
+
+        with ig as err:
+            func()
+
+        assert err.name == "ValueError"
+        assert err.be_ignore is True
+        assert err.count == 1
 
 
 # =============================================================================
@@ -77,8 +132,6 @@ class TestIgnoreSubclass:
         assert result == ["ok"]
 
     def test_multiple_subclass_levels(self):
-        """Deeply nested subclass should still be suppressed."""
-
         class MyError(LookupError):
             pass
 
@@ -98,7 +151,6 @@ class TestIgnoreWarns:
     def test_suppresses_specified_warning(self):
         with ignore_warns(DeprecationWarning):
             warnings.warn("old api", DeprecationWarning, stacklevel=1)
-        # no warning propagated
 
     def test_suppresses_multiple_warning_categories(self):
         with ignore_warns(DeprecationWarning, UserWarning):
@@ -123,3 +175,19 @@ class TestIgnoreWarns:
             warnings.warn("w", UserWarning, stacklevel=1)
             sentinel.append(1)
         assert sentinel == [1]
+
+
+class TestIgnoreClasses:
+    def test_ignored_error_reset(self):
+        err = IgnoredError()
+        err.name = "Test"
+        err.be_ignore = True
+        err.reset()
+        assert err.name is None
+        assert err.be_ignore is False
+
+    def test_error_ignore_wrapper_instance(self):
+        wrapper = ignore(KeyError)
+        assert isinstance(wrapper, ErrorIgnoreWrapper)
+        assert hasattr(wrapper, "__enter__")
+        assert hasattr(wrapper, "__exit__")

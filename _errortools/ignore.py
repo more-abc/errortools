@@ -4,8 +4,7 @@ from collections.abc import Iterator
 from contextlib import contextmanager
 import warnings
 
-from .tools._warps import is_base_subclass
-from .tools.error_msg import IgnoreNotExceptionSubclassMessage
+from .wrappers.ignore import ErrorIgnoreWrapper
 
 __all__ = [
     "ignore",
@@ -14,9 +13,8 @@ __all__ = [
 ]
 
 
-@contextmanager
-def ignore(*errors: type[Exception]) -> Iterator[None]:
-    """Context manager that silently suppresses the given exception types.
+ignore = ErrorIgnoreWrapper
+"""Context manager that silently suppresses the given exception types.
 
     Any exception raised inside the ``with`` block that is an instance of one
     of *errors* is caught and discarded.  All other exceptions propagate
@@ -26,18 +24,11 @@ def ignore(*errors: type[Exception]) -> Iterator[None]:
         *errors: One or more exception types to suppress.
 
     Example:
-        >>> with ignore(KeyError):
+        >>> with ignore(KeyError) as error:
         ...     d = {}
-        ...     _ = d["missing"]   # would normally raise KeyError
-        ... # no exception — execution continues here
-    """
-    for error in errors:
-        if not is_base_subclass(error=error, baseerror=Exception):
-            raise ValueError(IgnoreNotExceptionSubclassMessage)
-    try:
-        yield
-    except errors:
-        pass
+        ...     _ = d["missing"]
+        ... print(error.be_ignore)  # True
+"""
 
 
 @contextmanager

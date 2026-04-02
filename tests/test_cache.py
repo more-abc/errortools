@@ -5,25 +5,6 @@ import pytest
 from _errortools.cached.cache import error_cache
 
 # =============================================================================
-# Helpers
-# =============================================================================
-
-
-def _make_counter_func(raise_on=None):
-    """Return a function that counts calls and optionally raises."""
-    call_count = [0]
-
-    def f(x):
-        call_count[0] += 1
-        if raise_on is not None and x == raise_on:
-            raise ValueError(f"bad value: {x}")
-        return x * 2
-
-    f.call_count = call_count  # type: ignore
-    return f
-
-
-# =============================================================================
 # error_cache — basic decoration patterns
 # =============================================================================
 
