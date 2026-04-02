@@ -1,6 +1,7 @@
-"""Tests for _errortools/typing.py — type aliases."""
+"""Tests for _errortools.typing: type alias validation."""
 
 from typing import Union, get_args, get_origin
+import pytest
 
 from _errortools.typing import (
     PureBaseExceptionType,
@@ -11,6 +12,7 @@ from _errortools.typing import (
     AccessError,
     LookupError_,
     RuntimeError_,
+    ExceptionType,
 )
 from _errortools.classes.errorcodes import (
     PureBaseException,
@@ -24,67 +26,40 @@ from _errortools.classes.errorcodes import (
     ConfigurationError,
 )
 
-# =============================================================================
-# Per-class aliases resolve to the correct class
-# =============================================================================
 
+class TestBaseTypeAliases:
+    """Validate base exception type aliases."""
 
-class TestPerClassAliases:
-    def test_pure_base_exception_type_is_pure_base_exception(self):
+    def test_pure_base_exception_type(self):
         assert PureBaseExceptionType is PureBaseException
 
-    def test_context_exception_type_is_context_exception(self):
+    def test_context_exception_type(self):
         assert ContextExceptionType is ContextException
 
-    def test_base_error_codes_type_is_base_error_codes(self):
+    def test_base_error_codes_type(self):
         assert BaseErrorCodesType is BaseErrorCodes
 
-    def test_instances_satisfy_per_class_aliases(self):
-        assert isinstance(PureBaseException(), PureBaseExceptionType)
-        assert isinstance(ContextException(), ContextExceptionType)
-        assert isinstance(BaseErrorCodes(), BaseErrorCodesType)
 
-    def test_subclasses_satisfy_per_class_aliases(self):
-        # ContextException is a subclass of PureBaseException
-        assert isinstance(ContextException(), PureBaseExceptionType)
-        # BaseErrorCodes is a subclass of both
-        assert isinstance(BaseErrorCodes(), PureBaseExceptionType)
-        assert isinstance(BaseErrorCodes(), ContextExceptionType)
+class TestSimpleSemanticAliases:
+    """Validate short, user-friendly aliases."""
 
-
-# =============================================================================
-# Simple aliases resolve to the correct class
-# =============================================================================
-
-
-class TestSimpleAliases:
-    def test_input_error_is_invalid_input_error(self):
+    def test_input_error_alias(self):
         assert InputError is InvalidInputError
 
-    def test_access_error_is_access_denied_error(self):
+    def test_access_error_alias(self):
         assert AccessError is AccessDeniedError
 
-    def test_lookup_error_is_not_found_error(self):
+    def test_lookup_error_alias(self):
         assert LookupError_ is NotFoundError
 
-    def test_instances_satisfy_simple_aliases(self):
-        assert isinstance(InvalidInputError(), InputError)
-        assert isinstance(AccessDeniedError(), AccessError)
-        assert isinstance(NotFoundError(), LookupError_)
 
+class TestUnionTypeAliases:
+    """Validate union type alias composition."""
 
-# =============================================================================
-# Union aliases contain the correct members
-# =============================================================================
-
-
-class TestUnionAliases:
-    def test_any_error_code_is_union(self):
+    def test_any_error_code_union(self):
         assert get_origin(AnyErrorCode) is Union
-
-    def test_any_error_code_contains_all_six(self):
-        args = set(get_args(AnyErrorCode))
-        assert args == {
+        members = set(get_args(AnyErrorCode))
+        assert members == {
             InvalidInputError,
             AccessDeniedError,
             NotFoundError,
@@ -93,31 +68,35 @@ class TestUnionAliases:
             ConfigurationError,
         }
 
-    def test_runtime_error_is_union(self):
+    def test_runtime_error_union(self):
         assert get_origin(RuntimeError_) is Union
+        assert set(get_args(RuntimeError_)) == {RuntimeFailure, TimeoutFailure}
 
-    def test_runtime_error_contains_failure_and_timeout(self):
-        args = set(get_args(RuntimeError_))
-        assert args == {RuntimeFailure, TimeoutFailure}
-
-    def test_all_six_are_instances_of_base_error_codes(self):
-        for cls in get_args(AnyErrorCode):
-            assert isinstance(cls(), BaseErrorCodes)
+    def test_all_error_codes_inherit_base(self):
+        for exc_cls in get_args(AnyErrorCode):
+            assert issubclass(exc_cls, BaseErrorCodes)
 
 
-# =============================================================================
-# __all__ completeness
-# =============================================================================
+class TestExceptionTypeAlias:
+    """Validate the generic exception class type alias."""
+
+    def test_exception_type(self):
+        assert get_origin(ExceptionType) is type
+        assert get_args(ExceptionType) == (Exception,)
 
 
-class TestDunderAll:
-    def test_all_exported_names_are_importable(self):
-        import _errortools.typing as m
-        for name in m.__all__:
-            assert hasattr(m, name), f"{name!r} in __all__ but not defined"
+class TestModuleExports:
+    """Validate __all__ exports are complete and correct."""
 
-    def test_all_contains_expected_names(self):
-        import _errortools.typing as m
+    def test_all_exports_exist(self):
+        import _errortools.typing as mod
+
+        for name in mod.__all__:
+            assert hasattr(mod, name), f"Missing exported name: {name}"
+
+    def test_expected_exports(self):
+        import _errortools.typing as mod
+
         expected = {
             "PureBaseExceptionType",
             "ContextExceptionType",
@@ -127,5 +106,13 @@ class TestDunderAll:
             "AccessError",
             "LookupError_",
             "RuntimeError_",
+            "ExceptionType",
         }
-        assert expected == set(m.__all__)
+        assert set(mod.__all__) == expected
+
+
+def test_all_errors_can_be_raised():
+    """Verify all error types can be properly raised and caught."""
+    for exc_cls in get_args(AnyErrorCode):
+        with pytest.raises(exc_cls):
+            raise exc_cls("Test error")

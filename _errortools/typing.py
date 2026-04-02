@@ -23,6 +23,7 @@ __all__ = [
     "AccessError",
     "LookupError_",
     "RuntimeError_",
+    "ExceptionType",
 ]
 
 # ---------------------------------------------------------------------------
@@ -63,3 +64,10 @@ LookupError_: TypeAlias = NotFoundError
 
 RuntimeError_: TypeAlias = Union[RuntimeFailure, TimeoutFailure]
 """Union of runtime-related errors: `RuntimeFailure` (4001) and `TimeoutFailure` (4002)."""
+
+# ---------------------------------------------------------------------------
+# More type aliases
+# ---------------------------------------------------------------------------
+
+ExceptionType: TypeAlias = type[Exception]
+"""Type alias for an exception *class* (not an instance)."""

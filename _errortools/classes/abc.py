@@ -300,6 +300,11 @@ class Raiseable(ABC):
         pass
 
 
+# ----------------------------------------------------------------------
+# Error
+# ----------------------------------------------------------------------
+
+
 class Error(Exception, ABC):
     """Abstract Base Class for module-level Error exceptions.
 
@@ -321,6 +326,7 @@ class Error(Exception, ABC):
         >>> isinstance(MyError(), Error)
         True
     """
+
     __slots__ = ()
 
     @classmethod
@@ -328,7 +334,7 @@ class Error(Exception, ABC):
         if cls is Error:
             return subclass.__name__ == "Error"
         return NotImplemented
-    
+
 
 Error.register(copy.Error)
 Error.register(shutil.Error)

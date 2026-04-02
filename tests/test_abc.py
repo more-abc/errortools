@@ -253,9 +253,11 @@ class TestRaiseable:
         assert "Wrapped: Original failure" in str(excinfo.value)
         assert excinfo.value.__cause__ == error_instance
 
+
 # =============================================================================
 # Error ABC Tests
 # =============================================================================
+
 
 class TestError:
     def test_subclasshook_recognises_classes_named_Error(self):
@@ -299,6 +301,7 @@ class TestError:
 
     def test_subclasshook_returns_not_implemented_for_non_base_class(self):
         """__subclasshook__ returns NotImplemented for non-base Error checks."""
+
         # Create a subclass to test hook behavior
         class MyError(Error):
             __name__ = "Error"
