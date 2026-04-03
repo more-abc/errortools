@@ -342,7 +342,7 @@ class Error(Exception, ABC):
     def __subclasshook__(cls, subclass: type[Any]) -> bool:
         if cls is Error:
             return subclass.__name__ == "Error"
-        return NotImplemented
+        return False
 
 
 Error.register(copy.Error)
