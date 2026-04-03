@@ -16,11 +16,6 @@ def raises(
 ) -> None:
     """Validate exception types and raise the first (error, message) combination.
 
-    Computes the Cartesian product of *errors* x *msgs*, validates that every
-    error type is a subclass of *baseerror*, then raises the first resulting
-    exception.  If the product is empty (either iterable is empty) the function
-    returns without raising.
-
     Args:
         errors: An iterable of exception types to raise.
         msgs: An iterable of message strings to pair with each exception type.
@@ -36,6 +31,10 @@ def raises(
             ...
         ValueError: invalid input
     """
+    # NOTE: Computes the Cartesian product of *errors* x *msgs*, validates that every
+    # error type is a subclass of *baseerror*, then raises the first resulting
+    # exception.  If the product is empty (either iterable is empty) the function
+    # returns without raising.
     pairs = _warp_list_product(errors, msgs)
     if not pairs:
         return
@@ -53,10 +52,6 @@ def assert_raises(
     **kwargs: Any,
 ) -> Exception:
     """Call *func* and assert that it raises one of the expected exception types.
-
-    Invokes ``func(*args, **kwargs)`` and checks that the exception raised is
-    an instance of at least one type in *errors*.  If no exception is raised,
-    or the wrong type is raised, an `AssertionError` is raised instead.
 
     Args:
         func: The callable to invoke.
@@ -77,6 +72,9 @@ def assert_raises(
         >>> str(exc)
         "invalid literal for int() with base 10: 'not-a-number'"
     """
+    # NOTE: Invokes ``func(*args, **kwargs)`` and checks that the exception raised is
+    # an instance of at least one type in *errors*.  If no exception is raised,
+    # or the wrong type is raised, an `AssertionError` is raised instead.
     expected = tuple(errors)
     try:
         func(*args, **kwargs)
@@ -100,12 +98,6 @@ def raises_all(
 ) -> None:
     """Validate exception types and raise all (error, message) combinations as an ExceptionGroup.
 
-    Computes the Cartesian product of *errors* x *msgs*, validates that every
-    error type is a subclass of *baseerror*, then raises a single
-    `ExceptionGroup` containing one instantiated exception per pair.
-    If the product is empty (either iterable is empty) the function returns
-    without raising.
-
     Args:
         errors: An iterable of exception types to include in the group.
         msgs: An iterable of message strings to pair with each exception type.
@@ -125,6 +117,11 @@ def raises_all(
             ...
         ExceptionGroup: multiple errors (2 sub-exceptions)
     """
+    # NOTE: Computes the Cartesian product of *errors* x *msgs*, validates that every
+    # error type is a subclass of *baseerror*, then raises a single
+    # `ExceptionGroup` containing one instantiated exception per pair.
+    # If the product is empty (either iterable is empty) the function returns
+    # without raising.
     pairs = _warp_list_product(errors, msgs)
     if not pairs:
         return
@@ -141,10 +138,6 @@ def reraise(
 ) -> Iterator[None]:
     """Context manager that catches *catch* and re-raises it as *raise_as*.
 
-    Catches any exception that is an instance of *catch* within the ``with``
-    block and raises a new *raise_as* instance with the same message, chaining
-    the original via ``__cause__``.  All other exceptions propagate unchanged.
-
     Args:
         catch: An exception type (or tuple of types) to intercept.
         raise_as: The exception type to raise in its place.
@@ -160,6 +153,9 @@ def reraise(
             ...
         ValueError: 'missing key'
     """
+    # NOTE: Catches any exception that is an instance of *catch* within the ``with``
+    # block and raises a new *raise_as* instance with the same message, chaining
+    # the original via ``__cause__``.  All other exceptions propagate unchanged.
     try:
         yield
     except catch as exc:

@@ -1,11 +1,11 @@
 from typing import Any, Optional
 
 
+# NOTE: Validates the value is a string and not empty
+# after trimming leading/trailing whitespace.
+# Stores the cleaned (stripped) value on the instance.
 class NonBlankErrorMsg:
     """Descriptor that validates an attribute is a non-blank string after stripping whitespace.
-
-    Validates the value is a string and not empty after trimming leading/trailing whitespace.
-    Stores the cleaned (stripped) value on the instance.
 
     Args:
         message: Name/label used in error messages for validation failures.

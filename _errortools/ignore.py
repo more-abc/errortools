@@ -13,12 +13,13 @@ __all__ = [
 ]
 
 
+# A Context Manager? Maybe it is...
+
+# NOTE: Any exception raised inside the ``with`` block that is an instance of one
+# of *errors* is caught and discarded.  All other exceptions propagate
+# unchanged.  Execution resumes after the ``with`` block.
 ignore = ErrorIgnoreWrapper
 """Context manager that silently suppresses the given exception types.
-
-    Any exception raised inside the ``with`` block that is an instance of one
-    of *errors* is caught and discarded.  All other exceptions propagate
-    unchanged.  Execution resumes after the ``with`` block.
 
     Args:
         *errors: One or more exception types to suppress.
@@ -35,11 +36,6 @@ ignore = ErrorIgnoreWrapper
 def ignore_subclass(base: type[Exception]) -> Iterator[None]:
     """Context manager that suppresses any exception whose type is a subclass of *base*.
 
-    Similar to `ignore`, but accepts a single base class and suppresses
-    every exception whose type satisfies ``issubclass(type(exc), base)``.
-    Useful when you want to express intent explicitly — "ignore anything
-    derived from X" — rather than listing concrete types.
-
     Args:
         base: The base exception class.  Any raised exception whose type is a
             subclass of *base* (including *base* itself) is suppressed.
@@ -49,6 +45,10 @@ def ignore_subclass(base: type[Exception]) -> Iterator[None]:
         ...     raise IndexError("out of range")  # IndexError ⊆ LookupError
         ... # suppressed — execution continues here
     """
+    # NOTE: Similar to `ignore`, but accepts a single base class and suppresses
+    # every exception whose type satisfies ``issubclass(type(exc), base)``.
+    # Useful when you want to express intent explicitly — "ignore anything
+    # derived from X" — rather than listing concrete types.
     try:
         yield
     except Exception as exc:
@@ -60,10 +60,6 @@ def ignore_subclass(base: type[Exception]) -> Iterator[None]:
 def ignore_warns(*categories: type[Warning]) -> Iterator[None]:
     """Context manager that suppresses the given warning categories.
 
-    Uses `warnings.catch_warnings` and `warnings.simplefilter`
-    to silence any warning whose category is one of *categories* for the
-    duration of the ``with`` block.  All other warnings are unaffected.
-
     Args:
         *categories: One or more `Warning` subclasses to suppress.
             Passing no arguments suppresses all warnings.
@@ -73,6 +69,9 @@ def ignore_warns(*categories: type[Warning]) -> Iterator[None]:
         ...     warnings.warn("old api", DeprecationWarning)
         ... # no warning emitted
     """
+    # NOTE: Uses `warnings.catch_warnings` and `warnings.simplefilter`
+    # to silence any warning whose category is one of *categories* for the
+    # duration of the ``with`` block.  All other warnings are unaffected.
     with warnings.catch_warnings():
         for category in categories:
             warnings.filterwarnings("ignore", category=category)

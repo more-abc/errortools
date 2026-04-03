@@ -1,4 +1,4 @@
-"""A helper tool for caching exceptions raised by functions, like lru_cache."""
+"""A helper tool for caching exceptions raised by functions."""
 
 import functools
 from typing import (
@@ -31,19 +31,9 @@ def error_cache(  # type: ignore
     func: Optional[_T] = None, maxsize: Optional[int] = 128
 ) -> Any:
     """
-    Decorator to cache exceptions raised by a function (like functools.lru_cache).
+    Decorator to cache exceptions raised by a function.
 
-    This decorator automatically caches exceptions thrown by the wrapped function,
-    keyed by the function's arguments. If the function succeeds, the cached exception
-    (if any) for those arguments is removed.
-
-    Key features (aligned with lru_cache):
-    - maxsize: Maximum number of cached errors (None = unlimited, default=128)
-    - LRU eviction: Evicts least recently used entries when maxsize is reached
-    - cache_info(): Returns hits/misses/maxsize/currsize stats
-    - clear_cache(): Clears cache and resets statistics
-
-    Usage (same as lru_cache):
+    Usage:
 
         @error_cache  # Default maxsize=128
         def risky_func(x: int) -> int: ...
@@ -65,9 +55,18 @@ def error_cache(  # type: ignore
         Wrapped function with error caching functionality.
 
     Raises:
-        TypeError: If non-hashable arguments are passed (same as lru_cache).
+        TypeError: If non-hashable arguments are passed.
     """
 
+    # NOTE: This decorator automatically caches exceptions thrown by the wrapped function,
+    # keyed by the function's arguments. If the function succeeds, the cached exception
+    # (if any) for those arguments is removed.
+
+    # Key features:
+    # - maxsize: Maximum number of cached errors (None = unlimited, default=128)
+    # - LRU eviction: Evicts least recently used entries when maxsize is reached
+    # - cache_info(): Returns hits/misses/maxsize/currsize stats
+    # - clear_cache(): Clears cache and resets statistics
     def decorator(f: _T) -> ErrorCacheWrapper[_T]:
         if not callable(f):
             raise TypeError(f"Expected a callable, got {type(f).__name__} instead")

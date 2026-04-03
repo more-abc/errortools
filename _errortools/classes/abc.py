@@ -5,9 +5,6 @@ import shutil
 import csv
 import configparser
 
-from ..tools.error_msg import (
-    ErrorAttrableRaiseNotImplementedErrorMessage as ErrorAttrNotImplementedMsg,
-)
 from ..methods import (
     ErrorAttrMixin,
     ErrorAttrCheckMixin,
@@ -87,7 +84,10 @@ class ErrorAttrable(ABC):
             NotImplementedError: If not overridden
             AttributeError: Recommended error type for missing attributes
         """
-        raise NotImplementedError(ErrorAttrNotImplementedMsg)
+        raise NotImplementedError(
+            "Subclasses of ErrorAttrable must implement __errorattr__(self, name: str).\n"
+            "See `collections.abc` for similar abstract method requirements (e.g., __iter__ for Iterable)."
+        )
 
     def __delattr__(self, name: str) -> None:
         """
@@ -107,7 +107,10 @@ class ErrorAttrable(ABC):
         Args:
             name: Name of the attribute being deleted
         """
-        raise NotImplementedError(ErrorAttrNotImplementedMsg)
+        raise NotImplementedError(
+            "Subclasses of ErrorAttrable must implement __errorattr__(self, name: str).\n"
+            "See `collections.abc` for similar abstract method requirements (e.g., __iter__ for Iterable)."
+        )
 
     def __contains__(self, name: str) -> bool:
         """
@@ -130,7 +133,10 @@ class ErrorAttrable(ABC):
         Returns:
             bool: True if attribute exists (custom logic), False otherwise
         """
-        raise NotImplementedError(ErrorAttrNotImplementedMsg)
+        raise NotImplementedError(
+            "Subclasses of ErrorAttrable must implement __errorattr__(self, name: str).\n"
+            "See `collections.abc` for similar abstract method requirements (e.g., __iter__ for Iterable)."
+        )
 
     def __setattr__(self, name: str, value: Any) -> None:
         """
@@ -151,7 +157,10 @@ class ErrorAttrable(ABC):
             name: Name of the attribute to set
             value: Value to assign to the attribute
         """
-        raise NotImplementedError(ErrorAttrNotImplementedMsg)
+        raise NotImplementedError(
+            "Subclasses of ErrorAttrable must implement __errorattr__(self, name: str).\n"
+            "See `collections.abc` for similar abstract method requirements (e.g., __iter__ for Iterable)."
+        )
 
 
 # register four Mixin's

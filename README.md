@@ -1,4 +1,4 @@
-# errortools (in test now)
+# errortools 
 A lightweight Python exception handling utility library.
 
 ## Features
@@ -28,4 +28,4 @@ with reraise(KeyError, ValueError):
 
 - **Go explore more great stuff in code!** 
 
-***NOTES***: explore many many new things!
+<!-- ***NOTES***: explore many many new things! -->

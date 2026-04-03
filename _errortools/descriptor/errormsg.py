@@ -1,11 +1,10 @@
 from typing import Optional, NoReturn
 
 
+# NOTE: The attribute returns the preset message when accessed.
+# Any attempt to modify or delete it raises an ``AttributeError``.
 class ErrorMsg:
     """Descriptor that creates a read-only attribute with a fixed message.
-
-    The attribute returns the preset message when accessed.
-    Any attempt to modify or delete it raises an ``AttributeError``.
 
     Args:
         message: The fixed string returned when the attribute is accessed.

@@ -9,7 +9,7 @@ _Key: TypeAlias = tuple[
 
 
 class ErrorCacheWrapper(Generic[_T]):
-    """Wrapper class for error-cached functions (mimics lru_cache's wrapper style)."""
+    """Wrapper class for error-cached functions."""
 
     def __init__(self, func: _T, maxsize: Optional[int] = 128) -> None:
         self.__wrapped__ = func  # Required for inspect module compatibility
@@ -19,7 +19,7 @@ class ErrorCacheWrapper(Generic[_T]):
         self._maxsize = maxsize if (maxsize is None or maxsize > 0) else None
         self._cache: OrderedDict[_Key, Exception] = OrderedDict()
 
-        # Cache statistics (1:1 with lru_cache)
+        # Cache statistics
         self._hits = 0
         self._misses = 0
 
@@ -46,7 +46,7 @@ class ErrorCacheWrapper(Generic[_T]):
     def _make_key(
         self, args: tuple[Hashable, ...], kwargs: dict[str, Hashable]
     ) -> _Key:
-        """Generate a unique hashable key (consistent with lru_cache's logic)."""
+        """Generate a unique hashable key."""
         sorted_kwargs = tuple(sorted(kwargs.items()))
         return (self._func_name, args, sorted_kwargs)
 
@@ -63,13 +63,13 @@ class ErrorCacheWrapper(Generic[_T]):
         return None
 
     def clear_cache(self) -> None:
-        """Clear all cached exceptions and reset statistics (mimics lru_cache.clear)."""
+        """Clear all cached exceptions and reset statistics."""
         self._cache.clear()
         self._hits = 0
         self._misses = 0
 
     def cache_info(self) -> str:
-        """Return cache statistics (1:1 with lru_cache.cache_info)."""
+        """Return cache statistics."""
         return (
             f"ErrorCacheInfo(hits={self._hits}, misses={self._misses}, "
             f"maxsize={self._maxsize}, currsize={len(self._cache)})"

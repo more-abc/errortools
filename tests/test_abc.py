@@ -1,4 +1,4 @@
-"""Tests for _errortools/abc.py — abstract base classes for error handling.
+"""Tests for _errortools/classes/abc.py — abstract base classes for error handling.
 
 Covers:
   - ErrorCodeable (ABC for exceptions with machine-readable error codes)

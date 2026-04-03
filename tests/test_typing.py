@@ -1,4 +1,4 @@
-"""Tests for _errortools.typing: type alias validation."""
+"""Tests for _errortools/typing.py - type alias validation."""
 
 from typing import Union, get_args, get_origin
 import pytest

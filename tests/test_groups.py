@@ -1,4 +1,4 @@
-"""Tests for _errortools/classes/base/group.py — GroupErrors and BaseGroup."""
+"""Tests for _errortools/classes/group.py — GroupErrors and BaseGroup."""
 
 import pytest
 
