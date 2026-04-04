@@ -1,4 +1,4 @@
-"""Public type aliases for _errortools exception classes."""
+"""Public type aliases for errortools exception classes."""
 
 from typing import TypeAlias, Union
 

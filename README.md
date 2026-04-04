@@ -3,10 +3,11 @@ A lightweight Python exception handling utility library.
 
 ## Features
 - **Raise Exceptions**: `raises()`, `raises_all()`, `reraise()` support batch raising and exception conversion
-- **Catch & Suppress**: `ignore()`, `ignore_subclass()`, `ignore_warns()` enable graceful suppression of exceptions and warnings
+- **Catch & Suppress**: `ignore()`, `ignore_subclass()`, `ignore_warns()` `fast_ignore()` `super_fast_ignore()` enable graceful suppression of exceptions and warnings
 - **Exception Caching**: `error_cache` caches exceptions thrown by functions (similar to `lru_cache`)
-- **Custom Exceptions**: `BaseErrorCodes` supports structured exception classes with error codes
+- **Custom Exceptions**: `BaseErrorCodes` `BaseWarning` supports structured exception classes with error codes
 - **Attribute Error Mixin**: Customize error behavior for attribute access, assignment, and deletion
+- **Type Alias**: `ExceptionType` `AnyErrorCode` `BaseErrorCodesType` and more...
 
 ## Installation
 ```bash

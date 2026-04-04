@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="errortools",
-    version="1.1.5",
+    version="1.1.6",
     description="A toolset for working with Python exceptions and warnings",
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
