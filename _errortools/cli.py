@@ -20,9 +20,7 @@ def parse_args(args: Optional[list[str]] = None) -> argparse.Namespace:
         "-c", "--copyrights", action="store_true", help="Show copyright information"
     )
 
-    parser.add_argument(
-        "-a", "--author", action="store_true", help="Show author name"
-    )
+    parser.add_argument("-a", "--author", action="store_true", help="Show author name")
 
     parser.add_argument("-e", "--email", action="store_true", help="Show author email")
 

@@ -3,11 +3,7 @@
 import warnings
 import pytest
 
-from _errortools.ignore import (
-    ignore,
-    ignore_subclass,
-    ignore_warns,
-)
+from _errortools.ignore import ignore, ignore_subclass, ignore_warns, fast_ignore
 from _errortools.wrappers.ignore import IgnoredError, ErrorIgnoreWrapper
 
 # =============================================================================
@@ -51,9 +47,6 @@ class TestIgnore:
         sentinel.append("after")
         assert sentinel == ["after"]
 
-    # ------------------------------
-    # 新增：IgnoredError 属性测试
-    # ------------------------------
     def test_ignore_captures_error_attributes(self):
         with ignore(NameError) as error:
             raise NameError("test error")
@@ -191,3 +184,45 @@ class TestIgnoreClasses:
         assert isinstance(wrapper, ErrorIgnoreWrapper)
         assert hasattr(wrapper, "__enter__")
         assert hasattr(wrapper, "__exit__")
+
+
+# =============================================================================
+# fast_ignore() (High-performance, no traceback, no state)
+# =============================================================================
+
+
+class TestFastIgnore:
+    def test_fast_ignore_suppresses_specified_exception(self):
+        with fast_ignore(KeyError):
+            raise KeyError("should be suppressed")
+
+    def test_fast_ignore_suppresses_multiple_types(self):
+        with fast_ignore(KeyError, ValueError):
+            raise ValueError("suppressed")
+
+    def test_fast_ignore_unrelated_exception_propagates(self):
+        with pytest.raises(RuntimeError):
+            with fast_ignore(KeyError):
+                raise RuntimeError("not suppressed")
+
+    def test_fast_ignore_no_exception_passes_through(self):
+        result = []
+        with fast_ignore(KeyError):
+            result.append(1)
+        assert result == [1]
+
+    def test_fast_ignore_rejects_non_exception_subclass(self):
+        with pytest.raises(TypeError):
+            with fast_ignore(int):  # type: ignore
+                pass
+
+    def test_fast_ignore_subclass_suppressed_when_parent_listed(self):
+        with fast_ignore(LookupError):
+            raise KeyError("KeyError ⊆ LookupError")
+
+    def test_fast_ignore_execution_continues_after_suppression(self):
+        sentinel = []
+        with fast_ignore(ValueError):
+            raise ValueError("ignored")
+        sentinel.append("after")
+        assert sentinel == ["after"]

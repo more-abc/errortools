@@ -156,6 +156,10 @@ def reraise(
     # NOTE: Catches any exception that is an instance of *catch* within the ``with``
     # block and raises a new *raise_as* instance with the same message, chaining
     # the original via ``__cause__``.  All other exceptions propagate unchanged.
+
+    # Performance Note:
+    # The reraise context manager adds lightweight exception type conversion on top of native try/except logic.
+    # It introduces minimal overhead and is safe for general-purpose use in most applications.
     try:
         yield
     except catch as exc:
