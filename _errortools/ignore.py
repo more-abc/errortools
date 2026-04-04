@@ -22,7 +22,7 @@ ignore = ErrorIgnoreWrapper
 """Context manager that silently suppresses the given exception types.
 
     Args:
-        *errors: One or more exception types to suppress.
+        *excs: One or more exception types to suppress.
 
     Example:
         >>> with ignore(KeyError) as error:
