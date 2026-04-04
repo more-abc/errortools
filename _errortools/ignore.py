@@ -2,7 +2,7 @@
 
 from typing import Optional, TypeAlias
 from collections.abc import Iterator
-from contextlib import AbstractContextManager, contextmanager
+from contextlib import contextmanager
 import warnings
 
 from .wrappers.ignore import ErrorIgnoreWrapper
@@ -42,7 +42,7 @@ ignore = ErrorIgnoreWrapper
 """
 
 
-class fast_ignore(AbstractContextManager):
+class fast_ignore:
     """
     Ultra-lightweight context manager to suppress exceptions.
 
@@ -58,22 +58,24 @@ class fast_ignore(AbstractContextManager):
         ...     _ = d["missing"]
     """
 
-    __slots__ = ("excs",)
+    __slots__ = ("_excs",)
 
-    def __init__(self, *excs: _ExcType) -> None:
+    def __init__(self, *excs: type[BaseException]) -> None:
         for exc in excs:
             if not isinstance(exc, type) or not issubclass(exc, BaseException):
                 raise TypeError(f"Expected Exception subclass, got {exc!r}")
+        self._excs = excs
 
-        self.excs = excs
+    def __enter__(self) -> None:
+        return
 
-    def __exit__(
-        self,
-        typ: Optional[_ExcType],
-        val: Optional[BaseException],
-        tb: Optional[object],
-    ) -> bool:
-        return typ is not None and issubclass(typ, self.excs)
+    def __exit__(self, typ: type[BaseException] | None, _, __) -> bool:
+        if typ is None:
+            return False
+        excs = self._excs
+        if len(excs) == 1:
+            return typ is excs[0] or issubclass(typ, excs[0])
+        return issubclass(typ, excs)
 
 
 @contextmanager

@@ -69,6 +69,7 @@ from _errortools._metadata import (
     __title__,
     __url__,
 )
+import _errortools.future as future
 
 __all__ = [
     # functions
@@ -136,4 +137,6 @@ __all__ = [
     "__license__",
     "__title__",
     "__url__",
+    # submodules
+    "future",
 ]
