@@ -43,7 +43,6 @@ class TestIgnore:
             with ignore(int):  # type: ignore
                 pass
 
-
     def test_execution_continues_after_suppression(self):
         sentinel = []
         with ignore(ValueError):

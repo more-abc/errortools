@@ -55,7 +55,7 @@ from _errortools.typing import (
     AccessError,
     ExceptionType,
     TracebackType,
-    FrameType
+    FrameType,
 )
 from _errortools.descriptor.errormsg import ErrorMsg
 from _errortools.descriptor.nonblankmsg import NonBlankErrorMsg

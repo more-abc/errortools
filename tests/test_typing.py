@@ -13,6 +13,8 @@ from _errortools.typing import (
     LookupError_,
     RuntimeError_,
     ExceptionType,
+    TracebackType,
+    FrameType,
 )
 from _errortools.classes.errorcodes import (
     PureBaseException,
@@ -83,6 +85,34 @@ class TestExceptionTypeAlias:
     def test_exception_type(self):
         assert get_origin(ExceptionType) is type
         assert get_args(ExceptionType) == (Exception,)
+
+
+class TestTracebackAndFrameTypes:
+    """Validate TracebackType and FrameType are the correct runtime types."""
+
+    def test_traceback_type_matches_real_traceback(self):
+        try:
+            raise RuntimeError
+        except RuntimeError as exc:
+            assert isinstance(exc.__traceback__, TracebackType)
+
+    def test_frame_type_matches_real_frame(self):
+        try:
+            raise RuntimeError
+        except RuntimeError as exc:
+            assert isinstance(exc.__traceback__.tb_frame, FrameType) # type: ignore
+
+    def test_traceback_type_is_type(self):
+        assert isinstance(TracebackType, type)
+
+    def test_frame_type_is_type(self):
+        assert isinstance(FrameType, type)
+
+    def test_traceback_type_name(self):
+        assert TracebackType.__name__ == "traceback"
+
+    def test_frame_type_name(self):
+        assert FrameType.__name__ == "frame"
 
 
 class TestModuleExports:
