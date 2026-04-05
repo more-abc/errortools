@@ -12,7 +12,7 @@ from _errortools.ignore import (
 )
 from _errortools.classes.group import BaseGroup, GroupErrors
 from _errortools.cache import error_cache
-from _errortools._types import TracebackType, FrameType
+from _errortools.types import TracebackType, FrameType
 from _errortools.classes.errorcodes import (
     PureBaseException,
     ContextException,
@@ -58,7 +58,7 @@ from _errortools.typing import (
 )
 from _errortools.descriptor.errormsg import ErrorMsg
 from _errortools.descriptor.nonblankmsg import NonBlankErrorMsg
-from _errortools._version import (
+from _errortools.version import (
     __version__,
     __version_tuple__,
     __commit_id__,
@@ -66,7 +66,7 @@ from _errortools._version import (
     version_tuple,
     commit_id,
 )
-from _errortools._metadata import (
+from _errortools.metadata import (
     __author__,
     __author_email__,
     __copyright__,

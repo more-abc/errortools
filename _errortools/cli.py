@@ -3,7 +3,7 @@
 import argparse
 import sys
 
-from ._metadata import (
+from .metadata import (
     __description__,
     __copyright__,
     __author__,
@@ -11,12 +11,15 @@ from ._metadata import (
     __license__,
     __url__,
 )
-from ._version import __version__
+from .version import __version__
 
 
 def parse_args(args: list[str] | None = None) -> argparse.Namespace:
     """Parse command line arguments."""
-    parser = argparse.ArgumentParser(description=__description__, color=True)
+    if sys.version_info >= (3, 14):
+        parser = argparse.ArgumentParser(description=__description__, color=True)
+    else:
+        parser = argparse.ArgumentParser(description=__description__)
 
     parser.add_argument(
         "-v", "--version", action="store_true", help="Show version and exit"
