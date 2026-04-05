@@ -1,9 +1,16 @@
-"""Tests for _errortools/ignore.py — ignore, ignore_subclass, ignore_warns."""
+"""Tests for _errortools/ignore.py — ignore, ignore_subclass, ignore_warns, timeout."""
 
+import asyncio
 import warnings
 import pytest
 
-from _errortools.ignore import ignore, ignore_subclass, ignore_warns, fast_ignore
+from _errortools.ignore import (
+    ignore,
+    ignore_subclass,
+    ignore_warns,
+    fast_ignore,
+    timeout,
+)
 from _errortools.wrappers.ignore import IgnoredError, ErrorIgnoreWrapper
 
 # =============================================================================
@@ -226,3 +233,76 @@ class TestFastIgnore:
             raise ValueError("ignored")
         sentinel.append("after")
         assert sentinel == ["after"]
+
+
+# =============================================================================
+# timeout() decorator
+# =============================================================================
+
+
+class TestTimeout:
+    def test_timeout_completes_within_limit(self):
+        @timeout(1.0)
+        async def quick_task():
+            await asyncio.sleep(0.1)
+            return "done"
+
+        result = asyncio.run(quick_task())
+        assert result == "done"
+
+    def test_timeout_raises_on_exceeded(self):
+        @timeout(0.1)
+        async def slow_task():
+            await asyncio.sleep(1.0)
+
+        with pytest.raises(asyncio.TimeoutError):
+            asyncio.run(slow_task())
+
+    def test_timeout_with_args_kwargs(self):
+        @timeout(1.0)
+        async def task_with_params(a, b, c=None):
+            await asyncio.sleep(0.01)
+            return (a, b, c)
+
+        result = asyncio.run(task_with_params(1, 2, c=3))
+        assert result == (1, 2, 3)
+
+    def test_timeout_preserves_function_name(self):
+        @timeout(1.0)
+        async def my_async_func():
+            pass
+
+        assert my_async_func.__name__ == "my_async_func"
+
+    def test_timeout_propagates_other_exceptions(self):
+        @timeout(1.0)
+        async def failing_task():
+            await asyncio.sleep(0.01)
+            raise ValueError("custom error")
+
+        with pytest.raises(ValueError, match="custom error"):
+            asyncio.run(failing_task())
+
+    def test_timeout_rejects_sync_function(self):
+        with pytest.raises(ValueError, match="timeout only supports async functions"):
+            timeout(1.0)(lambda: None)
+
+    def test_timeout_rejects_regular_callable(self):
+        with pytest.raises(ValueError, match="timeout only supports async functions"):
+            timeout(1.0)(int)
+
+    def test_timeout_zero_seconds(self):
+        @timeout(0.0)
+        async def instant_task():
+            return "immediate"
+
+        with pytest.raises(asyncio.TimeoutError):
+            asyncio.run(instant_task())
+
+    def test_timeout_returns_value(self):
+        @timeout(1.0)
+        async def coro():
+            await asyncio.sleep(0.01)
+            return "value"
+
+        assert asyncio.run(coro()) == "value"

@@ -3,7 +3,13 @@ errortools - a toolset for working with Python exceptions and warnings.
 """
 
 from _errortools.raises import raises, assert_raises, raises_all, reraise
-from _errortools.ignore import ignore, ignore_subclass, ignore_warns, fast_ignore
+from _errortools.ignore import (
+    ignore,
+    ignore_subclass,
+    ignore_warns,
+    fast_ignore,
+    timeout,
+)
 from _errortools.classes.group import BaseGroup, GroupErrors
 from _errortools.cache import error_cache
 from _errortools._types import TracebackType, FrameType
@@ -81,6 +87,7 @@ __all__ = [
     "fast_ignore",
     "ignore_subclass",
     "ignore_warns",
+    "timeout",
     "error_cache",
     "TracebackType",
     "FrameType",
