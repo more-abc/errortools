@@ -1,5 +1,5 @@
-__version__: str = "1.1.7"
-__version_tuple__: tuple[int, int, int] = (1, 1, 7)
+__version__: str = "1.1.8"
+__version_tuple__: tuple[int, int, int] = (1, 1, 8)
 __commit_id__: str | None = None
 
 version = __version__

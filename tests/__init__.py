@@ -1,3 +1,3 @@
 """Tests for `errortools` module. Using pytest."""
 
-__version__ = "0.18"
+__version__ = "0.19"

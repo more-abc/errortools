@@ -2,7 +2,7 @@
 
 import pytest
 
-from _errortools.cached.cache import error_cache
+from _errortools.cache import error_cache
 
 # =============================================================================
 # error_cache — basic decoration patterns
