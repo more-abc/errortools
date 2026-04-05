@@ -18,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.14"
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
@@ -28,11 +28,11 @@ jobs:
       - name: Run pytest 
         run: pytest
 
-      - name: Run mypy
+      - name: Run mypy .
         run: mypy 
 
       - name: Run flake8
-        run: flake8 
+        run: flake8 .
 
       - name: Run black 
         run: black .
