@@ -137,6 +137,8 @@ class TestModuleExports:
             "LookupError_",
             "RuntimeError_",
             "ExceptionType",
+            "TracebackType",
+            "FrameType"
         }
         assert set(mod.__all__) == expected
 
