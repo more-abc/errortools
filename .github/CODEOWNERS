@@ -1,0 +1,19 @@
+*  @aiwonderland
+/tests/  @aiwonderland
+/_errortools/ @aiwonderland
+/errortools/  @aiwonderland
+/.github/  @aiwonderland
+
+requirements-dev.txt  @aiwonderland
+README.md  @aiwonderland
+setup.py  @aiwonderland
+
+.black  @aiwonderland
+.editorconfig  @aiwonderland
+.flake8  @aiwonderland
+.gitignore  @aiwonderland
+pytest.ini  @aiwonderland
+mypy.ini  @aiwonderland
+
+AUTHORS.txt  @aiwonderland
+LICENSE.txt  @aiwonderland
