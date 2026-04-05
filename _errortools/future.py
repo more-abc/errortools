@@ -1,6 +1,6 @@
 """Futures classes and functions."""
 
-from typing import TypeAlias, Optional
+from typing import TypeAlias
 
 _ExcType: TypeAlias = type[BaseException]
 
@@ -16,7 +16,7 @@ class super_fast_ignore:
     def __enter__(self) -> None:
         return
 
-    def __exit__(self, typ: Optional[_ExcType], _, __) -> bool:
+    def __exit__(self, typ: _ExcType | None, *_) -> bool:
         if typ is None:
             return False
         excs = self.excs

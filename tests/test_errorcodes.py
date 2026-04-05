@@ -100,7 +100,7 @@ class TestContextException:
         cause = ValueError("root")
         err = ContextException().with_cause(cause)
         assert err.__cause__ is cause
-        assert err.cause is None  # not a ContextException, so not stored
+        assert err.cause is cause
 
     def test_with_cause_context_exception(self):
         cause = ContextException("root cause")
@@ -339,7 +339,7 @@ class TestErrorTracing:
         cause = ValueError("root")
         err = RuntimeFailure().with_cause(cause)
         assert err.__cause__ is cause
-        assert err.cause is None
+        assert err.cause is cause
 
     def test_with_cause_preserves_typed_cause(self):
         cause = InvalidInputError("bad input")

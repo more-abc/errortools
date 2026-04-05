@@ -1,6 +1,5 @@
 """Utilities for silently suppressing exceptions and warnings."""
 
-from typing import TypeAlias
 from collections.abc import Iterator, Callable
 from contextlib import contextmanager
 from functools import wraps
@@ -12,6 +11,7 @@ from .wrappers.ignore import ErrorIgnoreWrapper
 
 __all__ = [
     "ignore",
+    "fast_ignore",
     "ignore_subclass",
     "ignore_warns",
     "timeout",
@@ -40,7 +40,7 @@ ignore = ErrorIgnoreWrapper
         >>> with ignore(KeyError) as error:
         ...     d = {}
         ...     _ = d["missing"]
-        ... print(error.be_ignore)  # True
+        >>> print(error.be_ignore)  # True
 """
 
 

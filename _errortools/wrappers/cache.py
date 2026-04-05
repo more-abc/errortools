@@ -1,6 +1,6 @@
 from collections import OrderedDict
 from collections.abc import Hashable, Callable
-from typing import Any, Generic, TypeVar, Optional, TypeAlias
+from typing import Any, Generic, TypeVar, Optional, TypeAlias, NamedTuple
 
 _T = TypeVar("_T", bound=Callable[..., Any])
 _Key: TypeAlias = tuple[
@@ -8,15 +8,28 @@ _Key: TypeAlias = tuple[
 ]
 
 
+class CacheInfo(NamedTuple):
+    """Cache statistics, compatible with functools.lru_cache CacheInfo."""
+
+    hits: int
+    misses: int
+    maxsize: int | None
+    currsize: int
+
+
 class ErrorCacheWrapper(Generic[_T]):
     """Wrapper class for error-cached functions."""
 
-    def __init__(self, func: _T, maxsize: Optional[int] = 128) -> None:
+    def __init__(self, func: _T, maxsize: int | None = 128) -> None:
         self.__wrapped__ = func  # Required for inspect module compatibility
         self._func_name = func.__name__
 
-        # LRU cache with maxsize support (OrderedDict preserves access order)
-        self._maxsize = maxsize if (maxsize is None or maxsize > 0) else None
+        # Validate maxsize
+        if maxsize is not None and maxsize < 0:
+            raise ValueError(
+                f"maxsize must be None or a non-negative integer, got {maxsize!r}"
+            )
+        self._maxsize = maxsize
         self._cache: OrderedDict[_Key, Exception] = OrderedDict()
 
         # Cache statistics
@@ -30,13 +43,17 @@ class ErrorCacheWrapper(Generic[_T]):
         try:
             result = self.__wrapped__(*args, **kwargs)
         except Exception as exc:
-            # Cache exception and enforce LRU eviction
-            self._cache[cache_key] = exc
-            self._misses += 1
+            if cache_key in self._cache:
+                self._hits += 1
+            else:
+                self._misses += 1
 
-            # Evict least recently used if maxsize is exceeded
-            if self._maxsize is not None and len(self._cache) > self._maxsize:
-                self._cache.popitem(last=False)  # FIFO = LRU for insert order
+            # Store in cache only if maxsize allows it (maxsize=0 means no caching)
+            if self._maxsize != 0:
+                self._cache[cache_key] = exc
+                # Evict least recently used if maxsize is exceeded
+                if self._maxsize is not None and len(self._cache) > self._maxsize:
+                    self._cache.popitem(last=False)  # FIFO = LRU for insert order
             raise
         else:
             # Auto-clear cache for successful calls
@@ -68,9 +85,11 @@ class ErrorCacheWrapper(Generic[_T]):
         self._hits = 0
         self._misses = 0
 
-    def cache_info(self) -> str:
-        """Return cache statistics."""
-        return (
-            f"ErrorCacheInfo(hits={self._hits}, misses={self._misses}, "
-            f"maxsize={self._maxsize}, currsize={len(self._cache)})"
+    def cache_info(self) -> CacheInfo:
+        """Return cache statistics as a named tuple (compatible with lru_cache)."""
+        return CacheInfo(
+            hits=self._hits,
+            misses=self._misses,
+            maxsize=self._maxsize,
+            currsize=len(self._cache),
         )

@@ -108,7 +108,7 @@ class ErrorAttrable(ABC):
             name: Name of the attribute being deleted
         """
         raise NotImplementedError(
-            "Subclasses of ErrorAttrable must implement __errorattr__(self, name: str).\n"
+            "Subclasses of ErrorAttrable must implement __errordelattr__(self, name: str).\n"
             "See `collections.abc` for similar abstract method requirements (e.g., __iter__ for Iterable)."
         )
 
@@ -134,7 +134,7 @@ class ErrorAttrable(ABC):
             bool: True if attribute exists (custom logic), False otherwise
         """
         raise NotImplementedError(
-            "Subclasses of ErrorAttrable must implement __errorattr__(self, name: str).\n"
+            "Subclasses of ErrorAttrable must implement __errorhasattr__(self, name: str).\n"
             "See `collections.abc` for similar abstract method requirements (e.g., __iter__ for Iterable)."
         )
 
@@ -158,7 +158,7 @@ class ErrorAttrable(ABC):
             value: Value to assign to the attribute
         """
         raise NotImplementedError(
-            "Subclasses of ErrorAttrable must implement __errorattr__(self, name: str).\n"
+            "Subclasses of ErrorAttrable must implement __errorsetattr__(self, name: str, value: Any).\n"
             "See `collections.abc` for similar abstract method requirements (e.g., __iter__ for Iterable)."
         )
 

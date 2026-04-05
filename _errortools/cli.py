@@ -2,13 +2,12 @@
 
 import argparse
 import sys
-from typing import Optional
 
 from ._metadata import __description__, __copyright__, __author__, __author_email__
 from ._version import __version__
 
 
-def parse_args(args: Optional[list[str]] = None) -> argparse.Namespace:
+def parse_args(args: list[str] | None = None) -> argparse.Namespace:
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(description=__description__, color=True)
 

@@ -77,7 +77,7 @@ class TestErrorCacheCaching:
             f(42)
 
         info = f.cache_info()
-        assert "misses=1" in info
+        assert info.misses == 1
 
     def test_hit_increments_stat(self):
         @error_cache
@@ -89,7 +89,7 @@ class TestErrorCacheCaching:
 
         f.get_cached_error(99)  # counts as a hit
         info = f.cache_info()
-        assert "hits=1" in info
+        assert info.hits == 1
 
     def test_successful_call_clears_cached_error(self):
         call_no = [0]
@@ -141,9 +141,9 @@ class TestErrorCacheCaching:
 
         f.clear_cache()
         info = f.cache_info()
-        assert "hits=0" in info
-        assert "misses=0" in info
-        assert "currsize=0" in info
+        assert info.hits == 0
+        assert info.misses == 0
+        assert info.currsize == 0
 
     def test_clear_cache_removes_entries(self):
         @error_cache
@@ -173,7 +173,7 @@ class TestErrorCacheLRU:
                 f(i)
 
         info = f.cache_info()
-        assert "currsize=2" in info  # LRU evicted one entry
+        assert info.currsize == 2  # LRU evicted one entry
 
     def test_unlimited_cache(self):
         @error_cache(maxsize=None)
@@ -185,8 +185,8 @@ class TestErrorCacheLRU:
                 f(i)
 
         info = f.cache_info()
-        assert "currsize=10" in info
-        assert "maxsize=None" in info
+        assert info.currsize == 10
+        assert info.maxsize is None
 
 
 # =============================================================================
@@ -195,7 +195,7 @@ class TestErrorCacheLRU:
 
 
 class TestCacheInfo:
-    def test_cache_info_format(self):
+    def test_cache_info_fields(self):
         @error_cache(maxsize=64)
         def f(x):
             raise RuntimeError("fail")
@@ -204,8 +204,7 @@ class TestCacheInfo:
             f(1)
 
         info = f.cache_info()
-        assert "ErrorCacheInfo" in info
-        assert "hits=0" in info
-        assert "misses=1" in info
-        assert "maxsize=64" in info
-        assert "currsize=1" in info
+        assert info.hits == 0
+        assert info.misses == 1
+        assert info.maxsize == 64
+        assert info.currsize == 1

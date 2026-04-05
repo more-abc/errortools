@@ -73,7 +73,7 @@ class ContextException(PureBaseException):
         # Extended attributes: trace ID (unique identifier for a single exception), context dictionary, root cause exception
         self.trace_id: str = uuid.uuid4().hex
         self.context: dict[str, Any] = {}
-        self.cause: Optional[ContextException] = None
+        self.cause: Optional[Exception] = None
 
     def __repr__(self) -> str:
         """
@@ -102,8 +102,7 @@ class ContextException(PureBaseException):
         Returns:
             Self instance (supports method chaining)
         """
-        if isinstance(cause, ContextException):
-            self.cause = cause
+        self.cause = cause
         self.__cause__ = cause  # Retain native exception chain
         return self
 
@@ -113,21 +112,31 @@ class ContextException(PureBaseException):
         Exception Chain (current to root cause)
         Returns:
             List of dicts, each containing type, code, detail, trace_id, and context
+            for ContextException instances, or type and detail for plain exceptions.
         """
-        chain = []
-        exc: Optional[ContextException] = self
-        while exc:
-            chain.append(
-                {
-                    "type": exc.__class__.__name__,
-                    "code": exc.code,
-                    "detail": exc.detail,
-                    "trace_id": exc.trace_id,
-                    "context": exc.context,
-                }
-            )
-            exc = exc.cause
-        return chain
+        result = []
+        exc: Optional[Exception] = self
+        while exc is not None:
+            if isinstance(exc, ContextException):
+                result.append(
+                    {
+                        "type": exc.__class__.__name__,
+                        "code": exc.code,
+                        "detail": exc.detail,
+                        "trace_id": exc.trace_id,
+                        "context": exc.context,
+                    }
+                )
+                exc = exc.cause
+            else:
+                result.append(
+                    {
+                        "type": exc.__class__.__name__,
+                        "detail": str(exc),
+                    }
+                )
+                exc = exc.__cause__  # type: ignore[assignment]
+        return result
 
     @property
     def traceback(self) -> str:
