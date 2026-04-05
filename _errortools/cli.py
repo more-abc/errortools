@@ -3,7 +3,14 @@
 import argparse
 import sys
 
-from ._metadata import __description__, __copyright__, __author__, __author_email__
+from ._metadata import (
+    __description__,
+    __copyright__,
+    __author__,
+    __author_email__,
+    __license__,
+    __url__,
+)
 from ._version import __version__
 
 
@@ -23,7 +30,29 @@ def parse_args(args: list[str] | None = None) -> argparse.Namespace:
 
     parser.add_argument("-e", "--email", action="store_true", help="Show author email")
 
+    parser.add_argument(
+        "-l", "--license", action="store_true", help="Show license type"
+    )
+
+    parser.add_argument(
+        "-u", "--url", action="store_true", help="Show project URL"
+    )
+
+    parser.add_argument(
+        "-i", "--info", action="store_true", help="Show all package information"
+    )
+
     return parser.parse_args(args)
+
+
+def _print_info() -> None:
+    """Print a summary of all package metadata."""
+    print(f"errortools v{__version__}")
+    print(f"  {__description__}")
+    print(f"  Author:    {__author__} <{__author_email__}>")
+    print(f"  License:   {__license__}")
+    print(f"  URL:       {__url__}")
+    print(f"  Copyright: {__copyright__}")
 
 
 def main() -> None:
@@ -32,16 +61,24 @@ def main() -> None:
 
     if args.version:
         print(f"v{__version__}")
-        return
 
     elif args.copyrights:
         print(__copyright__)
-        return
 
     elif args.author:
         print(f"Author: {__author__}")
-        return
 
     elif args.email:
         print(f"Email: {__author_email__}")
-        return
+
+    elif args.license:
+        print(f"License: {__license__}")
+
+    elif args.url:
+        print(f"URL: {__url__}")
+
+    elif args.info:
+        _print_info()
+
+    else:
+        _print_info()
