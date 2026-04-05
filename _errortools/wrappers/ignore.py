@@ -53,7 +53,7 @@ class ErrorIgnoreWrapper(Generic[_T]):
         exc_tb: Optional[Any],
     ) -> bool:
         if exc_type is None:
-            return True
+            return False
 
         if not issubclass(exc_type, self._excs):
             return False

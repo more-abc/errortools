@@ -20,8 +20,8 @@ __all__ = [
 # ==============================================
 class PureBaseException(Exception):
     """
-    Pure Base Exception Class (core skeleton)
-    Only provides error code, default prompt message, basic initialization and string formatting, no additional functions included
+    Pure Base Exception Class
+    Inherits from Exception, providing error code, default prompt, basic initialization and string formatting
     """
 
     # Class attributes: default error code and prompt, which can be overridden by subclasses
@@ -30,7 +30,7 @@ class PureBaseException(Exception):
 
     def __init__(self, detail: str | None = None) -> None:
         """
-        Initialize pure base exception
+        Pure Base Exception Initialization
         Args:
             detail: Custom error prompt, use default prompt (default_detail) when None
         """
@@ -38,11 +38,19 @@ class PureBaseException(Exception):
         super().__init__(self.detail)
 
     def __str__(self) -> str:
-        """Format exception string, unified format: [Error Code] Error Prompt"""
+        """
+        Exception String Formatting
+        Returns:
+            Formatted string: [Error Code] Error Prompt
+        """
         return f"[{self.code}] {self.detail}"
 
     def __repr__(self) -> str:
-        """Format exception repr information for easy debugging of core attributes"""
+        """
+        Exception Repr Formatting (core attributes)
+        Returns:
+            Repr string including class name, detail, and code
+        """
         return f"{type(self).__name__}(detail={self.detail!r}, code={self.code!r})"
 
 
@@ -51,13 +59,13 @@ class PureBaseException(Exception):
 # ==============================================
 class ContextException(PureBaseException):
     """
-    Common Capability Exception Class (extension layer)
-    Inherits from pure base exception, providing common capabilities such as trace ID, context management, exception chain, and simplified stack trace
+    Context/Exception Chain Capability Class (extension layer)
+    Inherits from pure base exception, providing trace ID, context management, exception chain, and simplified stack trace
     """
 
     def __init__(self, detail: str | None = None) -> None:
         """
-        Initialize common capability exception, inherit parent class initialization and add extended attributes
+        Context Exception Initialization
         Args:
             detail: Custom error prompt, use default prompt (default_detail) when None
         """
@@ -68,12 +76,16 @@ class ContextException(PureBaseException):
         self.cause: Optional[ContextException] = None
 
     def __repr__(self) -> str:
-        """Format exception repr information including trace_id for debugging"""
+        """
+        Exception Repr Formatting (with trace_id)
+        Returns:
+            Repr string including class name, detail, code, and trace_id
+        """
         return f"{type(self).__name__}(detail={self.detail!r}, code={self.code!r}, trace_id={self.trace_id!r})"
 
     def with_context(self, **kwargs: Any) -> "ContextException":
         """
-        Attach context data to the exception (such as user ID, request parameters, etc.)
+        Attach Context Data to Exception
         Args:
             **kwargs: Context key-value pairs (any type)
         Returns:
@@ -84,9 +96,9 @@ class ContextException(PureBaseException):
 
     def with_cause(self, cause: Exception) -> "ContextException":
         """
-        Set the root cause exception for the current exception, retain the exception chain for easy troubleshooting
+        Set Root Cause Exception
         Args:
-            cause: Root cause exception (can be any subclass of Exception)
+            cause: Root cause exception (any subclass of Exception)
         Returns:
             Self instance (supports method chaining)
         """
@@ -98,9 +110,9 @@ class ContextException(PureBaseException):
     @property
     def chain(self) -> list[dict[str, Any]]:
         """
-        Get the complete exception chain (from current exception to the bottom root cause exception)
+        Exception Chain (current to root cause)
         Returns:
-            Exception chain list, each element contains core exception information (type, error code, prompt, etc.)
+            List of dicts, each containing type, code, detail, trace_id, and context
         """
         chain = []
         exc: Optional[ContextException] = self
@@ -120,9 +132,9 @@ class ContextException(PureBaseException):
     @property
     def traceback(self) -> str:
         """
-        Get simplified exception stack trace (limited to 4 lines) for easy log output and troubleshooting
+        Simplified Stack Trace (limit 4 frames)
         Returns:
-            Simplified stack trace string, no blank lines, each line separated by |
+            Stack trace string with frames joined by |, or "no traceback" if unavailable
         """
         tb = self.__traceback__
         if not tb:
