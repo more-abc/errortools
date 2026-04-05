@@ -1,0 +1,11 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"                  
+    schedule:
+      interval: "weekly"           
+    versioning-strategy: increase
+    commit-message:
+      prefix: "deps"
+    labels:
+      - "dependencies"
