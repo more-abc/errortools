@@ -34,9 +34,7 @@ def parse_args(args: list[str] | None = None) -> argparse.Namespace:
         "-l", "--license", action="store_true", help="Show license type"
     )
 
-    parser.add_argument(
-        "-u", "--url", action="store_true", help="Show project URL"
-    )
+    parser.add_argument("-u", "--url", action="store_true", help="Show project URL")
 
     parser.add_argument(
         "-i", "--info", action="store_true", help="Show all package information"

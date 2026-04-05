@@ -8,6 +8,7 @@ A lightweight Python exception handling utility library.
 - **Custom Exceptions**: `PureBaseException`, `ContextException`, `BaseErrorCodes`, `BaseWarning` — structured exception classes with error codes, trace IDs, and context
 - **Attribute Error Mixin**: Customize error behavior for attribute access, assignment, and deletion
 - **Type Aliases**: `ExceptionType`, `AnyErrorCode`, `BaseErrorCodesType`, and more
+- **Logging**: `logger` — loguru-inspired structured logger with leveled output, multiple sinks, context binding, and exception capture
 
 ## Installation
 ```bash
@@ -149,3 +150,122 @@ BaseWarning.deprecated("use new_api() instead").emit()   # DeprecatedWarning
 BaseWarning.performance("O(n²) detected").emit()         # PerformanceWarning
 BaseWarning.resource("file handle leak").emit()          # ResourceUsageWarning
 ```
+
+---
+
+## Logging
+
+`errortools.logging` is a loguru-inspired structured logger with no external dependencies.
+
+### Quick start
+
+```python
+from errortools.logging import logger
+
+logger.info("Server started on port {}", 8080)
+logger.warning("Disk at {pct:.1f}%", pct=92.5)
+logger.success("All systems operational")
+```
+
+Output (colourised in a terminal):
+
+```
+2026-01-01 12:00:00.123 | INFO     | app:main:42 - Server started on port 8080
+2026-01-01 12:00:00.124 | WARNING  | app:main:43 - Disk at 92.5%
+2026-01-01 12:00:00.125 | SUCCESS  | app:main:44 - All systems operational
+```
+
+### Log levels
+
+| Method | Level | No |
+|---|---|---|
+| `logger.trace()` | TRACE | 5 |
+| `logger.debug()` | DEBUG | 10 |
+| `logger.info()` | INFO | 20 |
+| `logger.success()` | SUCCESS | 25 |
+| `logger.warning()` | WARNING | 30 |
+| `logger.error()` | ERROR | 40 |
+| `logger.critical()` | CRITICAL | 50 |
+
+### Sinks
+
+Add and remove destinations at runtime. Each sink has its own level filter.
+
+```python
+from errortools.logging import logger, Level
+
+# stream (stderr by default, auto-detects TTY colour)
+logger.add(sys.stdout, level="WARNING")
+
+# file with rotation (bytes) and retention (number of old files to keep)
+sid = logger.add("logs/app.log", rotation=10_485_760, retention=5)
+
+# any callable
+logger.add(print)
+
+# remove by id, or pass no argument to remove all
+logger.remove(sid)
+logger.remove()
+```
+
+### Level filtering
+
+```python
+logger.set_level("WARNING")   # or Level.WARNING or numeric 30
+logger.debug("dropped")       # below threshold — not emitted
+logger.warning("kept")        # at threshold — emitted
+```
+
+### Context binding
+
+`bind()` returns a **new** logger that carries extra fields in every record. The original logger is unmodified.
+
+```python
+req_log = logger.bind(request_id="abc-123", user="alice")
+req_log.info("Request received")   # record.extra contains request_id and user
+
+# Stacking
+db_log = req_log.bind(db="postgres")
+db_log.debug("Query OK")           # extra: request_id, user, db
+```
+
+### Exception capture
+
+```python
+# Attach the current traceback to any log call
+try:
+    connect()
+except ConnectionError:
+    logger.exception("DB connection failed")       # logs at ERROR + traceback
+
+# Equivalent long-hand
+logger.opt(exception=True).error("DB connection failed")
+```
+
+### catch() — auto-log and suppress
+
+```python
+# As a context manager
+with logger.catch():
+    int("not a number")   # logged at ERROR, then suppressed
+
+# Re-raise after logging
+with logger.catch(ConnectionError, reraise=True):
+    connect()
+
+# As a decorator
+@logger.catch(ValueError)
+def parse(s: str) -> int:
+    return int(s)
+```
+
+### Custom format string
+
+```python
+logger.add(
+    "debug.log",
+    fmt="{time} | {level} | {name}:{function}:{line} - {message}",
+)
+```
+
+Available placeholders: `{time}`, `{level}`, `{name}`, `{file}`, `{line}`, `{function}`, `{message}`.

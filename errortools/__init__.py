@@ -1,5 +1,5 @@
 """
-errortools - a toolset for working with Python exceptions and warnings.
+errortools - a toolset for working with Python exceptions and warnings and logging.
 """
 
 from _errortools.raises import raises, assert_raises, raises_all, reraise
@@ -76,6 +76,7 @@ from _errortools._metadata import (
     __url__,
 )
 import _errortools.future as future
+import _errortools.logging as logging
 
 __all__ = [
     # functions
@@ -146,4 +147,5 @@ __all__ = [
     "__url__",
     # submodules
     "future",
+    "logging",
 ]
