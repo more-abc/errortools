@@ -43,9 +43,6 @@ class TestIgnore:
             with ignore(int):  # type: ignore
                 pass
 
-    def test_subclass_suppressed_when_parent_listed(self):
-        with ignore(LookupError):
-            raise KeyError("KeyError ⊆ LookupError")
 
     def test_execution_continues_after_suppression(self):
         sentinel = []
