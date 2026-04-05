@@ -24,6 +24,8 @@ __all__ = [
     "LookupError_",
     "RuntimeError_",
     "ExceptionType",
+    "TracebackType",
+    "FrameType",
 ]
 
 # ---------------------------------------------------------------------------

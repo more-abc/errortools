@@ -100,7 +100,7 @@ class TestTracebackAndFrameTypes:
         try:
             raise RuntimeError
         except RuntimeError as exc:
-            assert isinstance(exc.__traceback__.tb_frame, FrameType) # type: ignore
+            assert isinstance(exc.__traceback__.tb_frame, FrameType)  # type: ignore
 
     def test_traceback_type_is_type(self):
         assert isinstance(TracebackType, type)
