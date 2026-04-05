@@ -6,7 +6,6 @@ import sys
 
 from .base import BaseLogger
 from .level import Level
-from .sink import StreamSink
 
 # Create the default global logger.
 # It ships with a single stderr sink at DEBUG level (mirrors loguru's default).

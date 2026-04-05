@@ -7,7 +7,7 @@ import threading
 from collections.abc import Callable
 from typing import Any, IO
 
-from .level import Level, get_level, LEVELS
+from .level import Level, get_level
 from .record import make_record
 from .sink import BaseSink, StreamSink, FileSink, CallableSink
 
@@ -383,7 +383,8 @@ class _CatchContext:
     ) -> bool:
         if exc_type is None or not issubclass(exc_type, self._exceptions):
             return False
-        import os, threading as _t
+        import os
+        import threading as _t
 
         frame = sys._getframe(1)
         func = frame.f_code.co_name
