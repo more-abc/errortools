@@ -11,3 +11,5 @@ insert_final_newline = true
 indent_size = 4
 max_line_length = 88  
 trim_trailing_whitespace = true
+comment_style = # 
+max_line_length = 120  
