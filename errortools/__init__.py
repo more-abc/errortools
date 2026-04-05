@@ -12,7 +12,6 @@ from _errortools.ignore import (
 )
 from _errortools.classes.group import BaseGroup, GroupErrors
 from _errortools.cache import error_cache
-from _errortools.types import TracebackType, FrameType
 from _errortools.classes.errorcodes import (
     PureBaseException,
     ContextException,
@@ -55,6 +54,8 @@ from _errortools.typing import (
     InputError,
     AccessError,
     ExceptionType,
+    TracebackType,
+    FrameType
 )
 from _errortools.descriptor.errormsg import ErrorMsg
 from _errortools.descriptor.nonblankmsg import NonBlankErrorMsg
