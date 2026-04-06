@@ -1,4 +1,4 @@
-name: Python Check (pytest → mypy → flake8 → black)
+name: Python Check (pytest → mypy → flake8 → black → autopep8)
 
 on:
   push:
@@ -36,3 +36,6 @@ jobs:
 
       - name: Run black 
         run: black .
+
+      - name: Run autopep8
+        run: autopep8 . --recursive --in-place --pep8-passes 2000 --verbose
