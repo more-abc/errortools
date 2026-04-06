@@ -3,4 +3,11 @@
 import subprocess
 import sys
 
-subprocess.run([sys.executable, "-m", "pytest"])
+
+def run_tests():
+    """Run pytest tests."""
+    subprocess.run([sys.executable, "-m", "pytest"])
+
+
+if __name__ == "__main__":
+    run_tests()
