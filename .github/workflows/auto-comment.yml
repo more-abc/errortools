@@ -5,10 +5,13 @@ on:
     types: [opened]
   pull_request:
     types: [opened]
+  pull_request_target:
+    types: [closed]
 
 jobs:
-  comment:
+  welcome-comment:
     runs-on: ubuntu-latest
+    if: github.event_name == 'issues' || github.event_name == 'pull_request'
     steps:
       - name: Auto Welcome Comment
         uses: peter-evans/create-or-update-comment@v4
@@ -22,19 +25,15 @@ jobs:
               - `pytest`
               - `mypy .`
               - `flake8 .`
-              - `black  .`
-              
-on:
-  pull_request_target:
-    types: [closed]
+              - `black .`
 
-jobs:
-  comment:
-    if: github.event.pull_request.merged == true
+  merged-comment:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request_target' && github.event.pull_request.merged == true
     steps:
       - uses: peter-evans/create-or-update-comment@v4
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             🎉 PR merged successfully! Thank you for your contribution.
