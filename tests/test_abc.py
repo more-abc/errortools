@@ -26,7 +26,7 @@ from _errortools.classes.abc import ErrorCodeable, Warnable, Raiseable, Error
 
 class TestErrorCodeable:
     def test_subclasshook_recognises_classes_with_code_and_default_detail(self):
-        """__subclasshook__ recognises classes with 'code' and 'default_detail' attributes."""
+        # __subclasshook__ recognises classes with 'code' and 'default_detail' attributes.
 
         # Valid class implementing required attributes
         class ValidError(ErrorCodeable):
@@ -50,7 +50,6 @@ class TestErrorCodeable:
         assert not issubclass(InvalidError, ErrorCodeable)
 
     def test_cannot_instantiate_abstract_base_class(self):
-        """Cannot instantiate ErrorCodeable directly (abstract base class)."""
         with pytest.raises(TypeError) as excinfo:
             ErrorCodeable()  # type: ignore
 
@@ -59,7 +58,6 @@ class TestErrorCodeable:
         assert "default_detail" in str(excinfo.value)
 
     def test_concrete_subclass_implements_required_properties(self):
-        """Concrete subclasses must implement 'code' and 'default_detail' properties."""
 
         class NotFoundError(ErrorCodeable, Exception):
             # Use different names for class vars to avoid property name collision
@@ -80,7 +78,6 @@ class TestErrorCodeable:
         assert error.default_detail == "Resource not found"
 
     def test_registered_classes_are_recognised_as_subclasses(self):
-        """Pre-registered error classes are recognised as ErrorCodeable subclasses."""
         # Import registered error classes (match original module structure)
         try:
             from _errortools.classes.errorcodes import (
@@ -121,7 +118,6 @@ class DeprecatedFeatureWarning(Warnable, Warning):
 
 class TestWarnable:
     def test_subclasshook_recognises_classes_with_emit_classmethod(self):
-        """__subclasshook__ recognises classes with 'emit' classmethod."""
 
         # Valid warning class with emit method
         class ValidWarning(Warnable, Warning):
@@ -140,7 +136,6 @@ class TestWarnable:
         assert not issubclass(InvalidWarning, Warnable)
 
     def test_cannot_instantiate_abstract_base_class(self):
-        """Cannot instantiate Warnable directly (abstract base class)."""
         with pytest.raises(TypeError) as excinfo:
             Warnable()  # type: ignore
 
@@ -148,7 +143,6 @@ class TestWarnable:
         assert "emit" in str(excinfo.value)
 
     def test_emit_method_issues_warning_correctly(self):
-        """Concrete Warnable subclass's emit() method issues proper warnings."""
         # Use module-level warning class (avoids local class identity issues)
         WarningClass = DeprecatedFeatureWarning
 
@@ -172,7 +166,6 @@ class TestWarnable:
         assert record[0].message.message == custom_msg
 
     def test_registered_warnings_are_recognised_as_subclasses(self):
-        """Pre-registered warning classes are recognised as Warnable subclasses."""
         try:
             from _errortools.classes.warn import (
                 DeprecatedWarning,
@@ -195,7 +188,6 @@ class TestWarnable:
 
 class TestRaiseable:
     def test_subclasshook_recognises_classes_with_raise_it_method(self):
-        """__subclasshook__ recognises classes with 'raise_it' instance method."""
 
         # Valid exception class with raise_it method
         class ValidRaiseableError(Raiseable, Exception):
@@ -210,7 +202,6 @@ class TestRaiseable:
         assert not issubclass(InvalidError, Raiseable)
 
     def test_cannot_instantiate_abstract_base_class(self):
-        """Cannot instantiate Raiseable directly (abstract base class)."""
         with pytest.raises(TypeError) as excinfo:
             Raiseable()  # type: ignore
 
@@ -218,7 +209,6 @@ class TestRaiseable:
         assert "raise_it" in str(excinfo.value)
 
     def test_raise_it_method_raises_self(self):
-        """Concrete Raiseable subclass's raise_it() method raises the instance itself."""
 
         class CustomError(Raiseable, Exception):
             def __init__(self, message: str):
@@ -236,7 +226,6 @@ class TestRaiseable:
         assert excinfo.value.message == "Something went wrong"
 
     def test_raise_it_can_raise_wrapped_exceptions(self):
-        """Raiseable can be implemented to raise wrapped/derived exceptions."""
 
         class WrappedError(Raiseable, Exception):
             def __init__(self, original_msg: str):
@@ -261,7 +250,6 @@ class TestRaiseable:
 
 class TestError:
     def test_subclasshook_recognises_classes_named_Error(self):
-        """__subclasshook__ recognises any class with __name__ == "Error"."""
 
         # Valid class named exactly "Error"
         class Error:
@@ -280,7 +268,6 @@ class TestError:
         assert not issubclass(NotAnError, Error)
 
     def test_standard_library_Error_classes_are_recognised(self):
-        """Standard library module.Error classes are recognised as virtual subclasses."""
         # All these classes are named "Error" → automatically matched
         assert issubclass(copy.Error, Error)
         assert issubclass(shutil.Error, Error)
@@ -294,13 +281,11 @@ class TestError:
         assert isinstance(configparser.Error(), Error)
 
     def test_registered_classes_are_recognised_as_subclasses(self):
-        """Explicitly registered classes are recognised as Error subclasses."""
         # These are already registered in the ABC
         assert issubclass(copy.Error, Error)
         assert issubclass(shutil.Error, Error)
 
     def test_subclasshook_returns_not_implemented_for_non_base_class(self):
-        """__subclasshook__ returns NotImplemented for non-base Error checks."""
 
         # Create a subclass to test hook behavior
         class MyError(Error):

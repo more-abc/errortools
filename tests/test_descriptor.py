@@ -12,7 +12,6 @@ from _errortools.descriptor.nonblankmsg import NonBlankErrorMsg
 
 class TestErrorMsg:
     def test_returns_preset_message_when_accessed(self):
-        """Accessing the attribute returns the predefined message."""
 
         class MyClass:
             msg = ErrorMsg("Read-only attribute")
@@ -22,7 +21,6 @@ class TestErrorMsg:
         assert MyClass.msg == "Read-only attribute"
 
     def test_modification_raises_attribute_error(self):
-        """Attempting to modify the attribute raises AttributeError."""
 
         class MyClass:
             attr = ErrorMsg("Cannot modify")
@@ -34,8 +32,6 @@ class TestErrorMsg:
             obj.attr = "new value"
 
     def test_deletion_raises_attribute_error(self):
-        """Attempting to delete the attribute raises AttributeError."""
-
         class MyClass:
             attr = ErrorMsg("Cannot delete")
 
@@ -46,7 +42,6 @@ class TestErrorMsg:
             del obj.attr
 
     def test_multiple_instances_hold_own_messages(self):
-        """Different instances have independent read-only messages."""
 
         class MyClass:
             info = ErrorMsg("Information only")
@@ -57,7 +52,6 @@ class TestErrorMsg:
         assert obj.warning == "Warning only"
 
     def test_instance_and_class_access_return_same_message(self):
-        """Access via class or instance yields the same message."""
         msg_text = "Consistent message"
 
         class MyClass:
@@ -74,7 +68,6 @@ class TestErrorMsg:
 
 class TestNonBlankErrorMsg:
     def test_accepts_valid_non_blank_string(self):
-        """Accessing the attribute returns the validated and stripped string."""
 
         class MyClass:
             msg = NonBlankErrorMsg("Error message")
@@ -84,7 +77,6 @@ class TestNonBlankErrorMsg:
         assert obj.msg == "Valid error message"
 
     def test_raises_value_error_for_blank_string(self):
-        """Empty or whitespace-only string raises ValueError."""
 
         class MyClass:
             msg = NonBlankErrorMsg("Error message")
@@ -109,7 +101,6 @@ class TestNonBlankErrorMsg:
             obj.msg = "\t\n  \t"
 
     def test_raises_value_error_for_non_string_type(self):
-        """Non-string value raises ValueError."""
 
         class MyClass:
             msg = NonBlankErrorMsg("Error message")
@@ -125,7 +116,6 @@ class TestNonBlankErrorMsg:
             obj.msg = []
 
     def test_strips_whitespace_from_valid_input(self):
-        """Value is automatically stripped before storage."""
 
         class MyClass:
             msg = NonBlankErrorMsg("Error message")
@@ -136,7 +126,6 @@ class TestNonBlankErrorMsg:
         assert obj.msg != "  Hello World  "
 
     def test_deletion_raises_attribute_error(self):
-        """Attempting to delete the attribute raises AttributeError."""
 
         class MyClass:
             msg = NonBlankErrorMsg("Error message")
@@ -148,7 +137,6 @@ class TestNonBlankErrorMsg:
             del obj.msg
 
     def test_multiple_instances_work_independently(self):
-        """Different instances store and validate their own values."""
 
         class MyClass:
             error1 = NonBlankErrorMsg("First error")

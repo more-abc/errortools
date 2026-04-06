@@ -11,39 +11,31 @@ from _errortools.raises import raises, assert_raises, raises_all, reraise
 
 class TestRaises:
     def test_raises_single_error_single_msg(self):
-        """Should raise the first (error, msg) pair."""
         with pytest.raises(ValueError, match="bad value"):
             raises([ValueError], ["bad value"])
 
     def test_raises_first_cartesian_pair(self):
-        """Cartesian product: first pair is (errors[0], msgs[0])."""
         with pytest.raises(ValueError, match="msg1"):
             raises([ValueError, TypeError], ["msg1", "msg2"])
 
     def test_raises_empty_errors(self):
-        """Empty errors list → no raise."""
         raises([], ["some message"])  # should not raise
 
     def test_raises_empty_msgs(self):
-        """Empty msgs list → no raise."""
         raises([ValueError], [])  # should not raise
 
     def test_raises_both_empty(self):
-        """Both empty → no raise."""
         raises([], [])  # should not raise
 
     def test_raises_type_error_on_non_subclass(self):
-        """Non-Exception subclass should raise TypeError."""
         with pytest.raises(TypeError):
             raises([ValueError], ["msg"], baseerror=LookupError)
 
     def test_raises_baseerror_respected_subclass(self):
-        """Subclass of baseerror is valid."""
         with pytest.raises(KeyError):
             raises([KeyError], ["missing"], baseerror=LookupError)
 
     def test_raises_with_custom_exception(self):
-        """Custom exception classes should work."""
 
         class MyError(Exception):
             pass
@@ -52,7 +44,6 @@ class TestRaises:
             raises([MyError], ["custom"])
 
     def test_raises_multiple_messages_first_wins(self):
-        """When multiple messages, only the first pair is raised."""
         with pytest.raises(ValueError, match="first"):
             raises([ValueError], ["first", "second", "third"])
 
@@ -68,27 +59,22 @@ class TestAssertRaises:
         assert isinstance(exc, ValueError)
 
     def test_returns_exception_instance(self):
-        """Return value should be the caught exception."""
         exc = assert_raises(lambda: 1 / 0, [ZeroDivisionError])
         assert isinstance(exc, ZeroDivisionError)
 
     def test_raises_assertion_when_no_exception(self):
-        """If func does not raise, AssertionError is raised."""
         with pytest.raises(AssertionError):
             assert_raises(lambda: 42, [ValueError])
 
     def test_raises_assertion_on_wrong_exception_type(self):
-        """If func raises but the wrong type, AssertionError is raised."""
         with pytest.raises(AssertionError):
             assert_raises(lambda: 1 / 0, [ValueError])
 
     def test_accepts_multiple_expected_types(self):
-        """Multiple expected types: any match is OK."""
         exc = assert_raises(int, [ValueError, TypeError], "bad")
         assert isinstance(exc, ValueError)
 
     def test_forwards_args_and_kwargs(self):
-        """Positional and keyword args must be forwarded to func."""
 
         def f(a, b, c=None):
             if c is None:
@@ -98,7 +84,6 @@ class TestAssertRaises:
         assert isinstance(exc, RuntimeError)
 
     def test_exc_message_in_assertion(self):
-        """AssertionError message should mention expected types."""
         with pytest.raises(AssertionError, match="ValueError"):
             assert_raises(lambda: 1 / 0, [ValueError])
 
@@ -142,7 +127,6 @@ class TestRaisesAll:
         assert exc_info.value.message == "multiple errors"
 
     def test_sub_exception_types(self):
-        """Each raised sub-exception should match its declared type."""
         with pytest.raises(ExceptionGroup) as exc_info:
             raises_all([ValueError, TypeError], ["msg"])
         types = {type(e) for e in exc_info.value.exceptions}
@@ -168,25 +152,21 @@ class TestReraise:
         assert isinstance(exc_info.value.__cause__, KeyError)
 
     def test_unrelated_exception_propagates(self):
-        """Exceptions not in 'catch' should propagate unchanged."""
         with pytest.raises(RuntimeError):
             with reraise(KeyError, ValueError):
                 raise RuntimeError("unrelated")
 
     def test_catch_tuple_of_types(self):
-        """catch can be a tuple of exception types."""
         with pytest.raises(ValueError):
             with reraise((KeyError, IndexError), ValueError):
                 raise IndexError("out of range")
 
     def test_message_preserved(self):
-        """The message of the original exception is preserved."""
         with pytest.raises(ValueError, match="orig-msg"):
             with reraise(RuntimeError, ValueError):
                 raise RuntimeError("orig-msg")
 
     def test_no_exception_passes_through(self):
-        """No exception inside block → reraise does nothing."""
         with reraise(KeyError, ValueError):
             x = 1 + 1  # should not raise
         assert x == 2

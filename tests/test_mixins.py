@@ -216,14 +216,12 @@ class TestErrorSetAttrMixin:
 
 class TestErrorAttrableABC:
     def test_mixin_classes_registered(self):
-        """All four mixin classes should be virtual subclasses."""
         assert issubclass(ErrorAttrMixin, ErrorAttrable)
         assert issubclass(ErrorAttrDeletionMixin, ErrorAttrable)
         assert issubclass(ErrorAttrCheckMixin, ErrorAttrable)
         assert issubclass(ErrorSetAttrMixin, ErrorAttrable)
 
     def test_subclasshook_recognises_errorattr(self):
-        """Any class with __errorattr__ is recognised as ErrorAttrable."""
 
         class HasErrorAttr:
             def __errorattr__(self, name):
@@ -232,7 +230,6 @@ class TestErrorAttrableABC:
         assert issubclass(HasErrorAttr, ErrorAttrable)
 
     def test_subclasshook_rejects_without_errorattr(self):
-        """Classes without __errorattr__ are NOT ErrorAttrable."""
 
         class NoErrorAttr:
             pass
@@ -240,12 +237,10 @@ class TestErrorAttrableABC:
         assert not issubclass(NoErrorAttr, ErrorAttrable)
 
     def test_cannot_instantiate_abstract_base(self):
-        """ErrorAttrable is abstract and cannot be instantiated directly."""
         with pytest.raises(TypeError):
             ErrorAttrable()  # type: ignore
 
     def test_concrete_implementation(self):
-        """A concrete subclass that implements __errorattr__ can be instantiated."""
 
         class Concrete(ErrorAttrable):
             def __errorattr__(self, name):

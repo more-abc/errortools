@@ -108,7 +108,6 @@ class TestGroupErrors:
 
 class TestBaseGroupAbstract:
     def test_base_group_has_abstract_methods(self):
-        """BaseGroup must declare all four abstract methods."""
         abstract = BaseGroup.__abstractmethods__
         assert "errors" in abstract
         assert "collect" in abstract
@@ -116,12 +115,10 @@ class TestBaseGroupAbstract:
         assert "raise_group" in abstract
 
     def test_concrete_subclass_is_valid(self):
-        """GroupErrors fully implements the abstract interface."""
         g = GroupErrors()
         assert isinstance(g, BaseGroup)
 
     def test_group_errors_satisfies_abstract_interface(self):
-        """GroupErrors must implement every abstract method of BaseGroup."""
         abstract = BaseGroup.__abstractmethods__
         for method in abstract:
             assert hasattr(GroupErrors, method), f"GroupErrors missing: {method}"

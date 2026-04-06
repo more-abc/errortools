@@ -3,8 +3,6 @@
 from __future__ import annotations
 
 import io
-import os
-import sys
 import tempfile
 import threading
 from pathlib import Path
@@ -29,7 +27,6 @@ from _errortools.logging import (
 
 
 def _make_logger(*args, **kwargs) -> tuple[BaseLogger, io.StringIO]:
-    """Return a fresh BaseLogger with a TRACE-level plain-text StringIO sink."""
     buf = io.StringIO()
     lg = BaseLogger(*args, **kwargs)
     lg.add(buf, level=Level.TRACE, colorize=False)

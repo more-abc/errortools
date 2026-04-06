@@ -30,7 +30,6 @@ from _errortools.classes.errorcodes import (
 
 
 class TestBaseTypeAliases:
-    """Validate base exception type aliases."""
 
     def test_pure_base_exception_type(self):
         assert PureBaseExceptionType is PureBaseException
@@ -56,7 +55,6 @@ class TestSimpleSemanticAliases:
 
 
 class TestUnionTypeAliases:
-    """Validate union type alias composition."""
 
     def test_any_error_code_union(self):
         assert get_origin(AnyErrorCode) is Union
@@ -80,7 +78,6 @@ class TestUnionTypeAliases:
 
 
 class TestExceptionTypeAlias:
-    """Validate the generic exception class type alias."""
 
     def test_exception_type(self):
         assert get_origin(ExceptionType) is type
@@ -88,7 +85,6 @@ class TestExceptionTypeAlias:
 
 
 class TestTracebackAndFrameTypes:
-    """Validate TracebackType and FrameType are the correct runtime types."""
 
     def test_traceback_type_matches_real_traceback(self):
         try:
@@ -116,8 +112,6 @@ class TestTracebackAndFrameTypes:
 
 
 class TestModuleExports:
-    """Validate __all__ exports are complete and correct."""
-
     def test_all_exports_exist(self):
         import _errortools.typing as mod
 
@@ -144,7 +138,6 @@ class TestModuleExports:
 
 
 def test_all_errors_can_be_raised():
-    """Verify all error types can be properly raised and caught."""
     for exc_cls in get_args(AnyErrorCode):
         with pytest.raises(exc_cls):
             raise exc_cls("Test error")
