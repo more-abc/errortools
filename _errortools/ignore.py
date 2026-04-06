@@ -74,14 +74,11 @@ class fast_ignore:
     def __exit__(self, typ: type[BaseException] | None, _, __) -> bool:
         if typ is None:
             return False
-        excs = self._excs
-        if len(excs) == 1:
-            return typ is excs[0] or issubclass(typ, excs[0])
-        return issubclass(typ, excs)
+        return typ in self._excs
 
 
 @contextmanager
-def ignore_subclass(base: type[Exception]) -> Iterator[None]:
+def ignore_subclass(base: type[BaseException]) -> Iterator[None]:
     """Context manager that suppresses any exception whose type is a subclass of *base*.
 
     Args:
@@ -99,7 +96,7 @@ def ignore_subclass(base: type[Exception]) -> Iterator[None]:
     # derived from X" — rather than listing concrete types.
     try:
         yield
-    except Exception as exc:
+    except BaseException as exc:
         if not issubclass(type(exc), base):
             raise
 

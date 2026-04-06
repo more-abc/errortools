@@ -55,7 +55,7 @@ class ErrorIgnoreWrapper(Generic[_T]):
         if exc_type is None:
             return False
 
-        if not issubclass(exc_type, self._excs):
+        if exc_type not in self._excs:
             return False
 
         self._info.name = exc_type.__name__

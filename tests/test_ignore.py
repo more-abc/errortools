@@ -32,6 +32,11 @@ class TestIgnore:
             with ignore(KeyError):
                 raise RuntimeError("not suppressed")
 
+    def test_subclass_not_suppressed(self):
+        with pytest.raises(KeyError):
+            with ignore(LookupError):
+                raise KeyError("subclass should not be suppressed")
+
     def test_no_exception_passes_through(self):
         result = []
         with ignore(KeyError):
@@ -137,6 +142,10 @@ class TestIgnoreSubclass:
         with ignore_subclass(LookupError):
             raise DeepError("deep")
 
+    def test_suppresses_base_exception_subclass(self):
+        with ignore_subclass(BaseException):
+            raise KeyboardInterrupt
+
 
 # =============================================================================
 # ignore_warns()
@@ -219,9 +228,10 @@ class TestFastIgnore:
             with fast_ignore(int):  # type: ignore
                 pass
 
-    def test_fast_ignore_subclass_suppressed_when_parent_listed(self):
-        with fast_ignore(LookupError):
-            raise KeyError("KeyError ⊆ LookupError")
+    def test_fast_ignore_subclass_not_suppressed(self):
+        with pytest.raises(KeyError):
+            with fast_ignore(LookupError):
+                raise KeyError("KeyError ⊆ LookupError, but not suppressed")
 
     def test_fast_ignore_execution_continues_after_suppression(self):
         sentinel = []
