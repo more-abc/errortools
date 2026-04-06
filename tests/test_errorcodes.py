@@ -262,7 +262,7 @@ class TestPredefinedErrorCodes:
             ConfigurationError,
         ],
     )
-    def test_is_base_subclass(self, cls):
+    def test__is_base_subclass(self, cls):
         assert issubclass(cls, BaseErrorCodes)
         assert issubclass(cls, Exception)
 

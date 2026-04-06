@@ -9,6 +9,7 @@ from _errortools.ignore import (
     ignore_warns,
     fast_ignore,
     timeout,
+    retry,
 )
 from _errortools.classes.group import BaseGroup, GroupErrors
 from _errortools.cache import error_cache
@@ -90,6 +91,7 @@ __all__ = [
     "ignore_subclass",
     "ignore_warns",
     "timeout",
+    "retry",
     "error_cache",
     "TracebackType",
     "FrameType",

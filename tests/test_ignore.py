@@ -1,4 +1,4 @@
-"""Tests for _errortools/ignore.py — ignore, ignore_subclass, ignore_warns, timeout."""
+"""Tests for _errortools/ignore.py — ignore, ignore_subclass, ignore_warns, timeout, retry."""
 
 import asyncio
 import warnings
@@ -10,6 +10,7 @@ from _errortools.ignore import (
     ignore_warns,
     fast_ignore,
     timeout,
+    retry,
 )
 from _errortools.wrappers.ignore import IgnoredError, ErrorIgnoreWrapper
 
@@ -312,3 +313,100 @@ class TestTimeout:
             return "value"
 
         assert asyncio.run(coro()) == "value"
+
+
+# =============================================================================
+# retry()
+# =============================================================================
+
+
+class TestRetry:
+    # --- init validation ---
+
+    def test_negative_times_raises_value_error(self):
+        with pytest.raises(ValueError):
+            retry(times=-1, on=ValueError)
+
+    def test_non_exception_type_raises_type_error(self):
+        with pytest.raises(TypeError):
+            retry(times=2, on=int)  # type: ignore
+
+    # --- decorator (sync) ---
+
+    def test_decorator_succeeds_on_first_attempt(self):
+        @retry(times=3, on=ValueError)
+        def fn():
+            return "ok"
+
+        assert fn() == "ok"
+
+    def test_decorator_retries_until_success(self):
+        state = {"n": 0}
+
+        @retry(times=3, on=ValueError)
+        def fn():
+            state["n"] += 1
+            if state["n"] < 3:
+                raise ValueError("retry me")
+            return state["n"]
+
+        assert fn() == 3
+
+    def test_decorator_reraises_after_exhaustion(self):
+        @retry(times=2, on=ValueError)
+        def fn():
+            raise ValueError("always fails")
+
+        with pytest.raises(ValueError, match="always fails"):
+            fn()
+
+    def test_decorator_unrelated_exception_propagates(self):
+        @retry(times=5, on=ValueError)
+        def fn():
+            raise RuntimeError("unrelated")
+
+        with pytest.raises(RuntimeError):
+            fn()
+
+    def test_decorator_preserves_return_value(self):
+        @retry(times=2, on=ValueError)
+        def fn():
+            return 42
+
+        assert fn() == 42
+
+    def test_decorator_preserves_function_name(self):
+        @retry(times=1, on=ValueError)
+        def my_func():
+            pass
+
+        assert my_func.__name__ == "my_func"
+
+    # --- decorator (async) ---
+
+    def test_async_decorator_succeeds(self):
+        @retry(times=3, on=ValueError)
+        async def fn():
+            return "async ok"
+
+        assert asyncio.run(fn()) == "async ok"
+
+    def test_async_decorator_retries_until_success(self):
+        state = {"n": 0}
+
+        @retry(times=3, on=ValueError)
+        async def fn():
+            state["n"] += 1
+            if state["n"] < 3:
+                raise ValueError("retry")
+            return state["n"]
+
+        assert asyncio.run(fn()) == 3
+
+    def test_async_decorator_reraises_after_exhaustion(self):
+        @retry(times=2, on=ValueError)
+        async def fn():
+            raise ValueError("async fail")
+
+        with pytest.raises(ValueError, match="async fail"):
+            asyncio.run(fn())

@@ -1,12 +1,29 @@
 """Utilities for raising exceptions."""
 
 from contextlib import contextmanager
+from itertools import product
 from typing import Callable, Any
 from collections.abc import Iterable, Iterator
 
-from .tools._warps import _warp_list_product, is_base_subclass
-
 __all__ = ["raises", "assert_raises", "raises_all", "reraise"]
+
+
+def _warp_list_product(
+    errors: Iterable[type[Exception]],
+    msgs: Iterable[str],
+) -> list[tuple[type[Exception], str]]:
+    # Return the Cartesian product of
+    # *errors* x *msgs* as a list of pairs.
+    return list(product(errors, msgs))
+
+
+def _is_base_subclass(
+    *,
+    error: type[Exception],
+    baseerror: type[Exception] = Exception,
+) -> bool:
+    # Return whether *error* is a subclass of *baseerror*.
+    return issubclass(error, baseerror)
 
 
 def raises(
@@ -39,7 +56,7 @@ def raises(
     if not pairs:
         return
     for error, _ in pairs:
-        if not is_base_subclass(error=error, baseerror=baseerror):
+        if not _is_base_subclass(error=error, baseerror=baseerror):
             raise TypeError(f"{error!r} is not a subclass of {baseerror.__name__}")
     error, msg = pairs[0]
     raise error(msg)
@@ -126,7 +143,7 @@ def raises_all(
     if not pairs:
         return
     for error, _ in pairs:
-        if not is_base_subclass(error=error, baseerror=baseerror):
+        if not _is_base_subclass(error=error, baseerror=baseerror):
             raise TypeError(f"{error!r} is not a subclass of {baseerror.__name__}")
     raise ExceptionGroup(group_msg, [error(msg) for error, msg in pairs])
 

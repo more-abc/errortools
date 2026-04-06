@@ -3,7 +3,7 @@ A lightweight Python exception handling utility library.
 
 ## Features
 - **Raise Exceptions**: `raises()`, `raises_all()`, `reraise()` — batch raising and exception conversion
-- **Catch & Suppress**: `ignore()`, `ignore_subclass()`, `ignore_warns()`, `fast_ignore()`, `super_fast_ignore()`, `timeout()` — graceful suppression of exceptions and warnings
+- **Catch & Suppress**: `ignore()`, `ignore_subclass()`, `ignore_warns()`, `fast_ignore()`, `super_fast_ignore()`, `timeout()`, `retry()` — graceful suppression of exceptions and warnings, with automatic retry
 - **Exception Caching**: `error_cache` — cache exceptions raised by functions (similar to `lru_cache`)
 - **Custom Exceptions**: `PureBaseException`, `ContextException`, `BaseErrorCodes`, `BaseWarning` — structured exception classes with error codes, trace IDs, and context
 - **Attribute Error Mixin**: Customize error behavior for attribute access, assignment, and deletion
@@ -22,7 +22,7 @@ pip install errortools
 ```python
 import warnings
 from errortools import (
-    ignore, fast_ignore, ignore_subclass, ignore_warns, timeout,
+    ignore, fast_ignore, ignore_subclass, ignore_warns, timeout, retry,
     reraise, raises, raises_all, assert_raises,
     error_cache,
     PureBaseException, ContextException, BaseErrorCodes, BaseWarning,
@@ -71,14 +71,29 @@ async def fetch_data(url: str) -> bytes:
 
 # asyncio.TimeoutError raised automatically if it exceeds 5 s
 
-# ── 6. reraise ── convert exception types on the fly ─────────────────────────
+# ── 6. retry ── automatically retry on failure ───────────────────────────────
+@retry(times=3, on=ConnectionError, delay=1.0)
+def connect(host: str) -> None:
+    ...                               # retried up to 3 times on ConnectionError
+
+# works with async functions too
+@retry(times=5, on=TimeoutError, delay=0.5)
+async def fetch(url: str) -> bytes:
+    ...
+
+# multiple exception types
+@retry(times=2, on=(ValueError, KeyError))
+def parse(data: dict) -> str:
+    return data["key"]
+
+# ── 7. reraise ── convert exception types on the fly ─────────────────────────
 with reraise(KeyError, ValueError):
     raise KeyError("missing key")      # → ValueError: 'missing key'
 
 with reraise((KeyError, IndexError), RuntimeError):
     _ = [][99]                         # → RuntimeError: list index out of range
 
-# ── 7. raises / raises_all ── batch raise ────────────────────────────────────
+# ── 8. raises / raises_all ── batch raise ────────────────────────────────────
 raises([ValueError], ["bad input"])    # → ValueError: bad input
 
 raises_all(
@@ -86,11 +101,11 @@ raises_all(
     ["bad input"],
 )                                      # → ExceptionGroup (2 sub-exceptions)
 
-# ── 8. assert_raises ── assert a callable raises ─────────────────────────────
+# ── 9. assert_raises ── assert a callable raises ─────────────────────────────
 exc = assert_raises(int, [ValueError], "not-a-number")
 print(exc)   # invalid literal for int() with base 10: 'not-a-number'
 
-# ── 9. error_cache ── cache exceptions by call arguments ─────────────────────
+# ── 10. error_cache ── cache exceptions by call arguments ─────────────────────
 @error_cache(maxsize=64)
 def load(user_id: int) -> dict:
     if user_id < 0:
@@ -103,7 +118,7 @@ with ignore(ValueError):
 print(load.cache_info())  # CacheInfo(hits=0, misses=1, maxsize=64, currsize=1)
 load.clear_cache()
 
-# ── 10. Custom exceptions — three layers ──────────────────────────────────────
+# ── 11. Custom exceptions — three layers ──────────────────────────────────────
 
 # Layer 1: PureBaseException — code + detail only
 class AppError(PureBaseException):
@@ -139,7 +154,7 @@ raise BaseErrorCodes.runtime_failure("crash")             # RuntimeFailure     [
 raise BaseErrorCodes.timeout_failure()                    # TimeoutFailure     [4002]
 raise BaseErrorCodes.configuration_error("missing key")   # ConfigurationError [5001]
 
-# ── 11. BaseWarning ── structured warnings with factory methods ───────────────
+# ── 12. BaseWarning ── structured warnings with factory methods ───────────────
 class ExperimentalWarning(BaseWarning):
     default_detail = "This feature is experimental."
 

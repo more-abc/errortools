@@ -1,10 +1,13 @@
 """Utilities for silently suppressing exceptions and warnings."""
 
+from __future__ import annotations
+
 from collections.abc import Iterator, Callable
 from contextlib import contextmanager
 from functools import wraps
 import asyncio
 import inspect
+import time
 import warnings
 
 from .wrappers.ignore import ErrorIgnoreWrapper
@@ -15,7 +18,9 @@ __all__ = [
     "ignore_subclass",
     "ignore_warns",
     "timeout",
+    "retry",
 ]
+
 
 # A Context Manager? Maybe it is...
 
@@ -153,3 +158,87 @@ def timeout(seconds: float) -> Callable:
         return wrapper
 
     return decorator
+
+
+# NOTE: Exceptions thrown inside the body of a Python `for`
+# loop are not propagated back to the iterator. As a result,
+# the pattern `for _ in retry(): ...` cannot be implemented
+# in Python. Therefore, `retry` is designed as a pure decorator.
+class retry:
+    """Decorator that retries a callable when specified exceptions are raised.
+
+    Supports both **sync** and **async** functions.
+
+    Args:
+        times: Maximum number of *retries* (total attempts = times + 1).
+        on: Exception type (or tuple of types) that triggers a retry.
+            Any other exception propagates immediately.
+        delay: Seconds to wait between retries.  Defaults to ``0`` (no wait).
+
+    Raises:
+        ValueError: If *times* is negative.
+        TypeError: If any type in *on* is not an ``Exception`` subclass.
+        The last exception: Re-raised when all retry attempts are exhausted.
+
+    Example:
+        >>> @retry(times=2, on=ValueError)
+        ... def unstable():
+        ...     raise ValueError("oops")
+        >>> unstable()
+        Traceback (most recent call last):
+            ...
+        ValueError: oops
+    """
+
+    def __init__(
+        self,
+        times: int,
+        on: type[Exception] | tuple[type[Exception], ...] = Exception,
+        delay: float = 0,
+    ) -> None:
+        if times < 0:
+            raise ValueError(f"times must be a non-negative integer, got {times!r}")
+
+        exc_types = on if isinstance(on, tuple) else (on,)
+        for t in exc_types:
+            if not isinstance(t, type) or not issubclass(t, Exception):
+                raise TypeError(f"Expected Exception subclass, got {t!r}")
+
+        self._times = times
+        self._on = exc_types
+        self._delay = delay
+
+    # ------------------------------------------------------------------
+    # Decorator protocol
+    # ------------------------------------------------------------------
+
+    def __call__(self, func: Callable) -> Callable:
+        if inspect.iscoroutinefunction(func):
+
+            @wraps(func)
+            async def async_wrapper(*args, **kwargs):
+                last_exc: Exception | None = None
+                for attempt in range(self._times + 1):
+                    try:
+                        return await func(*args, **kwargs)
+                    except self._on as exc:
+                        last_exc = exc
+                        if attempt < self._times and self._delay:
+                            await asyncio.sleep(self._delay)
+                raise last_exc
+
+            return async_wrapper
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            last_exc: Exception | None = None
+            for attempt in range(self._times + 1):
+                try:
+                    return func(*args, **kwargs)
+                except self._on as exc:
+                    last_exc = exc
+                    if attempt < self._times and self._delay:
+                        time.sleep(self._delay)
+            raise last_exc
+
+        return wrapper

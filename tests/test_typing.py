@@ -132,7 +132,7 @@ class TestModuleExports:
             "RuntimeError_",
             "ExceptionType",
             "TracebackType",
-            "FrameType"
+            "FrameType",
         }
         assert set(mod.__all__) == expected
 
