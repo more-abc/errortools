@@ -12,6 +12,7 @@ from .metadata import (
     __url__,
 )
 from .version import __version__
+from tests.run_tests import run_tests
 
 
 def parse_args(args: list[str] | None = None) -> argparse.Namespace:
@@ -43,6 +44,11 @@ def parse_args(args: list[str] | None = None) -> argparse.Namespace:
         "-i", "--info", action="store_true", help="Show all package information"
     )
 
+    parser.add_argument(
+        "--run-tests",
+        action="store_true",
+        help="Run tests for errortools module. (Using pytest)",
+    )
     return parser.parse_args(args)
 
 
@@ -78,8 +84,11 @@ def main() -> None:
     elif args.url:
         print(f"URL: {__url__}")
 
+    elif args.run_tests:
+        run_tests()
+
     elif args.info:
         _print_info()
 
     else:
-        _print_info()
+        parse_args(["--help"])
