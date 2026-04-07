@@ -24,12 +24,10 @@ jobs:
           issue-number: ${{ github.event.issue.number || github.event.pull_request.number }}
           body: |
             Thanks for opening this issue/PR! 😊
-            
-            - Please make sure you have run:
-              - `pytest`
-              - `mypy .`
-              - `flake8 .`
-              - `black .`
+
+            We really appreciate your contribution — your effort helps make the project better. ✨
+
+            Feel free to add any additional details, screenshots, or context here to help us review your work smoothly.
 
   merged-comment:
     runs-on: ubuntu-latest
