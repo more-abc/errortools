@@ -163,7 +163,7 @@ class BaseLogger:
     # Context binding
     # ------------------------------------------------------------------
 
-    def bind(self, **kwargs: Any) -> "BaseLogger":
+    def bind(self, **kwargs: Any) -> BaseLogger:
         """Return a **new** logger that carries extra context fields.
 
         The original logger is unmodified.  Bound fields appear in
@@ -372,7 +372,7 @@ class _CatchContext:
         self._message = message
 
     # Context manager protocol
-    def __enter__(self) -> "_CatchContext":
+    def __enter__(self) -> _CatchContext:
         return self
 
     def __exit__(
