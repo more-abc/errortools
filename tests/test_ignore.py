@@ -13,7 +13,10 @@ from _errortools.ignore import (
     retry,
 )
 from _errortools.wrappers.ignore import IgnoredError, ErrorIgnoreWrapper
+from . import HAS_PYTEST
 
+if not HAS_PYTEST:
+    print("pytest is required to run these tests, skip run test_ignore.py")
 # =============================================================================
 # ignore() (ErrorIgnoreWrapper)
 # =============================================================================

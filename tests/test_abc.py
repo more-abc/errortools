@@ -16,8 +16,12 @@ import configparser
 
 # Import the ABC classes to test
 from _errortools.classes.abc import ErrorCodeable, Warnable, Raiseable, Error
+from . import HAS_PYTEST
 
 # NOTE: Tests for `ErrorAttrable` was in `test_mixin.py`.
+
+if not HAS_PYTEST:
+    print("pytest is required to run these tests, skip run test_abc.py")
 
 # =============================================================================
 # ErrorCodeable ABC Tests

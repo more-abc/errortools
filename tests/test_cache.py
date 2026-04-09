@@ -3,6 +3,10 @@
 import pytest
 
 from _errortools.cache import error_cache
+from . import HAS_PYTEST
+
+if not HAS_PYTEST:
+    print("pytest is required to run these tests, skip run test_cache.py")
 
 # =============================================================================
 # error_cache — basic decoration patterns

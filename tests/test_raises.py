@@ -3,7 +3,10 @@
 import pytest
 
 from _errortools.raises import raises, assert_raises, raises_all, reraise
+from . import HAS_PYTEST
 
+if not HAS_PYTEST:
+    print("pytest is required to run these teststests/test_raises.py")
 # =============================================================================
 # raises()
 # =============================================================================

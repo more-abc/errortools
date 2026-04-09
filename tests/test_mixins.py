@@ -18,7 +18,10 @@ from _errortools.methods.errorsetattr import ErrorSetAttrMixin
 # NOTE: To maintain compatibility, I won't
 # move its test code to a separate file for now.
 from _errortools.classes.abc import ErrorAttrable
+from . import HAS_PYTEST
 
+if not HAS_PYTEST:
+    print("pytest is required to run these tests, skip run test_mixins.py")
 # =============================================================================
 # ErrorAttrMixin
 # =============================================================================

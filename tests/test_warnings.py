@@ -10,7 +10,10 @@ from _errortools.classes.warn import (
     RuntimeBehaviourWarning,
     ConfigurationWarning,
 )
+from . import HAS_PYTEST
 
+if not HAS_PYTEST:
+    print("pytest is required to run these teststests/test_warnings.py")
 # =============================================================================
 # BaseWarning — basic behaviour
 # =============================================================================
