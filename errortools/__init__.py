@@ -79,6 +79,7 @@ from _errortools.metadata import (
 )
 import _errortools.future as future
 import _errortools.logging as logging
+import _errortools.partial as partial
 
 __all__ = [
     # functions
@@ -151,4 +152,5 @@ __all__ = [
     # submodules
     "future",
     "logging",
+    "partial",
 ]
