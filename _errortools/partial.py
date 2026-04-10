@@ -4,6 +4,12 @@ from functools import partial
 
 from .ignore import ignore, ignore_subclass, ignore_warns, fast_ignore, timeout, retry
 from .cache import error_cache
+from .const import (
+    LARGE_ERROR_CACHE_SIZE,
+    SMALL_ERROR_CACHE_SIZE,
+    DEFAULT_ERROR_CACHE_SIZE,
+    UNLIMITED_ERROR_CACHE,
+)
 
 # ------------------------------------------------------------------
 # ignore
@@ -98,7 +104,7 @@ retry_5_delay_1s = partial(retry, times=5, delay=1)
 # error_cache
 # ------------------------------------------------------------------
 
-unlimited_error_cache = partial(error_cache, maxsize=None)
-lru_error_cache = partial(error_cache, maxsize=128)
-small_error_cache = partial(error_cache, maxsize=64)
-large_error_cache = partial(error_cache, maxsize=1024)
+unlimited_error_cache = partial(error_cache, maxsize=UNLIMITED_ERROR_CACHE)
+lru_error_cache = partial(error_cache, maxsize=DEFAULT_ERROR_CACHE_SIZE)
+small_error_cache = partial(error_cache, maxsize=SMALL_ERROR_CACHE_SIZE)
+large_error_cache = partial(error_cache, maxsize=LARGE_ERROR_CACHE_SIZE)
