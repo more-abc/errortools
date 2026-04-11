@@ -33,20 +33,59 @@ __all__ = [
 # It captures the full exception traceback and metadata, which results in higher overhead.
 # Use it for error handling and diagnostics, not for tight loops.
 ignore = ErrorIgnoreWrapper
-"""Context manager that silently suppresses the given exception types.
+"""Context manager that suppresses specified exceptions and captures metadata.
 
-    It captures the full exception traceback and metadata, which results in higher overhead.
-    Use it for error handling and diagnostics, not for tight loops. (Use `fast_ignore` faster)
+    Catches and suppresses the given exception types within a ``with`` block,
+    while recording detailed information about any suppressed exception.
 
     Args:
         *excs: One or more exception types to suppress.
 
+    Returns:
+        An ``IgnoredError`` instance (via ``as``) that provides access to
+        exception metadata after the block executes.
+
+    Attributes on the returned ``IgnoredError``:
+        be_ignore (bool):
+            ``True`` if an exception was suppressed during the block,
+            ``False`` otherwise.
+
+        name (str | None):
+            The class name of the suppressed exception
+            (e.g. ``'KeyError'``, ``'ValueError'``).
+            ``None`` if no exception occurred.
+
+        count (int):
+            Number of exceptions suppressed in this context block.
+            Typically 1 unless the context manager is reused.
+
+        exception (Exception | None):
+            The original exception instance that was caught and suppressed.
+            ``None`` if no exception occurred.
+
+        traceback (str | None):
+            Formatted traceback string showing where the suppressed exception
+            occurred.  Useful for debugging.  ``None`` if no exception occurred.
+
     Example:
-        >>> with ignore(KeyError) as error:
-        ...     d = {}
-        ...     _ = d["missing"]
-        >>> print(error.be_ignore)  # True
-"""
+        >>> with ignore(KeyError, ValueError) as err:
+        ...     data = {}["missing_key"]
+        ...
+        >>> print(err.be_ignore)    # True
+        >>> print(err.name)          # 'KeyError'
+        >>> print(err.count)         # 1
+        >>> print(err.exception)     # KeyError('missing_key')
+        >>> print(err.traceback)     # Formatted traceback string
+
+    Note:
+        Use :func:`fast_ignore` or :func:`super_fast_ignore` for zero-overhead
+        suppression when metadata collection is not needed.
+
+    See Also:
+        - :func:`fast_ignore` — minimal overhead, no metadata
+        - :func:`ignore_subclass` — suppress exceptions including subclasses
+        - :func:`retry` — automatic retry on exception
+    """
 
 
 class fast_ignore:

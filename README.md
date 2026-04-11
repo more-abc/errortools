@@ -39,7 +39,17 @@ assert err.count == 1         # how many times suppressed
 assert err.exception          # the original KeyError instance
 assert err.traceback          # full formatted traceback string
 
-# ignore as a decorator
+**Attributes on the returned object:**
+
+| Attribute | Type | Description |
+|---|---|---|
+| `be_ignore` | `bool` | `True` if an exception was suppressed |
+| `name` | `str \| None` | Class name of the suppressed exception |
+| `count` | `int` | Number of suppressed exceptions |
+| `exception` | `Exception \| None` | The original exception instance |
+| `traceback` | `str \| None` | Formatted traceback string for debugging |
+
+# ── ignore as a decorator ──
 @ignore(ValueError, TypeError)
 def parse(x: str) -> int:
     return int(x)
