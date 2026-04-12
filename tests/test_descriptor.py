@@ -8,6 +8,8 @@ from . import HAS_PYTEST
 
 if not HAS_PYTEST:
     print("pytest is required to run these tests, skip run test_descriptor.py")
+    exit(0)
+
 # =============================================================================
 # ErrorMsg Descriptor
 # =============================================================================

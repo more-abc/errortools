@@ -31,6 +31,7 @@ from . import HAS_PYTEST
 
 if not HAS_PYTEST:
     print("pytest is required to run these teststests/test_typing.py")
+    exit(0)
 
 
 class TestBaseTypeAliases:
