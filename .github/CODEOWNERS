@@ -1,20 +1,20 @@
-*  @core-dev-team
-/tests/  @aiwonderland
-/tests/run_tests.py  @aiwonderland @qorexdev
-/_errortools/ @core-dev-team
-/errortools/  @core-dev-team
-/.github/  @core-dev-team
+/tests/                      @aiwonderland
+/tests/run_tests.py          @aiwonderland @qorexdev
+/_errortools/                @core-dev-team
+/_errortools/ignore.py       @core-dev-team @aiwonderland @vgauraha62
+/errortools/                 @core-dev-team
+/.github/                    @core-dev-team @aiwonderland
 
-requirements-dev.txt  @core-dev-team
-README.md  @core-dev-team
-setup.py  @core-dev-team
+requirements-dev.txt         @core-dev-team
+README.md                    @core-dev-team
+setup.py                     @core-dev-team
 
-.black  @aiwonderland
-.editorconfig  @aiwonderland
-.flake8  @aiwonderland
-.gitignore  @core-dev-team
-pytest.ini  @aiwonderland
-mypy.ini  @aiwonderland
+.black                       @aiwonderland @core-dev-team
+.editorconfig                @aiwonderland @core-dev-team
+.flake8                      @aiwonderland @core-dev-team
+.gitignore                   @core-dev-team
+pytest.ini                   @aiwonderland @core-dev-team
+mypy.ini                     @aiwonderland @core-dev-team
 
-AUTHORS.txt  @*
-LICENSE.txt  @aiwonderland
+AUTHORS.txt                  @core-dev-team @aiwonderland 
+LICENSE.txt                  @core-dev-team @aiwonderland
