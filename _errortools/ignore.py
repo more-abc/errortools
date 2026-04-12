@@ -67,7 +67,8 @@ ignore = ErrorIgnoreWrapper
             Formatted traceback string showing where the suppressed exception
             occurred.  Useful for debugging.  ``None`` if no exception occurred.
 
-    Example:
+    Examples:
+
         >>> with ignore(KeyError, ValueError) as err:
         ...     data = {}["missing_key"]
         ...
@@ -78,13 +79,13 @@ ignore = ErrorIgnoreWrapper
         >>> print(err.traceback)     # Formatted traceback string
 
     Note:
-        Use :func:`fast_ignore` or :func:`super_fast_ignore` for zero-overhead
+        Use  `fast_ignore` or  `super_fast_ignore`(in `future` submodule) for zero-overhead
         suppression when metadata collection is not needed.
 
     See Also:
-        - :func:`fast_ignore` — minimal overhead, no metadata
-        - :func:`ignore_subclass` — suppress exceptions including subclasses
-        - :func:`retry` — automatic retry on exception
+        -  `fast_ignore` — minimal overhead, no metadata
+        -  `ignore_subclass` — suppress exceptions including subclasses
+        -  `retry` — automatic retry on exception
     """
 
 
@@ -98,7 +99,7 @@ class fast_ignore:
     Args:
         *excs: One or more exception types to suppress.
 
-    Example:
+    Examples:
         >>> with fast_ignore(KeyError):
         ...     d = {}
         ...     _ = d["missing"]

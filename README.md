@@ -17,7 +17,7 @@ pip install errortools
 
 ---
 
-## Example
+## Examples
 
 ```python
 import warnings
@@ -38,6 +38,7 @@ assert err.name == "KeyError" # exception class name
 assert err.count == 1         # how many times suppressed
 assert err.exception          # the original KeyError instance
 assert err.traceback          # full formatted traceback string
+```
 
 **Attributes on the returned object:**
 
@@ -49,6 +50,9 @@ assert err.traceback          # full formatted traceback string
 | `exception` | `Exception \| None` | The original exception instance |
 | `traceback` | `str \| None` | Formatted traceback string for debugging |
 
+## Examples
+
+```python
 # ── ignore as a decorator ──
 @ignore(ValueError, TypeError)
 def parse(x: str) -> int:

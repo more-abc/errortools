@@ -39,39 +39,39 @@ class ErrorIgnoreWrapper(Generic[_T]):
     any suppressed exception.
 
     When used as a context manager, ``__enter__`` returns an ``IgnoredError``
-    instance that provides the following attributes after the block executes:
-
-    Attributes:
-        be_ignore (bool):
-            ``True`` if an exception was suppressed during the block,
-            ``False`` otherwise.
-
-        name (str | None):
-            The class name of the suppressed exception
-            (e.g. ``'KeyError'``, ``'ValueError'``).
-            ``None`` if no exception occurred.
-
-        count (int):
-            Number of exceptions suppressed in this context block.
-            Typically 1 unless the context manager is reused.
-
-        exception (Exception | None):
-            The original exception instance that was caught and suppressed.
-            ``None`` if no exception occurred.
-
-        traceback (str | None):
-            Formatted traceback string showing where the suppressed exception
-            occurred.  Useful for debugging.  ``None`` if no exception occurred.
-
-    Example:
-        >>> from errortools import ignore
-        >>> with ignore(KeyError) as err:
-        ...     _ = {}["missing"]
-        >>> err.be_ignore
-        True
-        >>> err.name
-        'KeyError'
+    instance that provides the following attributes after the block executes.
     """
+
+    #     Attributes:
+    #     be_ignore (bool):
+    #         ``True`` if an exception was suppressed during the block,
+    #         ``False`` otherwise.
+
+    #     name (str | None):
+    #         The class name of the suppressed exception
+    #         (e.g. ``'KeyError'``, ``'ValueError'``).
+    #         ``None`` if no exception occurred.
+
+    #     count (int):
+    #         Number of exceptions suppressed in this context block.
+    #         Typically 1 unless the context manager is reused.
+
+    #     exception (Exception | None):
+    #         The original exception instance that was caught and suppressed.
+    #         ``None`` if no exception occurred.
+
+    #     traceback (str | None):
+    #         Formatted traceback string showing where the suppressed exception
+    #         occurred.  Useful for debugging.  ``None`` if no exception occurred.
+
+    # Example:
+    #     >>> from errortools import ignore
+    #     >>> with ignore(KeyError) as err:
+    #     ...     _ = {}["missing"]
+    #     >>> err.be_ignore
+    #     True
+    #     >>> err.name
+    #     'KeyError'
 
     def __init__(self, *excs: _ExcType) -> None:
         for exc in excs:
