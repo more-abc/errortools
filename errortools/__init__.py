@@ -77,6 +77,10 @@ from _errortools.metadata import (
     __license__,
     __title__,
     __url__,
+    __fullname__,
+    __signature__,
+    __slug__,
+    __uid__,
 )
 import _errortools.future as future
 import _errortools.logging as logging
@@ -151,6 +155,10 @@ __all__ = [
     "__license__",
     "__title__",
     "__url__",
+    "__fullname__",
+    "__signature__",
+    "__slug__",
+    "__uid__",
     # submodules
     "future",
     "logging",

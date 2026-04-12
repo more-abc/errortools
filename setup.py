@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="errortools",
-    version="1.3.3",
+    version="1.3.4",
     description="errortools - a toolset for working with Python exceptions and warnings and logging.",
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
@@ -25,7 +25,7 @@ setup(
     package_data={"errortools": ["py.typed"]},
     include_package_data=True,
     python_requires=">=3.10",
-    install_requires=[],
+    install_requires=["namebyauthor==1.0.0"],
     entry_points={
         "console_scripts": [
             "errortools = _errortools.cli:main",
