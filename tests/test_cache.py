@@ -2,7 +2,7 @@
 
 import pytest
 
-from _errortools.cache import error_cache
+from _errortools.decorator.cache import error_cache
 from . import HAS_PYTEST
 
 if not HAS_PYTEST:

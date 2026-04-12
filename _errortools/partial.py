@@ -3,7 +3,7 @@
 from functools import partial
 
 from .ignore import ignore, ignore_subclass, ignore_warns, fast_ignore, timeout, retry
-from .cache import error_cache
+from .decorator.cache import error_cache
 from .const import (
     LARGE_ERROR_CACHE_SIZE,
     SMALL_ERROR_CACHE_SIZE,

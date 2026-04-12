@@ -12,7 +12,7 @@ from _errortools.ignore import (
     retry,
 )
 from _errortools.classes.group import BaseGroup, GroupErrors
-from _errortools.cache import error_cache
+from _errortools.decorator.cache import error_cache
 from _errortools.decorator.deprecated import deprecated
 from _errortools.classes.errorcodes import (
     PureBaseException,

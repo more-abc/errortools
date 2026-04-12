@@ -9,8 +9,8 @@ from typing import (
     overload,
 )
 
-from .const import DEFAULT_ERROR_CACHE_SIZE
-from .wrappers.cache import ErrorCacheWrapper
+from ..const import DEFAULT_ERROR_CACHE_SIZE
+from ..wrappers.cache import ErrorCacheWrapper
 
 _T = TypeVar("_T", bound=Callable[..., Any])
 
