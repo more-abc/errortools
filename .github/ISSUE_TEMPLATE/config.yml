@@ -1,5 +1,14 @@
+# Configuration for issue templates
+# Documentation: https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository
+
 blank_issues_enabled: false
 contact_links:
   - name: Documentation
-    url: https://github.com/more-abc/errortools.git#readme
-    about: Check documentation first
+    url: https://github.com/more-abc/errortools#readme
+    about: Check the official documentation first.
+
+  - name: Ask a question
+    url: https://github.com/more-abc/errortools/discussions
+    about: Ask questions and discuss with other community members.
+
+issue_body_requires_title: true
