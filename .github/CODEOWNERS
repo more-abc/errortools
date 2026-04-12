@@ -1,20 +1,20 @@
-/tests/                      @aiwonderland
-/tests/run_tests.py          @aiwonderland @qorexdev
-/_errortools/                @core-dev-team
-/_errortools/ignore.py       @core-dev-team @aiwonderland @vgauraha62
-/errortools/                 @core-dev-team
-/.github/                    @core-dev-team @aiwonderland
+/tests/                      @more-abc/core-dev-team
+/tests/run_tests.py          @more-abc/core-dev-team @aiwonderland @qorexdev
+/_errortools/                @more-abc/core-dev-team
+/_errortools/ignore.py       @more-abc/core-dev-team @aiwonderland @vgauraha62
+/errortools/                 @more-abc/core-dev-team
+/.github/                    @more-abc/core-dev-team @aiwonderland
 
-requirements-dev.txt         @core-dev-team
-README.md                    @core-dev-team
-setup.py                     @core-dev-team
+requirements-dev.txt         @more-abc/core-dev-team
+README.md                    @more-abc/core-dev-team
+setup.py                     @more-abc/core-dev-team
 
-.black                       @aiwonderland @core-dev-team
-.editorconfig                @aiwonderland @core-dev-team
-.flake8                      @aiwonderland @core-dev-team
-.gitignore                   @core-dev-team
-pytest.ini                   @aiwonderland @core-dev-team
-mypy.ini                     @aiwonderland @core-dev-team
+.black                       @aiwonderland @more-abc/core-dev-team
+.editorconfig                @aiwonderland @more-abc/core-dev-team
+.flake8                      @aiwonderland @more-abc/core-dev-team
+.gitignore                   @more-abc/core-dev-team
+pytest.ini                   @aiwonderland @more-abc/core-dev-team
+mypy.ini                     @aiwonderland @more-abc/core-dev-team
 
-AUTHORS.txt                  @core-dev-team @aiwonderland 
-LICENSE.txt                  @core-dev-team @aiwonderland
+AUTHORS.txt                  @more-abc/core-dev-team @aiwonderland 
+LICENSE.txt                  @more-abc/core-dev-team @aiwonderland
