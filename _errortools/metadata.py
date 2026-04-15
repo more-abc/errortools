@@ -1,4 +1,4 @@
-import namebyauthor as na
+import namebyauthor as na # type: ignore
 
 __author__: str = "Evan Yang"
 __author_email__: str = "quantbit@126.com"
