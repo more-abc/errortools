@@ -6,20 +6,16 @@ permissions:
 
 on:
   issues:
-    types: [opened]
+    types: [opened, closed]
   pull_request:
-    types: [opened]
+    types: [opened, review_requested]
   pull_request_target:
     types: [closed]
 
-permissions:
-  issues: write
-  pull-requests: write
-  
 jobs:
   welcome-comment:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'issues' || github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'issues' && github.event.action == 'opened' || github.event_name == 'pull_request' && github.event.action == 'opened' }}
     steps:
       - name: Auto Welcome Comment
         uses: peter-evans/create-or-update-comment@v4
@@ -43,3 +39,31 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             🎉 PR merged successfully! Thank you for your contribution.
+
+  closed-issue-comment:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'issues' && github.event.action == 'closed' }}
+    steps:
+      - name: Auto Closed Issue Comment
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            This issue has been closed. Thanks for reporting it and helping us improve the project! 🙏
+
+            If you think this was closed in error, feel free to reopen it with additional context.
+
+  review-requested-comment:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' && github.event.action == 'review_requested' }}
+    steps:
+      - name: Auto Review Requested Comment
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            👀 A reviewer has been assigned to this PR — thanks for your patience while we review your work!
+
+            Reviewers: please check the description and linked issues for full context before leaving feedback.
