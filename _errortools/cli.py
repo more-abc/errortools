@@ -3,6 +3,8 @@
 import argparse
 import sys
 
+from _errortools._cli import _cmd_log, _print_info
+
 from .metadata import (
     __description__,
     __copyright__,
@@ -49,17 +51,44 @@ def parse_args(args: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Run tests for errortools module. (Using pytest)",
     )
+
+    subparsers = parser.add_subparsers(dest="subcommand")
+
+    log_parser = subparsers.add_parser(
+        "log",
+        help="Emit a log message from the command line",
+    )
+    log_parser.add_argument(
+        "message",
+        help="The message to log",
+    )
+    log_parser.add_argument(
+        "--level",
+        "-l",
+        default="info",
+        choices=["trace", "debug", "info", "success", "warning", "error", "critical"],
+        help="Log level (default: info)",
+    )
+    log_parser.add_argument(
+        "--output",
+        "-o",
+        choices=["stderr", "stdout"],
+        default="stderr",
+        help="Output stream (default: stderr)",
+    )
+
     return parser.parse_args(args)
 
 
-def _print_info() -> None:
-    """Print a summary of all package metadata."""
-    print(f"errortools v{__version__}")
-    print(f"  {__description__}")
-    print(f"  Author:    {__author__} <{__author_email__}>")
-    print(f"  License:   {__license__}")
-    print(f"  URL:       {__url__}")
-    print(f"  Copyright: {__copyright__}")
+def log_main() -> None:
+    """Logging main CLI entry point."""
+    args = parse_args(sys.argv[1:])
+
+    if args.subcommand == "log":
+        _cmd_log(args.message, args.level, args.output)
+    else:
+        parse_args(["--help"])
+        print("Use 'python -m errortools' to see more things")
 
 
 def main() -> None:
