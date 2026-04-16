@@ -14,7 +14,6 @@ from .metadata import (
     __url__,
 )
 from .version import __version__
-from tests.run_tests import run_tests
 
 
 def parse_args(args: list[str] | None = None) -> argparse.Namespace:
@@ -111,6 +110,7 @@ def main() -> None:
         print(f"URL: {__url__}")
 
     elif args.run_tests:
+        from tests.run_tests import run_tests
         run_tests()
 
     elif args.info:
