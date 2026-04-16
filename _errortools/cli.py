@@ -118,3 +118,7 @@ def main() -> None:
 
     else:
         parse_args(["--help"])
+
+
+if __name__ == "__main__":
+    main()
