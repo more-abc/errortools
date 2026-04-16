@@ -1,0 +1,31 @@
+name: CLA Assistant Bot
+
+on:
+  issue_comment:
+    types:
+      - created
+      - edited
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+jobs:
+  CLA-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check CLA
+        uses: contributor-assistant/github-action@v2.4.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.CLA_BOT_TOKEN }}
+        with:
+          config-path: .github/cla.yml
+          path-to-signatures: signatures/cla.json
+          branch: master
+          allowlist: dependabot[bot],github-actions[bot]
+          lock-pullrequest-unfetched-cla: true
+          lock-pr-body: |
+            Please sign the CLA by commenting "I have read and agree to the CLA"
