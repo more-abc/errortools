@@ -86,10 +86,6 @@ def log_main() -> None:
 
     if args.subcommand == "log":
         _cmd_log(args.message, args.level, args.output)
-    else:
-        parse_args(["--help"])
-        print("Use 'python -m errortools' to see more things")
-
 
 def main() -> None:
     """Main CLI entry point."""
