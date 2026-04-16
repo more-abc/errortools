@@ -87,6 +87,7 @@ def log_main() -> None:
     if args.subcommand == "log":
         _cmd_log(args.message, args.level, args.output)
 
+
 def main() -> None:
     """Main CLI entry point."""
     args = parse_args(sys.argv[1:])
