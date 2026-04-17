@@ -45,10 +45,10 @@ jobs:
       - name: Run autopep8 (auto fix)
         run: autopep8 . --recursive --in-place --pep8-passes 2000 --verbose
 
-      - name: Commit & push changes by AbaAbaAba-bot
+      - name: Commit & push as AbaAbaAba-bot-like[bot]
         run: |
           git config --local user.name "AbaAbaAba-bot-like[bot]"
-          git config --local user.email "aba-bot@users.noreply.github.com"
+          git config --local user.email "AbaAbaAba-bot-like[bot]@users.noreply.github.com"
           git add .
           git commit -am "[Bot]: auto format code (black + autopep8)" || exit 0
           git push
