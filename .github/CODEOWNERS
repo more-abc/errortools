@@ -1,7 +1,7 @@
 /tests/                      @more-abc/core-dev-team
-/tests/run_tests.py          @more-abc/core-dev-team @aiwonderland @qorexdev
+/tests/run_tests.py          @more-abc/core-dev-team @aiwonderland 
 /_errortools/                @more-abc/core-dev-team
-/_errortools/ignore.py       @more-abc/core-dev-team @aiwonderland @vgauraha62
+/_errortools/ignore.py       @more-abc/core-dev-team @aiwonderland 
 /errortools/                 @more-abc/core-dev-team
 /.github/                    @more-abc/core-dev-team @aiwonderland
 

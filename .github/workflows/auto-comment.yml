@@ -55,7 +55,6 @@ jobs:
           body: |
             PR merged successfully! Thank you for your contribution.
 
-  # Issue 被关闭
   closed-issue-comment:
     runs-on: ubuntu-latest
     needs: get-bot-token
