@@ -26,11 +26,14 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install package and dependencies
+      - name: Install package & dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -e .
 
+      # ------------------------------
+      # Core CLI info tests
+      # ------------------------------
       - name: Test --help
         run: python -m _errortools.cli --help
 
@@ -55,25 +58,34 @@ jobs:
       - name: Test --copyrights (-c)
         run: python -m _errortools.cli --copyrights
 
-      - name: Test log subcommand (info, stdout)
+      # ------------------------------
+      # Log subcommand full test
+      # ------------------------------
+      - name: Test log: info + stdout
         run: python -m _errortools.cli log "Hello from CI" --level info --output stdout
 
-      - name: Test log subcommand (warning, stderr)
+      - name: Test log: warning + stderr
         run: python -m _errortools.cli log "Warning from CI" --level warning --output stderr
 
-      - name: Test log subcommand (debug level)
+      - name: Test log: debug + stdout
         run: python -m _errortools.cli log "Debug message" --level debug --output stdout
 
-      - name: Test log subcommand (error level)
+      - name: Test log: error + stderr
         run: python -m _errortools.cli log "Error message" --level error --output stderr
 
-      - name: Test log subcommand (critical level)
+      - name: Test log: critical + stderr
         run: python -m _errortools.cli log "Critical message" --level critical --output stderr
 
-      - name: Test logger entry point (console script)
+      # ------------------------------
+      # Entry point (console script)
+      # ------------------------------
+      - name: Test console script: logger
         run: logger log "Logger entry point test" --level info --output stdout
 
-      - name: Verify --version output format
+      # ------------------------------
+      # Version format validation
+      # ------------------------------
+      - name: Validate version format
         run: |
           output=$(python -m _errortools.cli --version)
           echo "Version output: $output"

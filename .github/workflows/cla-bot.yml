@@ -12,6 +12,11 @@ on:
       - reopened
       - ready_for_review
 
+permissions:
+  pull-requests: write
+  contents: write
+  issues: write
+
 jobs:
   CLA-check:
     runs-on: ubuntu-latest
@@ -25,7 +30,8 @@ jobs:
           config-path: .github/cla.yml
           path-to-signatures: signatures/cla.json
           branch: master
-          allowlist: dependabot[bot],github-actions[bot]
+          allowlist: dependabot[bot],github-actions[bot],AbaAbaAba-bot-like[bot]
           lock-pullrequest-unfetched-cla: true
           lock-pr-body: |
-            Please sign the CLA by commenting "I have read and agree to the CLA"
+            Please sign the CLA by commenting:  
+            "I have read and agree to the CLA"

@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -25,17 +27,27 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest pytest-cov mypy flake8 black autopep8
 
-      - name: Run pytest 
+      - name: Run pytest
         run: pytest
 
-      - name: Run mypy .
-        run: mypy 
+      - name: Run mypy
+        run: mypy .
 
       - name: Run flake8
         run: flake8 .
 
-      - name: Run black 
+      - name: Run black (format code)
         run: black .
 
-      - name: Run autopep8
+      - name: Run autopep8 (auto fix)
         run: autopep8 . --recursive --in-place --pep8-passes 2000 --verbose
+
+      - name: Commit & push changes by AbaAbaAba-bot
+        run: |
+          git config --local user.name "AbaAbaAba-bot-like[bot]"
+          git config --local user.email "aba-bot@users.noreply.github.com"
+          git add -A
+          git diff --staged --exit-code || (
+            git commit -m "[Bot]: auto format code (black + autopep8)"
+            git push
+          )
