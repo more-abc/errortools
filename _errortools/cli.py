@@ -111,6 +111,7 @@ def main() -> None:
 
     elif args.run_tests:
         from tests.run_tests import run_tests
+
         run_tests()
 
     elif args.info:
