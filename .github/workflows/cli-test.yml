@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.12"]
+        python-version: "3.12"
 
     steps:
       - name: Checkout code
@@ -26,14 +26,11 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install package & dependencies
+      - name: Install package and dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -e .
 
-      # ------------------------------
-      # Core CLI info tests
-      # ------------------------------
       - name: Test --help
         run: python -m _errortools.cli --help
 
@@ -58,34 +55,25 @@ jobs:
       - name: Test --copyrights (-c)
         run: python -m _errortools.cli --copyrights
 
-      # ------------------------------
-      # Log subcommand full test
-      # ------------------------------
-      - name: Test log: info + stdout
+      - name: Test log subcommand (info, stdout)
         run: python -m _errortools.cli log "Hello from CI" --level info --output stdout
 
-      - name: Test log: warning + stderr
+      - name: Test log subcommand (warning, stderr)
         run: python -m _errortools.cli log "Warning from CI" --level warning --output stderr
 
-      - name: Test log: debug + stdout
+      - name: Test log subcommand (debug level)
         run: python -m _errortools.cli log "Debug message" --level debug --output stdout
 
-      - name: Test log: error + stderr
+      - name: Test log subcommand (error level)
         run: python -m _errortools.cli log "Error message" --level error --output stderr
 
-      - name: Test log: critical + stderr
+      - name: Test log subcommand (critical level)
         run: python -m _errortools.cli log "Critical message" --level critical --output stderr
 
-      # ------------------------------
-      # Entry point (console script)
-      # ------------------------------
-      - name: Test console script: logger
+      - name: Test logger entry point (console script)
         run: logger log "Logger entry point test" --level info --output stdout
 
-      # ------------------------------
-      # Version format validation
-      # ------------------------------
-      - name: Validate version format
+      - name: Verify --version output format
         run: |
           output=$(python -m _errortools.cli --version)
           echo "Version output: $output"
