@@ -5,7 +5,7 @@ import shutil
 import csv
 import configparser
 
-from typing_extensions import disjoint_base # I use 3.14.3
+from typing_extensions import disjoint_base  # I use 3.14.3
 from ..methods import (
     ErrorAttrMixin,
     ErrorAttrCheckMixin,
