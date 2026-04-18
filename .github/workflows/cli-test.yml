@@ -56,7 +56,7 @@ jobs:
         run: python -m errortools --copyrights
 
       - name: Test log info, stdout
-        run: logger log --level info --output stdout "Hello from CI" 
+        run: logger --level info --output stdout "Hello from CI" 
 
       - name: Test log warning, stderr
         run: logger --level warning --output stderr "Warning from CI" 
