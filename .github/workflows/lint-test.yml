@@ -47,10 +47,17 @@ jobs:
       - name: Run flake8
         run: flake8
 
+      - name: Get app token for AbaAbaAba-bot-like[bot]
+        id: get-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: 3410340
+          private_key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+
       - name: Commit & push as AbaAbaAba-bot-like[bot]
         run: |
           git config --local user.name "AbaAbaAba-bot-like[bot]"
-          git config --local user.email "bot@users.noreply.github.com"
+          git config --local user.email "AbaAbaAba-bot-like[bot]@users.noreply.github.com"
           git add .
           git commit -am "[Bot]: auto format code (black + autopep8)" || exit 0
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
+          git push https://x-access-token:${{ steps.get-token.outputs.token }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
