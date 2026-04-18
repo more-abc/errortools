@@ -5,6 +5,7 @@ import shutil
 import csv
 import configparser
 
+from typing_extensions import disjoint_base # I use 3.14.3
 from ..methods import (
     ErrorAttrMixin,
     ErrorAttrCheckMixin,
@@ -30,6 +31,7 @@ def _check_methods(C: type[Any], *methods: str) -> Union[bool, Literal[NotImplem
     return True
 
 
+@disjoint_base
 class ErrorAttrable(ABC):
     """
     Abstract Base Class (ABC) for classes supporting custom attribute error handling.
@@ -175,6 +177,7 @@ ErrorAttrable.register(ErrorSetAttrMixin)
 # ----------------------------------------------------------------------
 
 
+@disjoint_base
 class ErrorCodeable(ABC):
     """Abstract Base Class for exceptions that carry a machine-readable error code.
 
