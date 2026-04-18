@@ -5,7 +5,7 @@ import warnings
 import pytest
 
 from _errortools.decorator.cache import error_cache
-from _errortools.decorator.deprecated import deprecated
+from _errortools.decorator.deprecated import deprecated, experimental
 from . import HAS_PYTEST
 
 if not HAS_PYTEST:
@@ -80,6 +80,80 @@ class TestDeprecatedWarning:
             pass
 
         with pytest.warns(DeprecationWarning) as record:
+            f()
+
+        # Ensure warning points to caller, not wrapper
+        assert record[0].lineno is not None
+
+
+# =============================================================================
+# experimental decorator
+# =============================================================================
+
+
+class TestExperimentalDecorator:
+    def test_bare_decorator(self):
+        @experimental()
+        def f(x):
+            return x
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            assert f(3) == 3
+
+    def test_decorator_with_reason(self):
+        @experimental(reason="API may change without notice")
+        def f(x):
+            return x * 2
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            assert f(5) == 10
+
+    def test_wrapper_has_correct_name(self):
+        @experimental()
+        def my_func(x):
+            return x
+
+        assert my_func.__name__ == "my_func"
+
+    def test_wrapped_attribute(self):
+        def inner(x):
+            return x
+
+        wrapped = experimental()(inner)
+        assert wrapped.__wrapped__ is inner
+
+
+class TestExperimentalWarning:
+    def test_emits_user_warning_on_call(self):
+        @experimental()
+        def f():
+            pass
+
+        with pytest.warns(UserWarning) as record:
+            f()
+
+        assert len(record) == 1
+        warn = record[0]
+        assert "experimental" in str(warn.message)
+
+    def test_warning_contains_reason(self):
+        @experimental(reason="Subject to change")
+        def f():
+            pass
+
+        with pytest.warns(UserWarning) as record:
+            f()
+
+        assert "Subject to change" in str(record[0].message)
+
+    def test_warning_stacklevel_correct(self):
+        @experimental()
+        def f():
+            pass
+
+        with pytest.warns(UserWarning) as record:
             f()
 
         # Ensure warning points to caller, not wrapper

@@ -13,7 +13,7 @@ from _errortools.ignore import (
 )
 from _errortools.classes.group import BaseGroup, GroupErrors
 from _errortools.decorator.cache import error_cache
-from _errortools.decorator.deprecated import deprecated
+from _errortools.decorator.deprecated import deprecated, experimental
 from _errortools.classes.errorcodes import (
     PureBaseException,
     ContextException,
@@ -100,6 +100,7 @@ __all__ = [
     "timeout",
     "retry",
     "deprecated",
+    "experimental",
     "error_cache",
     "TracebackType",
     "FrameType",
