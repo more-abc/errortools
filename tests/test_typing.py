@@ -89,6 +89,7 @@ class TestExceptionTypeAlias:
         assert get_origin(ExceptionType) is type
         assert get_args(ExceptionType) == (Exception,)
 
+
 class TestWarningTypeAlias:
 
     def test_warning_type(self):
