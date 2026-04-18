@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections.abc import Iterator, Callable
 from contextlib import contextmanager
 from functools import wraps
+from typing import Any, TypeVar
 import asyncio
 import inspect
 import time
@@ -21,6 +22,9 @@ __all__ = [
     "retry",
 ]
 
+Func = TypeVar("Func", bound=Callable[..., Any])
+ExceptionType = type[BaseException]
+ExceptionTypes = tuple[ExceptionType, ...]
 
 # A Context Manager? Maybe it is...
 
@@ -227,13 +231,13 @@ class retry:
         >>> unstable()
         Traceback (most recent call last):
             ...
-        ValueError: oops
+            ValueError: oops
     """
 
     def __init__(
         self,
         times: int,
-        on: type[Exception] | tuple[type[Exception], ...] = Exception,
+        on: ExceptionType | ExceptionTypes = Exception,
         delay: float = 0,
     ) -> None:
         if times < 0:
@@ -241,23 +245,18 @@ class retry:
 
         exc_types = on if isinstance(on, tuple) else (on,)
         for t in exc_types:
-            if not isinstance(t, type) or not issubclass(t, Exception):
+            if not isinstance(t, type) or not issubclass(t, BaseException):
                 raise TypeError(f"Expected Exception subclass, got {t!r}")
 
         self._times = times
         self._on = exc_types
         self._delay = delay
 
-    # ------------------------------------------------------------------
-    # Decorator protocol
-    # ------------------------------------------------------------------
-
-    def __call__(self, func: Callable) -> Callable:
+    def __call__(self, func: Func) -> Func:
         if inspect.iscoroutinefunction(func):
-
             @wraps(func)
-            async def async_wrapper(*args, **kwargs):
-                last_exc: Exception | None = None
+            async def async_wrapper(*args: Any, **kwargs: Any) -> Any:
+                last_exc: BaseException | None = None
                 for attempt in range(self._times + 1):
                     try:
                         return await func(*args, **kwargs)
@@ -265,13 +264,15 @@ class retry:
                         last_exc = exc
                         if attempt < self._times and self._delay:
                             await asyncio.sleep(self._delay)
-                raise last_exc
+                if last_exc is not None:
+                    raise last_exc
+                raise RuntimeError("No exception to raise")
 
-            return async_wrapper
+            return async_wrapper  # type: ignore
 
         @wraps(func)
-        def wrapper(*args, **kwargs):
-            last_exc: Exception | None = None
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            last_exc: BaseException | None = None
             for attempt in range(self._times + 1):
                 try:
                     return func(*args, **kwargs)
@@ -279,6 +280,8 @@ class retry:
                     last_exc = exc
                     if attempt < self._times and self._delay:
                         time.sleep(self._delay)
-            raise last_exc
+            if last_exc is not None:
+                raise last_exc
+            raise RuntimeError("No exception to raise")
 
-        return wrapper
+        return wrapper  # type: ignore
