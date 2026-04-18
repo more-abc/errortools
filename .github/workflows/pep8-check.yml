@@ -1,4 +1,4 @@
-name: Python PEP8 Check (black → autopep8 → flake8)
+name: Python PEP8 Check (black → autopep8 → flake8 → pyflakes)
 
 on:
   push:
@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8 black autopep8
+          pip install flake8 black autopep8 pyflakes
 
       - name: Run black (format code)
         run: black .
@@ -40,6 +40,9 @@ jobs:
 
       - name: Run flake8
         run: flake8
+
+      - name: Run pyflakes
+        run: python -m pyflakes _errortools/
 
       - name: Get app token for AbaAbaAba-bot-like[bot]
         id: get-token
