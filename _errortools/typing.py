@@ -1,6 +1,5 @@
 """Public type aliases for errortools exception classes."""
 
-from tkinter import W
 from typing import TypeAlias, Union
 
 from .classes.errorcodes import (
