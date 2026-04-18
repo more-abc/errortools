@@ -25,7 +25,7 @@ setup(
     package_data={"errortools": ["py.typed"]},
     include_package_data=True,
     python_requires=">=3.10",
-    install_requires=["namebyauthor==1.0.0"],
+    install_requires=["namebyauthor==1.0.0", "typing_extensions"],
     entry_points={
         "console_scripts": [
             "python -m errortools = _errortools.cli:main",
