@@ -29,7 +29,7 @@ setup(
     entry_points={
         "console_scripts": [
             "python -m errortools = _errortools.cli:main",
-            "logger = _errortools.cli:log_main",
+            "logger = _errortools.cli:main",
         ]
     },
 )
