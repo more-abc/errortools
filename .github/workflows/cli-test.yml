@@ -32,49 +32,49 @@ jobs:
           pip install -e .
 
       - name: Test --help
-        run: python -m _errortools.cli --help
+        run: python -m errortools --help
 
       - name: Test --version (-v)
-        run: python -m _errortools.cli --version
+        run: python -m errortools --version
 
       - name: Test --info (-i)
-        run: python -m _errortools.cli --info
+        run: python -m errortools --info
 
       - name: Test --author (-a)
-        run: python -m _errortools.cli --author
+        run: python -m errortools --author
 
       - name: Test --email (-e)
-        run: python -m _errortools.cli --email
+        run: python -m errortools --email
 
       - name: Test --license (-l)
-        run: python -m _errortools.cli --license
+        run: python -m errortools --license
 
       - name: Test --url (-u)
-        run: python -m _errortools.cli --url
+        run: python -m errortools --url
 
       - name: Test --copyrights (-c)
-        run: python -m _errortools.cli --copyrights
+        run: python -m errortools --copyrights
 
-      - name: Test log subcommand (info, stdout)
-        run: python -m _errortools.cli log "Hello from CI" --level info --output stdout
+      - name: Test log info, stdout
+        run: logger log --level info --output stdout "Hello from CI" 
 
-      - name: Test log subcommand (warning, stderr)
-        run: python -m _errortools.cli log "Warning from CI" --level warning --output stderr
+      - name: Test log warning, stderr
+        run: logger --level warning --output stderr "Warning from CI" 
 
-      - name: Test log subcommand (debug level)
-        run: python -m _errortools.cli log "Debug message" --level debug --output stdout
+      - name: Test log debug level
+        run: logger --level debug --output stdout "Debug message" 
 
-      - name: Test log subcommand (error level)
-        run: python -m _errortools.cli log "Error message" --level error --output stderr
+      - name: Test log error level
+        run: logger --level error --output stderr "Error message"
 
-      - name: Test log subcommand (critical level)
-        run: python -m _errortools.cli log "Critical message" --level critical --output stderr
+      - name: Test log critical level
+        run: logger --level critical --output stderr "Critical message" 
 
       - name: Test logger entry point (console script)
-        run: logger log "Logger entry point test" --level info --output stdout
+        run: logger --level info --output stdout "Logger entry point test" 
 
       - name: Verify --version output format
         run: |
-          output=$(python -m _errortools.cli --version)
+          output=$(python -m errortools --version)
           echo "Version output: $output"
           echo "$output" | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$'
