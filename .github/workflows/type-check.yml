@@ -33,4 +33,4 @@ jobs:
           pip install mypy pytest-mypy-plugins
 
       - name: Run mypy (Type checker)
-        run: mypy 
+        run: mypy _errortools/
