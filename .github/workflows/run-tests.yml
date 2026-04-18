@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest pytest-cov
+          pip install pytest pytest-cov errortools
 
       - name: Run all tests (pytest)
-        run: pytest
+        run: python -m errortools --run-tests
