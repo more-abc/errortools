@@ -285,3 +285,4 @@ class retry:
             raise RuntimeError("No exception to raise")
 
         return wrapper  # type: ignore
+    

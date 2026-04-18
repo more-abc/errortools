@@ -36,14 +36,14 @@ jobs:
       - name: Run mypy
         run: mypy
 
-      - name: Run flake8
-        run: flake8
-
       - name: Run black (format code)
         run: black .
 
       - name: Run autopep8 (auto fix)
         run: autopep8 . --recursive --in-place --pep8-passes 2000 --verbose
+      
+      - name: Run flake8
+        run: flake8
 
       - name: Commit & push as AbaAbaAba-bot-like[bot]
         run: |
