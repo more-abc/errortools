@@ -85,6 +85,7 @@ class TestDeprecatedWarning:
         # Ensure warning points to caller, not wrapper
         assert record[0].lineno is not None
 
+
 # =============================================================================
 # error_cache — basic decoration patterns
 # =============================================================================
