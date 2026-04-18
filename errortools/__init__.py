@@ -56,6 +56,7 @@ from _errortools.typing import (
     InputError,
     AccessError,
     ExceptionType,
+    WarningType,
     TracebackType,
     FrameType,
 )
@@ -141,6 +142,7 @@ __all__ = [
     "LookupError_",
     "RuntimeError_",
     "ExceptionType",
+    "WarningType",
     # metadata
     "__version__",
     "__version_tuple__",

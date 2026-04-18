@@ -13,6 +13,7 @@ from _errortools.typing import (
     LookupError_,
     RuntimeError_,
     ExceptionType,
+    WarningType,
     TracebackType,
     FrameType,
 )
@@ -88,6 +89,12 @@ class TestExceptionTypeAlias:
         assert get_origin(ExceptionType) is type
         assert get_args(ExceptionType) == (Exception,)
 
+class TestWarningTypeAlias:
+
+    def test_warning_type(self):
+        assert get_origin(WarningType) is type
+        assert get_args(WarningType) == (Warning,)
+
 
 class TestTracebackAndFrameTypes:
 
@@ -136,6 +143,7 @@ class TestModuleExports:
             "LookupError_",
             "RuntimeError_",
             "ExceptionType",
+            "WarningType",
             "TracebackType",
             "FrameType",
         }

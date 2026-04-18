@@ -111,7 +111,7 @@ class fast_ignore:
 
     __slots__ = ("_excs",)
 
-    def __init__(self, *excs: type[BaseException]) -> None:
+    def __init__(self, *excs: ExceptionType) -> None:
         for exc in excs:
             if not isinstance(exc, type) or not issubclass(exc, BaseException):
                 raise TypeError(f"Expected Exception subclass, got {exc!r}")
@@ -120,14 +120,14 @@ class fast_ignore:
     def __enter__(self) -> None:
         return
 
-    def __exit__(self, typ: type[BaseException] | None, _, __) -> bool:
+    def __exit__(self, typ: ExceptionType | None, _, __) -> bool:
         if typ is None:
             return False
         return typ in self._excs
 
 
 @contextmanager
-def ignore_subclass(base: type[BaseException]) -> Iterator[None]:
+def ignore_subclass(base: ExceptionType) -> Iterator[None]:
     """Context manager that suppresses any exception whose type is a subclass of *base*.
 
     Args:

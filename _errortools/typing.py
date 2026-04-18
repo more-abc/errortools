@@ -1,5 +1,6 @@
 """Public type aliases for errortools exception classes."""
 
+from tkinter import W
 from typing import TypeAlias, Union
 
 from .classes.errorcodes import (
@@ -24,6 +25,7 @@ __all__ = [
     "LookupError_",
     "RuntimeError_",
     "ExceptionType",
+    "WarningType",
     "TracebackType",
     "FrameType",
 ]
@@ -73,6 +75,9 @@ RuntimeError_: TypeAlias = Union[RuntimeFailure, TimeoutFailure]
 
 ExceptionType: TypeAlias = type[Exception]
 """Type alias for an exception *class* (not an instance)."""
+
+WarningType: TypeAlias = type[Warning]
+"""Type alias for an warning *class* like `ExceptionType` (not an instance)."""
 
 # ---------------------------------------------------------------------------
 # Types from ``types`` module
