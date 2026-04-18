@@ -254,6 +254,7 @@ class retry:
 
     def __call__(self, func: Func) -> Func:
         if inspect.iscoroutinefunction(func):
+
             @wraps(func)
             async def async_wrapper(*args: Any, **kwargs: Any) -> Any:
                 last_exc: BaseException | None = None
@@ -285,4 +286,3 @@ class retry:
             raise RuntimeError("No exception to raise")
 
         return wrapper  # type: ignore
-    
