@@ -1,6 +1,7 @@
 """Constants for errortools module."""
 
 from typing import Final
+
 # ------------------------------------------------------------------
 # error_cache constants
 # ------------------------------------------------------------------
