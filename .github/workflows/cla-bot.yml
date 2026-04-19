@@ -24,13 +24,12 @@ jobs:
       - name: Check CLA
         uses: contributor-assistant/github-action@v2.4.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_APP_PRIVATE_KEY }}
-          PERSONAL_ACCESS_TOKEN: ${{ secrets.CLA_BOT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           config-path: .github/cla.yml
           path-to-signatures: signatures/cla.json
           branch: master
-          allowlist: AbaAbaAba-bot-like[bot]
           lock-pullrequest-unfetched-cla: true
           lock-pr-body: |
             Please sign the CLA by commenting:
