@@ -71,6 +71,7 @@ def strerror(code: int) -> str:
         Error message string
     """
     import os
+
     try:
         return os.strerror(code)
     except (ValueError, OSError):

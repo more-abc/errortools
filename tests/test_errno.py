@@ -103,6 +103,7 @@ class TestStrerror:
 
     def test_consistency_with_os_strerror(self):
         import os
+
         code = errno.ENOENT
         try:
             expected = os.strerror(code)
