@@ -2,7 +2,7 @@
 name: Documentation Issue
 about: Report errors or improvements for docs
 title: "[Docs] "
-labels: documentation
+labels: 📝docs
 assignees: ''
 
 ---

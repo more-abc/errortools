@@ -2,7 +2,7 @@
 name: Refactor
 about: Improve code structure, readability, or maintainability
 title: "[Refactor] "
-labels: refactor
+labels: ♻️ refactor
 assignees: ''
 
 ---

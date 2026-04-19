@@ -2,7 +2,7 @@
 name: Performance Issue
 about: Report slowness, high memory, etc.
 title: "[Performance] "
-labels: performance
+labels: 🚀 performance
 assignees: ''
 
 ---
