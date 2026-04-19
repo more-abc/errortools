@@ -30,7 +30,7 @@ def get_errno_message(code: int) -> str:
     """
     if not is_valid_errno(code):
         raise ValueError(f"Unknown error code: {code}")
-    
+
     return errno.errorcode.get(code, f"Unknown error {code}")
 
 
