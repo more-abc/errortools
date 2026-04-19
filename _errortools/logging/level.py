@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import ClassVar
+from typing import ClassVar, Final
 
 
 @dataclass(frozen=True)
@@ -55,7 +55,7 @@ Level.CRITICAL = Level("CRITICAL", 50, "\033[1;31m", "☠")  # bold red
 
 
 # Ordered list for iteration / lookup
-LEVELS: tuple[Level, ...] = (
+LEVELS: Final[tuple[Level, ...]] = (
     Level.TRACE,
     Level.DEBUG,
     Level.INFO,
@@ -65,8 +65,8 @@ LEVELS: tuple[Level, ...] = (
     Level.CRITICAL,
 )
 
-_NAME_MAP: dict[str, Level] = {lv.name: lv for lv in LEVELS}
-_NO_MAP: dict[int, Level] = {lv.no: lv for lv in LEVELS}
+_NAME_MAP: Final[dict[str, Level]] = {lv.name: lv for lv in LEVELS}
+_NO_MAP: Final[dict[int, Level]] = {lv.no: lv for lv in LEVELS}
 
 
 def get_level(name_or_no: str | int) -> Level:
