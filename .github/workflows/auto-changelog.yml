@@ -1,0 +1,56 @@
+name: Auto Changelog
+
+on:
+  release:
+    types: [ published ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Update changelog with release
+        if: github.event_name == 'release'
+        run: |
+          python << 'EOF'
+          import sys
+          from datetime import datetime
+
+          version = "${{ github.event.release.tag_name }}"
+          body = "${{ github.event.release.body }}".replace('"', '\"')
+          release_date = datetime.utcnow().strftime('%Y-%m-%d')
+
+          with open('ChangeLog.md', 'r') as f:
+              content = f.read()
+
+          # Find the [Unreleased] section and insert new release after it
+          unreleased_marker = '## [Unreleased]\n'
+          if unreleased_marker in content:
+              idx = content.index(unreleased_marker) + len(unreleased_marker)
+              new_section = f"\n## [{version}] - {release_date}\n\n{body}\n"
+              content = content[:idx] + new_section + content[idx:]
+
+          with open('ChangeLog.md', 'w') as f:
+              f.write(content)
+          EOF
+
+      - name: Get app token for AbaAbaAba-bot-like[bot]
+        id: get-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: 3410340
+          private_key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+
+      - name: Commit & push changelog as AbaAbaAba-bot-like[bot]
+        run: |
+          git config --local user.name "AbaAbaAba-bot-like[bot]"
+          git config --local user.email "AbaAbaAba-bot-like[bot]@users.noreply.github.com"
+          git add ChangeLog.md
+          git commit -m "[Bot]: update changelog for ${{ github.event.release.tag_name }}" || exit 0
+          git push https://x-access-token:${{ steps.get-token.outputs.token }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
