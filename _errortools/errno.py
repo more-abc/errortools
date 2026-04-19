@@ -5,10 +5,10 @@ def get_errno_name(code: int) -> str | None:
     """Get the symbolic name for an errno code.
 
     Args:
-        code: The errno code (e.g., 2 for ENOENT)
+        code: The numeric errno code (e.g., 2 for ENOENT)
 
     Returns:
-        The errno name (e.g., "ENOENT") or None if not found
+        The symbolic errno name (e.g., "ENOENT") or None if not found
     """
     for name in dir(errno):
         if name.isupper() and getattr(errno, name) == code:
@@ -17,25 +17,28 @@ def get_errno_name(code: int) -> str | None:
 
 
 def get_errno_message(code: int) -> str:
-    """Get the error message for an errno code.
+    """Get the corresponding message description for an errno code.
 
     Args:
-        code: The errno code
+        code: The numeric errno code
 
     Returns:
-        The error message string
+        The message string corresponding to the errno code
+
+    Raises:
+        ValueError: If the given errno code is invalid
     """
-    try:
-        return errno.errorcode.get(code, f"Unknown error {code}")
-    except (AttributeError, KeyError):
-        return f"Unknown error {code}"
+    if not is_valid_errno(code):
+        raise ValueError(f"Unknown error code: {code}")
+    
+    return errno.errorcode.get(code, f"Unknown error {code}")
 
 
 def get_all_errno_codes() -> dict[str, int]:
-    """Get a mapping of all errno names to their numeric codes.
+    """Get a dictionary of all errno constant names and their numeric codes.
 
     Returns:
-        Dictionary mapping errno names to their numeric values
+        Dictionary mapping uppercase errno names to their integer values
     """
     codes = {}
     for name in dir(errno):
@@ -50,29 +53,32 @@ def get_all_errno_codes() -> dict[str, int]:
 
 
 def is_valid_errno(code: int) -> bool:
-    """Check if a code is a valid errno constant.
+    """Check whether a given integer is a valid system errno code.
 
     Args:
-        code: The code to check
+        code: The numeric code to validate
 
     Returns:
-        True if the code is a valid errno, False otherwise
+        True if the code corresponds to a known errno constant, False otherwise
     """
     return get_errno_name(code) is not None
 
 
 def strerror(code: int) -> str:
-    """Get human-readable error message for errno code.
+    """Get the human-readable system error message for an errno code.
 
     Args:
-        code: The errno code
+        code: The numeric errno code
 
     Returns:
-        Error message string
+        Human-readable error message string
+
+    Raises:
+        ValueError: If the error code is not recognized by the system
     """
     import os
 
     try:
         return os.strerror(code)
     except (ValueError, OSError):
-        return f"Unknown error {code}"
+        raise ValueError(f"Unknown error code: {code}")

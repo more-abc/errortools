@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-## v2.3.1 -2026-04-19
+## v2.3.3 -2026-04-19
+- Refactor and optimize _errortools/errno.py.
+- Change tests/test_errno.py to refactor version.
+
+## v2.3.2 -2026-04-19
 - Use `typing.Final`  in _errortools/logging/level.py.
 
 ## v2.3.1 - 2026-04-19

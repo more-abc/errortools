@@ -2,6 +2,8 @@
 
 import errno
 
+import pytest
+
 from _errortools.errno import (
     get_errno_name,
     get_errno_message,
@@ -37,8 +39,9 @@ class TestGetErrnoMessage:
         assert len(message) > 0
 
     def test_invalid_errno_message(self):
-        message = get_errno_message(9999)
-        assert "Unknown error" in message or len(message) > 0
+        with pytest.raises(ValueError):
+            message = get_errno_message(9999)
+            assert "Unknown error" in message or len(message) > 0
 
     def test_errno_two_message(self):
         message = get_errno_message(2)
