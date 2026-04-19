@@ -18,7 +18,7 @@ def _cmd_log(message: str, level: str, output: str) -> None:
 
     stream = sys.stdout if output == "stdout" else sys.stderr
     log = BaseLogger(name="errortools-cli")
-    log.set_level("TRACE") 
+    log.set_level("TRACE")
     log.add(stream, level=level, colorize=None)
     log.log(get_level(level), message)
 
