@@ -11,6 +11,12 @@ from _errortools.ignore import (
     timeout,
     retry,
 )
+from _errortools.errno import (
+    get_errno_message,
+    get_errno_name,
+    get_all_errno_codes,
+    is_valid_errno,
+)
 from _errortools.classes.group import BaseGroup, GroupErrors
 from _errortools.decorator.cache import error_cache
 from _errortools.decorator.deprecated import deprecated, experimental
@@ -99,6 +105,10 @@ __all__ = [
     "ignore_warns",
     "timeout",
     "retry",
+    "get_errno_message",
+    "get_errno_name",
+    "get_all_errno_codes",
+    "is_valid_errno",
     "deprecated",
     "experimental",
     "error_cache",
