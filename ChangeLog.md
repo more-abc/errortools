@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## v2.3.1 -2026-04-19
+- Use `typing.Final`  in _errortools/logging/level.py.
+
+## v2.3.1 - 2026-04-19
+- Use `typing.Final`  in _errortools/const.py.
+
 ## Release v2.3.0 - 2026-04-19
 - Release 2.3.0
 
