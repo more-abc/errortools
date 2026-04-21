@@ -4,6 +4,7 @@ A lightweight Python exception handling utility library.
 ## Features
 - **Raise Exceptions**: `raises()`, `raises_all()`, `reraise()` — batch raising and exception conversion
 - **Catch & Suppress**: `ignore()`, `ignore_subclass()`, `ignore_warns()`, `fast_ignore()`, `super_fast_ignore()`, `timeout()`, `retry()` — graceful suppression of exceptions and warnings, with automatic retry
+- **Future Utilities**: `super_fast_catch()`, `super_fast_reraise()`, `ExceptionCollector` — lightweight exception handling for high-performance scenarios
 - **Exception Caching**: `error_cache` — cache exceptions raised by functions (similar to `lru_cache`)
 - **Custom Exceptions**: `PureBaseException`, `ContextException`, `BaseErrorCodes`, `BaseWarning` — structured exception classes with error codes, trace IDs, and context
 - **Attribute Error Mixin**: Customize error behavior for attribute access, assignment, and deletion
@@ -27,7 +28,7 @@ from errortools import (
     error_cache,
     PureBaseException, ContextException, BaseErrorCodes, BaseWarning,
 )
-from errortools.future import super_fast_ignore
+from errortools.future import super_fast_ignore, super_fast_catch, super_fast_reraise, ExceptionCollector
 
 # ── 1. ignore ── context manager with full metadata ──────────────────────────
 with ignore(KeyError) as err:
@@ -119,7 +120,27 @@ raises_all(
 exc = assert_raises(int, [ValueError], "not-a-number")
 print(exc)   # invalid literal for int() with base 10: 'not-a-number'
 
-# ── 10. error_cache ── cache exceptions by call arguments ─────────────────────
+# ── 10. super_fast_catch ── lightweight exception capture ──────────────────────
+with super_fast_catch(ValueError) as ctx:
+    raise ValueError("oops")
+    
+assert ctx.exception is not None
+print(ctx.exception)  # ValueError('oops')
+
+# ── 11. super_fast_reraise ── lightweight exception type conversion ────────────
+with super_fast_reraise(KeyError, ValueError):
+    raise KeyError("missing")           # → ValueError: 'missing'
+
+# ── 12. ExceptionCollector ── batch collect exceptions ───────────────────────────
+collector = ExceptionCollector()
+collector.catch(int, "bad1")
+collector.catch(int, "bad2")
+
+if collector.has_errors:
+    print(f"Collected {collector.count} errors")
+    collector.raise_all("batch operation failed")  # → ExceptionGroup (2 sub-exceptions)
+
+# ── 13. error_cache ── cache exceptions by call arguments ─────────────────────
 @error_cache(maxsize=64)
 def load(user_id: int) -> dict:
     if user_id < 0:
@@ -132,7 +153,7 @@ with ignore(ValueError):
 print(load.cache_info())  # CacheInfo(hits=0, misses=1, maxsize=64, currsize=1)
 load.clear_cache()
 
-# ── 11. Custom exceptions — three layers ──────────────────────────────────────
+# ── 14. Custom exceptions — three layers ──────────────────────────────────────
 
 # Layer 1: PureBaseException — code + detail only
 class AppError(PureBaseException):
@@ -168,7 +189,7 @@ raise BaseErrorCodes.runtime_failure("crash")             # RuntimeFailure     [
 raise BaseErrorCodes.timeout_failure()                    # TimeoutFailure     [4002]
 raise BaseErrorCodes.configuration_error("missing key")   # ConfigurationError [5001]
 
-# ── 12. BaseWarning ── structured warnings with factory methods ───────────────
+# ── 15. BaseWarning ── structured warnings with factory methods ───────────────
 class ExperimentalWarning(BaseWarning):
     default_detail = "This feature is experimental."
 
