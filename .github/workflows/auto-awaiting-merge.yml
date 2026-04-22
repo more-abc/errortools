@@ -1,0 +1,25 @@
+name: Add Awaiting merge when tests pass
+
+on:
+  workflow_run:
+    workflows:
+      - build
+    types:
+      - completed
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  add-label:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.pull_requests[0].number != null
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add Awaiting merge label
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ github.event.workflow_run.pull_requests[0].number }}
+          labels: |
+            Awaiting merge
