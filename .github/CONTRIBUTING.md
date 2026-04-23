@@ -13,7 +13,7 @@ Thank you for your interest in contributing to **errortools**! We welcome contri
 
 1. **Fork and clone the repository:**
    ```bash
-   git clone https://github.com/your-username/errortools.git
+   git clone https://github.com/more-abc/errortools.git
    cd errortools
    ```
 
@@ -61,8 +61,8 @@ pytest
 
 ```bash
 git add change_file
-git commit -am "Descriptive commit message"
-git push origin type/your-issue-name
+git commit -m "Descriptive commit message"
+git push origin type/your-branch-name
 ```
 
 ### 5. Open a Pull Request
@@ -134,7 +134,8 @@ errortools/
 ├── .github/              # GitHub templates and workflows
 ├── setup.py              # Package configuration
 ├── pytest.ini            # Pytest configuration
-└── requirements-dev.txt  # Development dependencies
+├── requirements-dev.txt  # Development dependencies
+└── ...
 ```
 
 ## Module Overview
@@ -146,6 +147,7 @@ errortools/
 - **logging/**: Structured logging functionality
 - **decorator/**: Decorators for error handling and caching
 - **typing.py**: Type aliases for common patterns
+- **...**
 
 ## Configuration Files
 
@@ -153,6 +155,7 @@ errortools/
 - **.flake8**: Flake8 linter settings
 - **mypy.ini**: MyPy type checker configuration
 - **.editorconfig**: Editor configuration for consistency
+- **...**
 
 ## Code of Conduct
 
