@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ## Release v2.4.0 - 2026-04-23
-- Release 2.3.0
+- Release 2.4.0
 
 ## v2.3.5 - 2026-04-23
 - Add docstring in `_errortools/errno.py`.
