@@ -1,3 +1,5 @@
+"""Lightweight utilities for errno error code inspection and handling."""
+
 import errno
 
 
