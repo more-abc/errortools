@@ -1,4 +1,4 @@
-# errortools (on branch stable/2.x.x)
+# errortools (on branch 2.3.0)
 A lightweight Python exception handling utility library.
 
 ## Features
