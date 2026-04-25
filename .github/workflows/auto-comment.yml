@@ -19,7 +19,7 @@ jobs:
     if: ${{ (github.event_name == 'issues' && github.event.action == 'opened') || (github.event_name == 'pull_request' && github.event.action == 'opened') }}
     steps:
       - name: Auto Welcome Comment
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number || github.event.pull_request.number }}
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.merged == true }}
     steps:
-      - uses: peter-evans/create-or-update-comment@v4
+      - uses: peter-evans/create-or-update-comment@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
@@ -46,7 +46,7 @@ jobs:
     if: ${{ github.event_name == 'issues' && github.event.action == 'closed' }}
     steps:
       - name: Auto Closed Issue Comment
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
@@ -60,7 +60,7 @@ jobs:
     if: ${{ github.event_name == 'pull_request' && github.event.action == 'review_requested' }}
     steps:
       - name: Auto Review Requested Comment
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
