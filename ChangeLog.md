@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## v2.4.3 - 2026-04-25
+- Show log level icons in default logging output.
+- Fix logging file tests on Windows by reading UTF-8 log files explicitly.
+
 ## v2.4.2 - 2026-04-25
 - Add logging submodule im errortools module.
 - Add future submodule im errortools module.

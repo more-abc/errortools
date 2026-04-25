@@ -124,7 +124,9 @@ class TestBaseLoggerLevelMethods:
 
     def test_debug(self):
         self.lg.debug("debug line")
-        assert "DEBUG" in self._out()
+        out = self._out()
+        assert "⚙ DEBUG" in out
+        assert "debug line" in out
 
     def test_info(self):
         self.lg.info("info line")
@@ -536,7 +538,7 @@ class TestFileSink:
         lg.add(log_path)
         lg.info("file write")
         lg.remove()
-        assert "file write" in log_path.read_text()
+        assert "file write" in log_path.read_text(encoding="utf-8")
 
     def test_appends_on_reopen(self, tmp_path):
         log_path = tmp_path / "app.log"
@@ -545,7 +547,7 @@ class TestFileSink:
             lg.add(log_path)
             lg.info(msg)
             lg.remove()
-        content = log_path.read_text()
+        content = log_path.read_text(encoding="utf-8")
         assert "first" in content
         assert "second" in content
 
@@ -576,7 +578,7 @@ class TestFileSink:
         lg.warning("dropped")
         lg.error("kept")
         lg.remove()
-        content = log_path.read_text()
+        content = log_path.read_text(encoding="utf-8")
         assert "dropped" not in content
         assert "kept" in content
 
@@ -587,7 +589,7 @@ class TestFileSink:
 
         sink.emit(make_record(Level.INFO, "string path", "root", 1, False, {}))
         sink.close()
-        assert "string path" in Path(log_path).read_text()
+        assert "string path" in Path(log_path).read_text(encoding="utf-8")
 
 
 # =============================================================================

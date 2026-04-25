@@ -1,6 +1,6 @@
 """Tests for `errortools` module. Using pytest."""
 
-__version__ = "1.12"
+__version__ = "1.13"
 
 try:
     import pytest

@@ -48,8 +48,8 @@ def _format_record(record: Record, colorize: bool, fmt: str | None) -> str:
         )
     else:
         # Default format (loguru-inspired)
-        # 2024-01-01 12:00:00.000 | INFO     | module 10 - message
-        level_tag = f"{lv.name:<8}"
+        # 2024-01-01 12:00:00.000 | ℹ INFO     | module 10 - message
+        level_tag = f"{lv.icon} {lv.name:<8}"
         location = f"{Path(record.file).stem}:{record.function}:{record.line}"
 
         if colorize:
