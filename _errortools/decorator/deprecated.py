@@ -53,7 +53,7 @@ def experimental(
         @wraps(func)
         def wrapper(*args, **kwargs):
             msg = f"{func.__name__} is experimental. {reason}"
-            warnings.warn(msg, UserWarning, stacklevel=2)
+            warnings.warn(msg, FutureWarning, stacklevel=2)
             return func(*args, **kwargs)
 
         return wrapper
