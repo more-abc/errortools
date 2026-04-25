@@ -131,7 +131,7 @@ class TestExperimentalWarning:
         def f():
             pass
 
-        with pytest.warns(UserWarning) as record:
+        with pytest.warns(FutureWarning) as record:
             f()
 
         assert len(record) == 1
@@ -143,7 +143,7 @@ class TestExperimentalWarning:
         def f():
             pass
 
-        with pytest.warns(UserWarning) as record:
+        with pytest.warns(FutureWarning) as record:
             f()
 
         assert "Subject to change" in str(record[0].message)
@@ -153,7 +153,7 @@ class TestExperimentalWarning:
         def f():
             pass
 
-        with pytest.warns(UserWarning) as record:
+        with pytest.warns(FutureWarning) as record:
             f()
 
         # Ensure warning points to caller, not wrapper
