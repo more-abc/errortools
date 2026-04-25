@@ -74,7 +74,9 @@ ignoreSubclassOSError: Callable = partial(ignore_subclass, OSError)
 
 ignoreUserWarning: Callable = partial(ignore_warns, UserWarning)
 ignoreDeprecationWarning: Callable = partial(ignore_warns, DeprecationWarning)
-ignorePendingDeprecationWarning: Callable = partial(ignore_warns, PendingDeprecationWarning)
+ignorePendingDeprecationWarning: Callable = partial(
+    ignore_warns, PendingDeprecationWarning
+)
 ignoreRuntimeWarning: Callable = partial(ignore_warns, RuntimeWarning)
 ignoreSyntaxWarning: Callable = partial(ignore_warns, SyntaxWarning)
 ignoreFutureWarning: Callable = partial(ignore_warns, FutureWarning)
@@ -141,7 +143,6 @@ __all__ = [
     "ignoreNotImplementedError",
     "ignoreOverflowError",
     "ignoreTimeoutError",
-
     # fast_ignore
     "fast_ignoreTypeError",
     "fast_ignoreValueError",
@@ -158,11 +159,9 @@ __all__ = [
     "fast_ignoreNotImplementedError",
     "fast_ignoreOverflowError",
     "fast_ignoreTimeoutError",
-
     # ignore_subclass
     "ignoreSubclassException",
     "ignoreSubclassOSError",
-
     # ignore_warns
     "ignoreUserWarning",
     "ignoreDeprecationWarning",
@@ -174,7 +173,6 @@ __all__ = [
     "ignoreUnicodeWarning",
     "ignoreBytesWarning",
     "ignoreResourceWarning",
-
     # timeout
     "timeout_1s",
     "timeout_2s",
@@ -182,7 +180,6 @@ __all__ = [
     "timeout_5s",
     "timeout_10s",
     "timeout_30s",
-
     # retry
     "retry_1",
     "retry_2",
@@ -194,7 +191,6 @@ __all__ = [
     "retry_3_delay_1s",
     "retry_3_delay_2s",
     "retry_5_delay_1s",
-
     # cache
     "unlimited_error_cache",
     "lru_error_cache",

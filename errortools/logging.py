@@ -19,19 +19,26 @@ Quick start::
         int("oops")
 """
 
-from _errortools.logging import *
+from _errortools.logging import (
+    logger,
+    BaseLogger,
+    Level,
+    get_level,
+    LEVELS,
+    Record,
+    BaseSink,
+    StreamSink,
+    FileSink,
+    CallableSink,
+)
 
 __all__ = [
-    # Core objects
     "logger",
     "BaseLogger",
-    # Level helpers
     "Level",
     "get_level",
     "LEVELS",
-    # Record
     "Record",
-    # Sinks
     "BaseSink",
     "StreamSink",
     "FileSink",

@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## v2.4.2 - 2026-04-25
+- Add logging submodule im errortools module.
+- Add future submodule im errortools module.
+- Add partial submodule im errortools module.
+- Add type hints in `_errortools/partial.py`.
+
 ## v2.4.1 - 2026-04-25
 - `experimental` decorator now warns `FutureWarning`.
 
