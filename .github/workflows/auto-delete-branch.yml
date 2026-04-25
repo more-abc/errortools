@@ -6,7 +6,7 @@ jobs:
   delete:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v7
+      - uses: actions/github-script@v9
         with:
           script: |
             if (context.payload.pull_request.merged) {
