@@ -4,6 +4,10 @@ A lightweight Python exception handling utility library.
 [![Code Style: Google](https://img.shields.io/badge/style-google-3666d6.svg)](https://google.github.io/styleguide/pyguide.html#s3.8-comments-and-docstrings)
 [![PyPI Version](https://img.shields.io/pypi/v/errortools)](https://pypi.org/project/errortools/)
 [![Python Versions](https://img.shields.io/pypi/pyversions/errortools)](https://pypi.org/project/errortools/)
+![This week commits](https://img.shields.io/github/commit-activity/w/more-abc/errortools)
+![This month commits](https://img.shields.io/github/commit-activity/m/more-abc/errortools)
+![Past year commits](https://img.shields.io/github/commit-activity/y/more-abc/errortools)
+![Total commits badge](https://img.shields.io/github/commit-activity/t/more-abc/errortools)
 
 ## Features
 - **Raise Exceptions**: `raises()`, `raises_all()`, `reraise()` — batch raising and exception conversion
