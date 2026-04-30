@@ -9,7 +9,9 @@ _CLI_INFO: dict[str, list[str]] = {
         "logger = _errortools.cli:main",
     ]
 }
-_DESCRIPTION: str = "errortools - a toolset for working with Python exceptions and warnings and logging."
+_DESCRIPTION: str = (
+    "errortools - a toolset for working with Python exceptions and warnings and logging."
+)
 _URL: str = "https://github.com/more-abc/errortools"
 _AUTHOR: str = "Evan Yang"
 _AUTHOR_EMAIL: str = "quantbit@126.com"
