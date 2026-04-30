@@ -4,8 +4,13 @@ import copy
 import shutil
 import csv
 import configparser
+import sys
 
-from typing_extensions import disjoint_base  # I use 3.14.3
+if sys.version_info >= (3, 15):
+    from typing import disjoint_base
+else:
+    from typing_extensions import disjoint_base
+
 from ..methods import (
     ErrorAttrMixin,
     ErrorAttrCheckMixin,

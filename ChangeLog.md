@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## v2.4.4 - 2026-04-30
+- Add Python 3.15 compatibility for `disjoint_base` imports by using `typing` on 3.15+ and `typing_extensions` on earlier versions.
+- Update packaging metadata for v2.4.4, including Python 3.15 classifier support and conditional dependency handling in `setup.py`.
+
 ## v2.4.3 - 2026-04-25
 - Show log level icons in default logging output.
 - Fix logging file tests on Windows by reading UTF-8 log files explicitly.
