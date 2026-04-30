@@ -1,6 +1,10 @@
 # errortools
 A lightweight Python exception handling utility library.
 
+[![Code Style: Google](https://img.shields.io/badge/style-google-3666d6.svg)](https://google.github.io/styleguide/pyguide.html#s3.8-comments-and-docstrings)
+[![PyPI Version](https://img.shields.io/pypi/v/errortools)](https://pypi.org/project/errortools/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/errortools)](https://pypi.org/project/errortools/)
+
 ## Features
 - **Raise Exceptions**: `raises()`, `raises_all()`, `reraise()` — batch raising and exception conversion
 - **Catch & Suppress**: `ignore()`, `ignore_subclass()`, `ignore_warns()`, `fast_ignore()`, `super_fast_ignore()`, `timeout()`, `retry()` — graceful suppression of exceptions and warnings, with automatic retry
