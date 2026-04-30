@@ -220,9 +220,9 @@ logger.success("All systems operational")
 Output (colourised in a terminal):
 
 ```
-2026-01-01 12:00:00.123 | INFO     | app:main:42 - Server started on port 8080
-2026-01-01 12:00:00.124 | WARNING  | app:main:43 - Disk at 92.5%
-2026-01-01 12:00:00.125 | SUCCESS  | app:main:44 - All systems operational
+2026-04-30 08:34:21.850 | ℹ INFO     | <string>:<module>:3 - Server started on port 8080
+2026-04-30 08:34:21.851 | ⚠ WARNING  | <string>:<module>:4 - Disk at 92.5%
+2026-04-30 08:34:21.851 | ✔ SUCCESS  | <string>:<module>:5 - All systems operational
 ```
 
 ### Log levels
