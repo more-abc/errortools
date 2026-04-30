@@ -74,6 +74,6 @@ else:
         package_data={"errortools": ["py.typed"]},
         include_package_data=True,
         python_requires=">=3.10",
-        install_requires=["namebyauthor==1.0.0"],
+        install_requires=["namebyauthor==1.0.0", "typing_extensions>=4.8.0"],
         entry_points=_CLI_INFO,
     )
