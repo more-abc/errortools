@@ -19,3 +19,9 @@ htmlcov/
 
 # Settings
 .vscode/
+
+# readthedocs/sphinx
+docs/_build/
+docs/_static/
+docs/_templates/
+docs/.doctrees/
