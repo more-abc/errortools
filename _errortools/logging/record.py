@@ -6,9 +6,16 @@ import sys
 import threading
 import traceback
 from dataclasses import dataclass, field
-from datetime import datetime, UTC
+from datetime import datetime
 from types import TracebackType
 from typing import Any
+
+if sys.version_info >= (3, 9):
+    from datetime import UTC
+else:
+    from datetime import timezone
+
+    UTC = timezone.utc
 
 from .level import Level
 

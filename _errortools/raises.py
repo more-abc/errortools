@@ -1,5 +1,6 @@
 """Utilities for raising exceptions."""
 
+import sys
 from contextlib import contextmanager
 from itertools import product
 from typing import Callable, Any
@@ -107,45 +108,47 @@ def assert_raises(
     )
 
 
-def raises_all(
-    errors: Iterable[type[Exception]],
-    msgs: Iterable[str],
-    baseerror: type[Exception] = Exception,
-    group_msg: str = "multiple errors",
-) -> None:
-    """Validate exception types and raise all (error, message) combinations as an ExceptionGroup.
+if sys.version_info >= (3, 11):
 
-    Args:
-        errors: An iterable of exception types to include in the group.
-        msgs: An iterable of message strings to pair with each exception type.
-        baseerror: The base exception class that every type in *errors* must
-            inherit from.  Defaults to `Exception`.
-        group_msg: The message attached to the `ExceptionGroup` itself.
-            Defaults to ``"multiple errors"``.
+    def raises_all(
+        errors: Iterable[type[Exception]],
+        msgs: Iterable[str],
+        baseerror: type[Exception] = Exception,
+        group_msg: str = "multiple errors",
+    ) -> None:
+        """Validate exception types and raise all (error, message) combinations as an ExceptionGroup.
 
-    Raises:
-        TypeError: If any type in *errors* is not a subclass of *baseerror*.
-        ExceptionGroup: Containing one ``errors[i](msgs[j])`` instance for
-            every ``(i, j)`` pair in the Cartesian product.
+        Args:
+            errors: An iterable of exception types to include in the group.
+            msgs: An iterable of message strings to pair with each exception type.
+            baseerror: The base exception class that every type in *errors* must
+                inherit from.  Defaults to `Exception`.
+            group_msg: The message attached to the `ExceptionGroup` itself.
+                Defaults to ``"multiple errors"``.
 
-    Example:
-        >>> raises_all([ValueError, TypeError], ["bad input"])
-        Traceback (most recent call last):
-            ...
-        ExceptionGroup: multiple errors (2 sub-exceptions)
-    """
-    # NOTE: Computes the Cartesian product of *errors* x *msgs*, validates that every
-    # error type is a subclass of *baseerror*, then raises a single
-    # `ExceptionGroup` containing one instantiated exception per pair.
-    # If the product is empty (either iterable is empty) the function returns
-    # without raising.
-    pairs = _warp_list_product(errors, msgs)
-    if not pairs:
-        return
-    for error, _ in pairs:
-        if not _is_base_subclass(error=error, baseerror=baseerror):
-            raise TypeError(f"{error!r} is not a subclass of {baseerror.__name__}")
-    raise ExceptionGroup(group_msg, [error(msg) for error, msg in pairs])
+        Raises:
+            TypeError: If any type in *errors* is not a subclass of *baseerror*.
+            ExceptionGroup: Containing one ``errors[i](msgs[j])`` instance for
+                every ``(i, j)`` pair in the Cartesian product.
+
+        Example:
+            >>> raises_all([ValueError, TypeError], ["bad input"])
+            Traceback (most recent call last):
+                ...
+            ExceptionGroup: multiple errors (2 sub-exceptions)
+        """
+        # NOTE: Computes the Cartesian product of *errors* x *msgs*, validates that every
+        # error type is a subclass of *baseerror*, then raises a single
+        # `ExceptionGroup` containing one instantiated exception per pair.
+        # If the product is empty (either iterable is empty) the function returns
+        # without raising.
+        pairs = _warp_list_product(errors, msgs)
+        if not pairs:
+            return
+        for error, _ in pairs:
+            if not _is_base_subclass(error=error, baseerror=baseerror):
+                raise TypeError(f"{error!r} is not a subclass of {baseerror.__name__}")
+        raise ExceptionGroup(group_msg, [error(msg) for error, msg in pairs])
 
 
 @contextmanager

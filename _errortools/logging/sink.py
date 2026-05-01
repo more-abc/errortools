@@ -5,9 +5,16 @@ from __future__ import annotations
 import sys
 import threading
 from abc import ABC, abstractmethod
-from datetime import datetime, UTC
+from datetime import datetime
 from pathlib import Path
 from typing import IO, Any
+
+if sys.version_info >= (3, 9):
+    from datetime import UTC
+else:
+    from datetime import timezone
+
+    UTC = timezone.utc
 
 from .level import Level
 from .record import Record

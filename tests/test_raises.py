@@ -1,5 +1,7 @@
 """Tests for _errortools/raises.py — raises, assert_raises, raises_all, reraise."""
 
+import sys
+
 import pytest
 
 from _errortools.raises import raises, assert_raises, raises_all, reraise
@@ -97,44 +99,45 @@ class TestAssertRaises:
 # =============================================================================
 
 
-class TestRaisesAll:
-    def test_raises_exception_group(self):
-        with pytest.raises(ExceptionGroup) as exc_info:
-            raises_all([ValueError, TypeError], ["bad"])
-        grp = exc_info.value
-        assert len(grp.exceptions) == 2
+if sys.version_info >= (3, 11):
 
-    def test_group_message(self):
-        with pytest.raises(ExceptionGroup) as exc_info:
-            raises_all([ValueError], ["oops"], group_msg="my errors")
-        assert exc_info.value.message == "my errors"
+    class TestRaisesAll:
+        def test_raises_exception_group(self):
+            with pytest.raises(ExceptionGroup) as exc_info:
+                raises_all([ValueError, TypeError], ["bad"])
+            grp = exc_info.value
+            assert len(grp.exceptions) == 2
 
-    def test_cartesian_product_count(self):
-        """2 errors × 3 messages = 6 exceptions."""
-        with pytest.raises(ExceptionGroup) as exc_info:
-            raises_all([ValueError, TypeError], ["m1", "m2", "m3"])
-        assert len(exc_info.value.exceptions) == 6
+        def test_group_message(self):
+            with pytest.raises(ExceptionGroup) as exc_info:
+                raises_all([ValueError], ["oops"], group_msg="my errors")
+            assert exc_info.value.message == "my errors"
 
-    def test_empty_errors_no_raise(self):
-        raises_all([], ["msg"])  # no raise
+        def test_cartesian_product_count(self):
+            with pytest.raises(ExceptionGroup) as exc_info:
+                raises_all([ValueError, TypeError], ["m1", "m2", "m3"])
+            assert len(exc_info.value.exceptions) == 6
 
-    def test_empty_msgs_no_raise(self):
-        raises_all([ValueError], [])  # no raise
+        def test_empty_errors_no_raise(self):
+            raises_all([], ["msg"])  # no raise
 
-    def test_type_error_on_non_subclass(self):
-        with pytest.raises(TypeError):
-            raises_all([ValueError], ["msg"], baseerror=LookupError)
+        def test_empty_msgs_no_raise(self):
+            raises_all([ValueError], [])  # no raise
 
-    def test_default_group_msg(self):
-        with pytest.raises(ExceptionGroup) as exc_info:
-            raises_all([ValueError], ["x"])
-        assert exc_info.value.message == "multiple errors"
+        def test_type_error_on_non_subclass(self):
+            with pytest.raises(TypeError):
+                raises_all([ValueError], ["msg"], baseerror=LookupError)
 
-    def test_sub_exception_types(self):
-        with pytest.raises(ExceptionGroup) as exc_info:
-            raises_all([ValueError, TypeError], ["msg"])
-        types = {type(e) for e in exc_info.value.exceptions}
-        assert types == {ValueError, TypeError}
+        def test_default_group_msg(self):
+            with pytest.raises(ExceptionGroup) as exc_info:
+                raises_all([ValueError], ["x"])
+            assert exc_info.value.message == "multiple errors"
+
+        def test_sub_exception_types(self):
+            with pytest.raises(ExceptionGroup) as exc_info:
+                raises_all([ValueError, TypeError], ["msg"])
+            types = {type(e) for e in exc_info.value.exceptions}
+            assert types == {ValueError, TypeError}
 
 
 # =============================================================================

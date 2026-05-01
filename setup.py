@@ -2,7 +2,7 @@ import sys
 
 from setuptools import setup, find_packages
 
-_VERSION: str = "2.5.0"
+_VERSION: str = "2.5.1"
 _CLI_INFO: dict[str, list[str]] = {
     "console_scripts": [
         "python -m errortools = _errortools.cli:main",
@@ -31,11 +31,6 @@ if sys.version_info >= (3, 15):
         classifiers=[
             "License :: OSI Approved :: MIT License",
             "Programming Language :: Python :: 3",
-            "Programming Language :: Python :: 3.10",
-            "Programming Language :: Python :: 3.11",
-            "Programming Language :: Python :: 3.12",
-            "Programming Language :: Python :: 3.13",
-            "Programming Language :: Python :: 3.14",
             "Programming Language :: Python :: 3.15",
             "Operating System :: OS Independent",
             "Typing :: Typed",
@@ -61,6 +56,8 @@ else:
         classifiers=[
             "License :: OSI Approved :: MIT License",
             "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 3.8",
+            "Programming Language :: Python :: 3.9",
             "Programming Language :: Python :: 3.10",
             "Programming Language :: Python :: 3.11",
             "Programming Language :: Python :: 3.12",
