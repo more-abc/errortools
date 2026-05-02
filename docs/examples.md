@@ -5,6 +5,7 @@ Real-world examples demonstrating errortools usage.
 ## Web API Error Handling
 
 ```python
+import requests
 from errortools import ContextException, ignore
 from errortools.logging import logger
 
@@ -38,9 +39,10 @@ with logger.catch(APIError):
 ## Database Connection with Retry
 
 ```python
+import asyncio
+
 from errortools import retry, timeout
 from errortools.logging import logger
-import asyncio
 
 @retry(times=3, on=(ConnectionError, TimeoutError), delay=2.0)
 @timeout(10.0)
