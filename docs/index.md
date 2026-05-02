@@ -49,11 +49,18 @@ pip install errortools
 ## Documentation Structure
 
 ```{toctree}
-:maxdepth: 2
-
+---
+maxdepth: 2
+caption: Contents
+---
 installation
 quickstart
 core-features
+exception-handling
+raising-exceptions
+decorators
+custom-exceptions
+warnings
 future-module
 logging
 api-reference
