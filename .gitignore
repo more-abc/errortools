@@ -24,3 +24,5 @@ htmlcov/
 docs/_build/
 docs/_templates/
 docs/.doctrees/
+docs/Makefile
+docs/make.bat
