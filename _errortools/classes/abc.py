@@ -29,7 +29,6 @@ def _check_methods(C: type[Any], *methods: str) -> Union[bool, Literal[NotImplem
     return True
 
 
-
 # ----------------------------------------------------------------------
 # ErrorCodeable
 # ----------------------------------------------------------------------
