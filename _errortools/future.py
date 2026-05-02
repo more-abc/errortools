@@ -8,10 +8,13 @@ from typing import TypeAlias, cast, Literal
 try:
     from _errortools._speedup import fast_issubclass_check, fast_append_exception
 except ImportError:
+
     def fast_issubclass_check(typ, excs):  # type: ignore
         return typ is not None and issubclass(typ, excs)
+
     def fast_append_exception(lst, exc):  # type: ignore
         lst.append(exc)
+
 
 __all__ = [
     "super_fast_ignore",

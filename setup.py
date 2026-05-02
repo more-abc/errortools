@@ -19,9 +19,9 @@ _LICENSE: str = "MIT"
 
 # C extension for performance
 _speedup_module = Extension(
-    '_errortools._speedup',
-    sources=['_errortools/_speedup.c'],
-    extra_compile_args=['/O2'] if sys.platform == 'win32' else ['-O3', '-march=native'],
+    "_errortools._speedup",
+    sources=["_errortools/_speedup.c"],
+    extra_compile_args=["/O2"] if sys.platform == "win32" else ["-O3", "-march=native"],
 )
 
 if sys.version_info >= (3, 15):
