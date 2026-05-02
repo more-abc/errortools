@@ -1,8 +1,8 @@
 import sys
 
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, Extension
 
-_VERSION: str = "2.5.1"
+_VERSION: str = "2.5.2"
 _CLI_INFO: dict[str, list[str]] = {
     "console_scripts": [
         "python -m errortools = _errortools.cli:main",
@@ -16,6 +16,13 @@ _URL: str = "https://github.com/more-abc/errortools"
 _AUTHOR: str = "Evan Yang"
 _AUTHOR_EMAIL: str = "quantbit@126.com"
 _LICENSE: str = "MIT"
+
+# C extension for performance
+_speedup_module = Extension(
+    '_errortools._speedup',
+    sources=['_errortools/_speedup.c'],
+    extra_compile_args=['/O2'] if sys.platform == 'win32' else ['-O3', '-march=native'],
+)
 
 if sys.version_info >= (3, 15):
     setup(
@@ -41,6 +48,7 @@ if sys.version_info >= (3, 15):
         python_requires=">=3.15",
         install_requires=["namebyauthor==1.0.0"],
         entry_points=_CLI_INFO,
+        ext_modules=[_speedup_module],
     )
 else:
     setup(
@@ -73,4 +81,5 @@ else:
         python_requires=">=3.10",
         install_requires=["namebyauthor==1.0.0", "typing_extensions>=4.8.0"],
         entry_points=_CLI_INFO,
+        ext_modules=[_speedup_module],
     )

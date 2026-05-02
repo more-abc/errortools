@@ -4,6 +4,15 @@ from __future__ import annotations
 
 from typing import TypeAlias, cast, Literal
 
+# Try to import C speedup
+try:
+    from _errortools._speedup import fast_issubclass_check, fast_append_exception
+except ImportError:
+    def fast_issubclass_check(typ, excs):  # type: ignore
+        return typ is not None and issubclass(typ, excs)
+    def fast_append_exception(lst, exc):  # type: ignore
+        lst.append(exc)
+
 __all__ = [
     "super_fast_ignore",
     "super_fast_catch",
@@ -26,10 +35,7 @@ class super_fast_ignore:
         return
 
     def __exit__(self, typ: _ExcType | None, *_) -> bool:
-        if typ is None:
-            return False
-        excs = self.excs
-        return issubclass(typ, excs)
+        return fast_issubclass_check(typ, self.excs)
 
 
 class super_fast_catch:
@@ -54,7 +60,7 @@ class super_fast_catch:
         return self
 
     def __exit__(self, typ: _ExcType | None, val, *_) -> bool:
-        if typ is None or not issubclass(typ, self.excs):
+        if not fast_issubclass_check(typ, self.excs):
             return False
         self.exception = val
         return True
@@ -117,7 +123,7 @@ class ExceptionCollector:
 
     def __exit__(self, exc_typ, exc_val, *_) -> bool:
         if exc_typ is not None:
-            self._exceptions.append(exc_val)
+            fast_append_exception(self._exceptions, exc_val)
             if self._stop_on_first:
                 return False
             return True
@@ -129,14 +135,14 @@ class ExceptionCollector:
             func(*args, **kwargs)
             return False
         except BaseException as exc:
-            self._exceptions.append(exc)
+            fast_append_exception(self._exceptions, exc)
             if self._stop_on_first:
                 raise
             return True
 
     def add(self, exc: BaseException) -> None:
         """Manually add an exception."""
-        self._exceptions.append(exc)
+        fast_append_exception(self._exceptions, exc)
         if self._stop_on_first:
             raise exc
 
