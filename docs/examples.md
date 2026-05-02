@@ -5,7 +5,8 @@ Real-world examples demonstrating errortools usage.
 ## Web API Error Handling
 
 ```python
-from errortools import ContextException, ignore, logger
+from errortools import ContextException, ignore
+from errortools.logging import logger
 
 class APIError(ContextException):
     code = 5000
@@ -37,7 +38,8 @@ with logger.catch(APIError):
 ## Database Connection with Retry
 
 ```python
-from errortools import retry, timeout, logger
+from errortools import retry, timeout
+from errortools.logging import logger
 import asyncio
 
 @retry(times=3, on=(ConnectionError, TimeoutError), delay=2.0)
@@ -57,7 +59,7 @@ conn = await connect_db("localhost", 5432)
 
 ```python
 from errortools.future import ExceptionCollector
-from errortools import logger
+from errortools.logging import logger
 
 def process_batch(items: list[dict]) -> None:
     collector = ExceptionCollector()
@@ -89,9 +91,9 @@ def process_item(item: dict) -> None:
 from errortools import (
     BaseErrorCodes,
     ignore,
-    ConfigurationWarning,
-    logger
+    ConfigurationWarning
 )
+from errortools.logging import logger
 
 def load_config(path: str) -> dict:
     with ignore(FileNotFoundError) as err:
@@ -228,9 +230,8 @@ print(validate_user_token.cache_info())
 ```python
 from errortools import (
     ContextException,
-    ignore_subclass,
-    logger
-)
+    ignore_subclass)
+from errortools.logging import logger
 
 class DataError(ContextException):
     code = 6000
