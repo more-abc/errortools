@@ -38,7 +38,7 @@ class super_fast_ignore:
         return
 
     def __exit__(self, typ: _ExcType | None, *_) -> bool:
-        return fast_issubclass_check(typ, self.excs)
+        return cast(bool, fast_issubclass_check(typ, self.excs))
 
 
 class super_fast_catch:
