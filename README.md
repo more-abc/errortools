@@ -15,7 +15,6 @@ A lightweight Python exception handling utility library.
 - **Future Utilities**: `super_fast_catch()`, `super_fast_reraise()`, `ExceptionCollector` — lightweight exception handling for high-performance scenarios
 - **Exception Caching**: `error_cache` — cache exceptions raised by functions (similar to `lru_cache`)
 - **Custom Exceptions**: `PureBaseException`, `ContextException`, `BaseErrorCodes`, `BaseWarning` — structured exception classes with error codes, trace IDs, and context
-- **Attribute Error Mixin**: Customize error behavior for attribute access, assignment, and deletion
 - **Type Aliases**: `ExceptionType`, `AnyErrorCode`, `BaseErrorCodesType`, and more
 - **Logging**: `logger` — loguru-inspired structured logger with leveled output, multiple sinks, context binding, and exception capture
 

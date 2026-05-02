@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## v2.5.4 - 2026-05-02
+- Delete 4 classes in `/methods`.
+- Delete 1 class in `classes/abc.py`.
+- Delete tests for 5 delete classes.
+
 ## v2.5.3 - 2026-05-02
 - Fix type error by mypy in `future.py`.
 

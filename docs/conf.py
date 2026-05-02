@@ -10,7 +10,7 @@ project = "errortools"
 copyright = "(C) 2026 aiwonderland and more-abc team"
 author = "aiwonderland"
 release = "2.5.0"
-version = "2.5.3"
+version = "2.5.4"
 
 
 # -- General configuration ---------------------------------------------------
