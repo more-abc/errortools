@@ -50,7 +50,7 @@ class super_fast_catch:
         self.excs = excs if excs else (BaseException,)
         self.exception: BaseException | None = None
 
-    def __enter__(self) -> "super_fast_catch":
+    def __enter__(self) -> super_fast_catch:
         return self
 
     def __exit__(self, typ: _ExcType | None, val, *_) -> bool:
