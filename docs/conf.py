@@ -9,7 +9,9 @@
 project = "errortools"
 copyright = "(C) 2026 aiwonderland and more-abc team"
 author = "aiwonderland"
-release = "2.5.1"
+release = "2.5.0"
+version = "2.5.1"
+
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

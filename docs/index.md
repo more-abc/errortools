@@ -1,5 +1,9 @@
 # errortools
 
+<p align="center">
+  <img src="_static/img/main.png" alt="errortools logo" width="220">
+</p>
+
 A lightweight Python exception handling utility library.
 
 ## Overview
@@ -65,4 +69,5 @@ future-module
 logging
 api-reference
 examples
+mascot
 ```
