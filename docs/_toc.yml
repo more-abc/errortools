@@ -1,0 +1,16 @@
+format: jb-book
+root: index
+chapters:
+  - file: installation
+  - file: quickstart
+  - file: core-features
+    sections:
+      - file: exception-handling
+      - file: raising-exceptions
+      - file: decorators
+      - file: custom-exceptions
+      - file: warnings
+  - file: future-module
+  - file: logging
+  - file: api-reference
+  - file: examples

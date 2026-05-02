@@ -1,3 +1,61 @@
-# errortools documentation
+# errortools
 
-Hello! this is errortools documentation.
+A lightweight Python exception handling utility library.
+
+## Overview
+
+**errortools** provides a comprehensive toolkit for working with Python exceptions, warnings, and logging. It offers both high-level convenience functions and low-overhead utilities for performance-critical code.
+
+## Key Features
+
+- **Exception Handling**: Context managers and decorators for graceful error suppression
+- **Batch Operations**: Raise multiple exceptions at once with `raises_all()` and `ExceptionGroup`
+- **Retry & Timeout**: Automatic retry logic and async timeout decorators
+- **Custom Exceptions**: Structured exception classes with error codes, trace IDs, and context
+- **Future Module**: Zero-overhead exception handling for hot paths
+- **Logging**: Loguru-inspired structured logger with no external dependencies
+- **Type Safety**: Full type hints and type aliases for better IDE support
+
+## Quick Example
+
+```python
+from errortools import ignore, retry, BaseErrorCodes, logger
+
+# Suppress exceptions with metadata
+with ignore(KeyError) as err:
+    _ = {}["missing"]
+    
+print(err.be_ignore)  # True
+print(err.exception)  # KeyError('missing')
+
+# Automatic retry on failure
+@retry(times=3, on=ConnectionError, delay=1.0)
+def connect(host: str):
+    ...
+
+# Structured exceptions with error codes
+raise BaseErrorCodes.not_found("user #42")  # NotFoundError [3001]
+
+# Structured logging
+logger.info("Server started on port {}", 8080)
+```
+
+## Installation
+
+```bash
+pip install errortools
+```
+
+## Documentation Structure
+
+```{toctree}
+:maxdepth: 2
+
+installation
+quickstart
+core-features
+future-module
+logging
+api-reference
+examples
+```
