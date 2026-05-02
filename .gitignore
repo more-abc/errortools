@@ -1,26 +1,34 @@
 # Python
 .venv/
+venv/
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
 
-# build
+# Build & Distribution
 dist/
-errortools.egg-info/
-pypi_token.txt 
-# HaHaHa
+build/
+*.egg-info/
+*.egg
+pypi_token.txt
 
-# mypy
+# Type Checker (mypy)
 .mypy_cache/
 
-# Pytest
+# Testing & Coverage
 .pytest_cache/
 htmlcov/
 .coverage
+coverage.xml
 
-# Settings
+# IDE & Editor Settings
 .vscode/
+.idea/
+*.swp
+*.swo
 
-# readthedocs/sphinx
+# Documentation (readthedocs/sphinx)
 docs/_build/
 docs/_templates/
 docs/.doctrees/
