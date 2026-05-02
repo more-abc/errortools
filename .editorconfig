@@ -7,6 +7,18 @@ end_of_line = lf
 charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
+
 [*.py]
-comment_style = # 
 max_line_length = 120  
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.txt]
+trim_trailing_whitespace = false
+
+[*.{yml,yaml,ini}]
+indent_size = 2
+
+[.gitignore]
+indent_size = 4
