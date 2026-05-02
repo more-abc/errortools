@@ -23,7 +23,8 @@ A lightweight Python exception handling utility library.
 ## Quick Example
 
 ```python
-from errortools import ignore, retry, BaseErrorCodes, logger
+from errortools import ignore, retry, BaseErrorCodes
+from errortools.logging import logger
 
 # Suppress exceptions with metadata
 with ignore(KeyError) as err:
