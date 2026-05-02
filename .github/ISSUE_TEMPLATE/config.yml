@@ -4,7 +4,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: Documentation
-    url: https://github.com/more-abc/errortools#readme
+    url: https://errortools.readthedocs.io/
     about: Check the official documentation first.
 
   - name: Ask a question
