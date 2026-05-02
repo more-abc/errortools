@@ -4,11 +4,6 @@ import pytest
 
 from _errortools.descriptor.errormsg import ErrorMsg
 from _errortools.descriptor.nonblankmsg import NonBlankErrorMsg
-from . import HAS_PYTEST
-
-if not HAS_PYTEST:
-    print("pytest is required to run these tests, skip run test_descriptor.py")
-    exit(0)
 
 # =============================================================================
 # ErrorMsg Descriptor

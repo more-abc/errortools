@@ -6,11 +6,6 @@ from _errortools.const import (
     DEFAULT_ERROR_CACHE_SIZE,
     UNLIMITED_ERROR_CACHE,
 )
-from . import HAS_PYTEST
-
-if not HAS_PYTEST:
-    print("pytest is required to run these tests, skip run test_const.py")
-    exit(0)
 
 
 def test_constant_types():

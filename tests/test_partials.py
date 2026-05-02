@@ -39,11 +39,6 @@ from _errortools.partial import (
     retry_3,
     retry_1_delay_1s,
 )
-from . import HAS_PYTEST
-
-if not HAS_PYTEST:
-    print("pytest is required to run these tests, skip run test_partials.py")
-    exit(0)
 
 
 # =============================================================================

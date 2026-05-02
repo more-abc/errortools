@@ -6,11 +6,6 @@ import pytest
 
 from _errortools.decorator.cache import error_cache
 from _errortools.decorator.deprecated import deprecated, experimental
-from . import HAS_PYTEST
-
-if not HAS_PYTEST:
-    print("pytest is required to run these tests, skip run test_decorator.py")
-    exit(0)
 
 # =============================================================================
 # deprecated decorator

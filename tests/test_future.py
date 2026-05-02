@@ -8,12 +8,6 @@ from _errortools.future import (
     super_fast_reraise,
     ExceptionCollector,
 )
-from . import HAS_PYTEST
-
-if not HAS_PYTEST:
-    print("pytest is required to run these tests, skip run test_future.py")
-    exit(0)
-
 
 # =============================================================================
 # super_fast_ignore

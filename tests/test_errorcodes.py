@@ -13,11 +13,6 @@ from _errortools.classes.errorcodes import (
     TimeoutFailure,
     ConfigurationError,
 )
-from . import HAS_PYTEST
-
-if not HAS_PYTEST:
-    print("pytest is required to run these tests, skip run test_errorcodes.py")
-    exit(0)
 
 # =============================================================================
 # PureBaseException

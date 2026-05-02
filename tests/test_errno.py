@@ -11,11 +11,6 @@ from _errortools.errno import (
     is_valid_errno,
     strerror,
 )
-from . import HAS_PYTEST
-
-if not HAS_PYTEST:
-    print("pytest is required to run these tests, skip run test_errno.py")
-    exit(0)
 
 
 class TestGetErrnoName:

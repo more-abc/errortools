@@ -5,11 +5,6 @@ import sys
 import pytest
 
 from _errortools.classes.group import GroupErrors, BaseGroup
-from . import HAS_PYTEST
-
-if not HAS_PYTEST:
-    print("pytest is required to run these tests, skip run test_groups.py")
-    exit(0)
 
 # =============================================================================
 # GroupErrors — collect / raise_group / clear
