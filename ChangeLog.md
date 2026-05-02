@@ -4,10 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## v2.5.3 - 2026-05-02
+- Fix type error by mypy in `future.py`.
+
 ## v2.5.2 - 2026-05-02
-- Add C extension module `_speedup` for performance optimization in `future.py`
+- Add C extension module `_speedup` for performance optimization in `future.py`.
 - Optimize exception type checking (`issubclass`) and list append operations with C implementation
-- Automatic fallback to pure Python when C extension is unavailable
+- Automatic fallback to pure Python when C extension is unavailable.
 
 ## v2.5.1 - 2026-05-01
 - Improve compatibility across Python 3.8 to 3.15.

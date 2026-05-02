@@ -6,13 +6,13 @@ from typing import TypeAlias, cast, Literal
 
 # Try to import C speedup
 try:
-    from _errortools._speedup import fast_issubclass_check, fast_append_exception
+    from _errortools._speedup import fast_issubclass_check, fast_append_exception  # type: ignore[import-not-found]
 except ImportError:
 
-    def fast_issubclass_check(typ, excs):  # type: ignore
+    def fast_issubclass_check(typ, excs) -> bool:
         return typ is not None and issubclass(typ, excs)
 
-    def fast_append_exception(lst, exc):  # type: ignore
+    def fast_append_exception(lst, exc) -> None:
         lst.append(exc)
 
 
