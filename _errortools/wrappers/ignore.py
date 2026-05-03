@@ -6,7 +6,7 @@ if sys.version_info <= (3, 10):
     from typing_extensions import TypeAlias
 else:
     from typing import TypeAlias
-    
+
 from typing import Any, Generic, TypeVar, Optional
 
 _T = TypeVar("_T", bound=Callable[..., Any])

@@ -6,7 +6,7 @@ if sys.version_info <= (3, 10):
     from typing_extensions import TypeAlias
 else:
     from typing import TypeAlias
-from typing import Any, Generic, NamedTuple, Optional, TypeAlias, TypeVar
+from typing import Any, Generic, NamedTuple, Optional, TypeVar
 
 _T = TypeVar("_T", bound=Callable[..., Any])
 _Key: TypeAlias = tuple[
