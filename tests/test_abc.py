@@ -17,8 +17,6 @@ import configparser
 # Import the ABC classes to test
 from _errortools.classes.abc import ErrorCodeable, Warnable, Raiseable, Error
 
-# NOTE: Tests for `ErrorAttrable` was in `test_mixin.py`.
-
 
 # =============================================================================
 # ErrorCodeable ABC Tests
