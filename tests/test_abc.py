@@ -17,7 +17,6 @@ import configparser
 # Import the ABC classes to test
 from _errortools.classes.abc import ErrorCodeable, Warnable, Raiseable, Error
 
-
 # =============================================================================
 # ErrorCodeable ABC Tests
 # =============================================================================
