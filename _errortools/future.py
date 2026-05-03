@@ -1,8 +1,13 @@
 """Future-focused lightweight exception handling utilities."""
 
 from __future__ import annotations
+import sys
 
-from typing import TypeAlias, cast, Literal
+if sys.version_info <= (3, 10):
+    from typing_extensions import TypeAlias
+else:
+    from typing import TypeAlias
+from typing import cast, Literal
 
 # Try to import C speedup
 try:

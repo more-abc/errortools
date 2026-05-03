@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## v2.5.5 - 2026-05-03
+- Improve compatibility for `TypeAlias` across Python 3.8 to 3.15 in some files.
+
 ## v2.5.4 - 2026-05-02
 - Delete 4 classes in `/methods`.
 - Delete 1 class in `classes/abc.py`.

@@ -1,6 +1,12 @@
 from collections import OrderedDict
 from collections.abc import Hashable, Callable
-from typing import Any, Generic, TypeVar, Optional, TypeAlias, NamedTuple
+import sys
+
+if sys.version_info <= (3, 10):
+    from typing_extensions import TypeAlias
+else:
+    from typing import TypeAlias
+from typing import Any, Generic, NamedTuple, Optional, TypeAlias, TypeVar
 
 _T = TypeVar("_T", bound=Callable[..., Any])
 _Key: TypeAlias = tuple[

@@ -2,7 +2,7 @@ import sys
 
 from setuptools import setup, find_packages, Extension
 
-_VERSION: str = "2.5.4"
+_VERSION: str = "2.5.5"
 _CLI_INFO: dict[str, list[str]] = {
     "console_scripts": [
         "python -m errortools = _errortools.cli:main",
@@ -24,62 +24,35 @@ _speedup_module = Extension(
     extra_compile_args=["/O2"] if sys.platform == "win32" else ["-O3", "-march=native"],
 )
 
-if sys.version_info >= (3, 15):
-    setup(
-        name="errortools",
-        version=_VERSION,
-        description=_DESCRIPTION,
-        long_description=open("README.md", encoding="utf-8").read(),
-        long_description_content_type="text/markdown",
-        url=_URL,
-        author=_AUTHOR,
-        author_email=_AUTHOR_EMAIL,
-        license=_LICENSE,
-        classifiers=[
-            "License :: OSI Approved :: MIT License",
-            "Programming Language :: Python :: 3",
-            "Programming Language :: Python :: 3.15",
-            "Operating System :: OS Independent",
-            "Typing :: Typed",
-        ],
-        packages=find_packages(),
-        package_data={"errortools": ["py.typed"]},
-        include_package_data=True,
-        python_requires=">=3.15",
-        install_requires=["namebyauthor==1.0.0"],
-        entry_points=_CLI_INFO,
-        ext_modules=[_speedup_module],
-    )
-else:
-    setup(
-        name="errortools",
-        version=_VERSION,
-        description=_DESCRIPTION,
-        long_description=open("README.md", encoding="utf-8").read(),
-        long_description_content_type="text/markdown",
-        url=_URL,
-        author=_AUTHOR,
-        author_email=_AUTHOR_EMAIL,
-        license=_LICENSE,
-        classifiers=[
-            "License :: OSI Approved :: MIT License",
-            "Programming Language :: Python :: 3",
-            "Programming Language :: Python :: 3.8",
-            "Programming Language :: Python :: 3.9",
-            "Programming Language :: Python :: 3.10",
-            "Programming Language :: Python :: 3.11",
-            "Programming Language :: Python :: 3.12",
-            "Programming Language :: Python :: 3.13",
-            "Programming Language :: Python :: 3.14",
-            "Programming Language :: Python :: 3.15",
-            "Operating System :: OS Independent",
-            "Typing :: Typed",
-        ],
-        packages=find_packages(),
-        package_data={"errortools": ["py.typed"]},
-        include_package_data=True,
-        python_requires=">=3.10",
-        install_requires=["namebyauthor==1.0.0", "typing_extensions>=4.8.0"],
-        entry_points=_CLI_INFO,
-        ext_modules=[_speedup_module],
-    )
+setup(
+    name="errortools",
+    version=_VERSION,
+    description=_DESCRIPTION,
+    long_description=open("README.md", encoding="utf-8").read(),
+    long_description_content_type="text/markdown",
+    url=_URL,
+    author=_AUTHOR,
+    author_email=_AUTHOR_EMAIL,
+    license=_LICENSE,
+    classifiers=[
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.15",
+        "Operating System :: OS Independent",
+        "Typing :: Typed",
+    ],
+    packages=find_packages(),
+    package_data={"errortools": ["py.typed"]},
+    include_package_data=True,
+    python_requires=">=3.8",
+    install_requires=["namebyauthor==1.0.0", "typing_extensions>=4.8.0"],
+    entry_points=_CLI_INFO,
+    ext_modules=[_speedup_module],
+)

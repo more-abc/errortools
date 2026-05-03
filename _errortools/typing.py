@@ -1,6 +1,12 @@
 """Public type aliases for errortools exception classes."""
 
-from typing import TypeAlias, Union
+import sys
+
+if sys.version_info <= (3, 10):
+    from typing_extensions import TypeAlias
+else:
+    from typing import TypeAlias
+from typing import Union
 
 from .classes.errorcodes import (
     PureBaseException,
