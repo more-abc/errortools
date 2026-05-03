@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## Release v3.0.0- 2026-05-03
+- Release 3.0.0
+
 ## v2.5.5 - 2026-05-03
 - Improve compatibility for `TypeAlias` across Python 3.8 to 3.15 in some files.
 

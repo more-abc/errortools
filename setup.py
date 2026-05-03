@@ -2,7 +2,7 @@ import sys
 
 from setuptools import setup, find_packages, Extension
 
-_VERSION: str = "2.5.5"
+_VERSION: str = "3.0.0"
 _CLI_INFO: dict[str, list[str]] = {
     "console_scripts": [
         "python -m errortools = _errortools.cli:main",
