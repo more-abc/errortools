@@ -10,6 +10,7 @@ __pycache__/
 # Build & Distribution
 dist/
 build/
+errortools.egg-info/
 pypi_token.txt
 
 # Type Checker (mypy)
