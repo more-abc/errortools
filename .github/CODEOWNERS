@@ -1,20 +1,19 @@
-/tests/                      @more-abc/core-dev-team
-/tests/run_tests.py          @more-abc/core-dev-team @aiwonderland 
+/testsing/                      @more-abc/core-dev-team
 /_errortools/                @more-abc/core-dev-team
-/_errortools/ignore.py       @more-abc/core-dev-team @aiwonderland 
 /errortools/                 @more-abc/core-dev-team
-/.github/                    @more-abc/core-dev-team @aiwonderland
+/.github/                    @more-abc/core-dev-team 
 
 requirements-dev.txt         @more-abc/core-dev-team
 README.md                    @more-abc/core-dev-team
+ChangeLog.md                 @more-abc/core-dev-team
 setup.py                     @more-abc/core-dev-team
+build.bat                    @more-abc/core-dev-team
 
-.black                       @aiwonderland @more-abc/core-dev-team
 .editorconfig                @aiwonderland @more-abc/core-dev-team
 .flake8                      @aiwonderland @more-abc/core-dev-team
 .gitignore                   @more-abc/core-dev-team
 pytest.ini                   @aiwonderland @more-abc/core-dev-team
 mypy.ini                     @aiwonderland @more-abc/core-dev-team
 
-AUTHORS.txt                  @more-abc/core-dev-team @aiwonderland 
+AUTHORS.txt                  @more-abc/core-dev-team
 LICENSE.txt                  @more-abc/core-dev-team @aiwonderland
