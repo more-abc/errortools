@@ -1,6 +1,6 @@
 import sys
 
-from setuptools import setup, find_packages, Extension
+from setuptools import setup, Extension
 
 _VERSION: str = "3.0.1"
 _CLI_INFO: dict[str, list[str]] = {
@@ -48,7 +48,7 @@ setup(
         "Operating System :: OS Independent",
         "Typing :: Typed",
     ],
-    packages=find_packages(),
+    packages=["_errortools", "errortools", "testing"],
     package_data={"errortools": ["py.typed"]},
     include_package_data=True,
     python_requires=">=3.8",
