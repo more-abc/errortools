@@ -1,6 +1,6 @@
 """Tests for `errortools` module. Using pytest."""
 
-__version__ = "1.17"
+__version__ = "1.1.18"
 try:
     import pytest
 except ImportError:
