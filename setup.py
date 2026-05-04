@@ -1,7 +1,6 @@
 import sys
 
 from setuptools import setup, Extension
-from mypyc.build import mypycify
 
 _VERSION: str = "3.0.2"
 _CLI_INFO: dict[str, list[str]] = {
@@ -24,8 +23,6 @@ _speedup_module = Extension(
     sources=["_errortools/_speedup.c"],
     extra_compile_args=["/O2"] if sys.platform == "win32" else ["-O3", "-march=native"],
 )
-compiled_modules = mypycify(["_errortools", "errortools", "testing"])
-all_ext_modules = [_speedup_module] + compiled_modules
 
 setup(
     name="errortools",
@@ -57,5 +54,5 @@ setup(
     python_requires=">=3.8",
     install_requires=["namebyauthor==1.0.0", "typing_extensions>=4.8.0"],
     entry_points=_CLI_INFO,
-    ext_modules=all_ext_modules,
+    ext_modules=[_speedup_module],
 )
