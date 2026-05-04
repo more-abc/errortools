@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## v3.0.2 - 2026-05-04
+- Let mypyc OK.
+
 ## v3.0.1 - 2026-05-04
 - Optimize exception handling functions in _speedup.c
 

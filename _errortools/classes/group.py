@@ -68,54 +68,56 @@ class BaseGroup(Exception, ABC):
         )
 
 
-if sys.version_info >= (3, 11):
+class GroupErrors(BaseGroup):
+    """A collector that accumulates exceptions and raises them as an ExceptionGroup.
 
-    class GroupErrors(BaseGroup):
-        """A collector that accumulates exceptions and raises them as an ExceptionGroup.
+    Call `collect` to add exceptions one by one, then `raise_group`
+    to raise them all at once.  Use `errors` to inspect what has been
+    collected without raising.
 
-        Call `collect` to add exceptions one by one, then `raise_group`
-        to raise them all at once.  Use `errors` to inspect what has been
-        collected without raising.
+    Example:
 
-        Example:
+        >>> g = GroupErrors("validation failed")
+        >>> g.collect(TypeError("expected str"))
+        >>> g.collect(ValueError("value out of range"))
+        >>> g.raise_group()
+        Traceback (most recent call last):
+            ...
+        ExceptionGroup: validation failed (2 sub-exceptions)
+    """
 
-            >>> g = GroupErrors("validation failed")
-            >>> g.collect(TypeError("expected str"))
-            >>> g.collect(ValueError("value out of range"))
-            >>> g.raise_group()
-            Traceback (most recent call last):
-                ...
-            ExceptionGroup: validation failed (2 sub-exceptions)
+    def __init__(self, group_msg: str = "multiple errors") -> None:
+        super().__init__(group_msg)
+        self._errors: list[Exception] = []
+
+    @property
+    def errors(self) -> list[Exception]:
+        """A copy of the collected exceptions."""
+        return list(self._errors)
+
+    def collect(self, exc: Exception) -> None:
+        """Add *exc* to the group without raising it.
+
+        Args:
+            exc: The exception instance to collect.
         """
+        self._errors.append(exc)
 
-        def __init__(self, group_msg: str = "multiple errors") -> None:
-            super().__init__(group_msg)
-            self._errors: list[Exception] = []
+    def clear(self) -> None:
+        """Remove all collected exceptions."""
+        self._errors.clear()
 
-        @property
-        def errors(self) -> list[Exception]:
-            """A copy of the collected exceptions."""
-            return list(self._errors)
+    def raise_group(self) -> None:
+        """Raise all collected exceptions as an `ExceptionGroup`.
 
-        def collect(self, exc: Exception) -> None:
-            """Add *exc* to the group without raising it.
+        Does nothing if no exceptions have been collected.
 
-            Args:
-                exc: The exception instance to collect.
-            """
-            self._errors.append(exc)
+        Raises:
+            ExceptionGroup: Containing every exception added via `collect`.
+        """
+        if self._errors:
+            raise ExceptionGroup(self.group_msg, self._errors)
 
-        def clear(self) -> None:
-            """Remove all collected exceptions."""
-            self._errors.clear()
 
-        def raise_group(self) -> None:
-            """Raise all collected exceptions as an `ExceptionGroup`.
-
-            Does nothing if no exceptions have been collected.
-
-            Raises:
-                ExceptionGroup: Containing every exception added via `collect`.
-            """
-            if self._errors:
-                raise ExceptionGroup(self.group_msg, self._errors)
+if sys.version_info <= (3, 10):
+    del GroupErrors
