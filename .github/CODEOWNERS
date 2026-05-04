@@ -4,8 +4,8 @@
 /.github/                    @more-abc/core-dev-team 
 
 requirements-dev.txt         @more-abc/core-dev-team
-README.md                    @more-abc/core-dev-team
-ChangeLog.md                 @more-abc/core-dev-team
+README.md                    @more-abc/core-dev-team @more-abc/doc
+ChangeLog.md                 @more-abc/core-dev-team @more-abc/doc
 setup.py                     @more-abc/core-dev-team
 build.bat                    @more-abc/core-dev-team
 
@@ -16,8 +16,8 @@ pytest.ini                   @aiwonderland @more-abc/core-dev-team
 mypy.ini                     @aiwonderland @more-abc/core-dev-team
 
 AUTHORS.txt                  @more-abc/core-dev-team
-LICENSE.txt                  @more-abc/core-dev-team @aiwonderland
+LICENSE.txt                  @more-abc/core-dev-team
 
-.readthedocs.yaml            @more-abc/core-dev-team
-/docs/                       @more-abc/core-dev-team
-/emeps/                      @more-abc/core-dev-team
+.readthedocs.yaml            @more-abc/doc
+/docs/                       @more-abc/doc
+/emeps/                      @more-abc/doc
