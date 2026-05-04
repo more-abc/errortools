@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-## Release v3.0.0- 2026-05-03
+## v3.0.1 - 2026-05-04
+- Optimize exception handling functions in _speedup.c
+
+## Release v3.0.0 - 2026-05-03
 - Fix flake8 error F811 in `_errortools\wrappers\cache.py`.
 - Fix flake8 error W293 in `_errortools\wrappers\ignore.py`.
 
