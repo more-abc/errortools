@@ -17,3 +17,7 @@ mypy.ini                     @aiwonderland @more-abc/core-dev-team
 
 AUTHORS.txt                  @more-abc/core-dev-team
 LICENSE.txt                  @more-abc/core-dev-team @aiwonderland
+
+.readthedocs.yaml            @more-abc/core-dev-team
+/docs/                       @more-abc/core-dev-team
+/emeps/                      @more-abc/core-dev-team
