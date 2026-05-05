@@ -4,8 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## v3.0.3 - 2026-05-05
+- deprecated 4 type alias in `_errortools/typing.py`.
+
 ## v3.0.2 - 2026-05-04
-- Let mypyc OK.
+- ~~Let mypyc OK.~~ Now use mypyc now.
 
 ## v3.0.1 - 2026-05-04
 - Optimize exception handling functions in _speedup.c
@@ -45,9 +48,9 @@ All notable changes to this project will be documented in this file.
 - Fix logging file tests on Windows by reading UTF-8 log files explicitly.
 
 ## v2.4.2 - 2026-04-25
-- Add logging submodule im errortools module.
-- Add future submodule im errortools module.
-- Add partial submodule im errortools module.
+- Add logging submodule in errortools module.
+- Add future submodule in errortools module.
+- Add partial submodule in errortools module.
 - Add type hints in `_errortools/partial.py`.
 
 ## v2.4.1 - 2026-04-25

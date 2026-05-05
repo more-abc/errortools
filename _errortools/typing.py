@@ -63,16 +63,28 @@ AnyErrorCode: TypeAlias = Union[
 """Union of all predefined error-code subclasses."""
 
 InputError: TypeAlias = InvalidInputError
-"""Alias for `InvalidInputError` (1001)."""
+"""Alias for `InvalidInputError` (1001).
+
+.. deprecated:: 3.0.0
+    This type alias is deprecated as it is redundant."""
 
 AccessError: TypeAlias = AccessDeniedError
-"""Alias for `AccessDeniedError` (2001)."""
+"""Alias for `AccessDeniedError` (2001).
+
+.. deprecated:: 3.0.0
+    This type alias is deprecated as it is redundant."""
 
 LookupError_: TypeAlias = NotFoundError
-"""Alias for `NotFoundError` (3001). Trailing underscore avoids shadowing builtins."""
+"""Alias for `NotFoundError` (3001). Trailing underscore avoids shadowing builtins.
+
+.. deprecated:: 3.0.0
+    This type alias is deprecated as it is redundant."""
 
 RuntimeError_: TypeAlias = Union[RuntimeFailure, TimeoutFailure]
-"""Union of runtime-related errors: `RuntimeFailure` (4001) and `TimeoutFailure` (4002)."""
+"""Union of runtime-related errors: `RuntimeFailure` (4001) and `TimeoutFailure` (4002).
+
+.. deprecated:: 3.0.0
+    This type alias is deprecated as it is redundant."""
 
 # ---------------------------------------------------------------------------
 # More type aliases
