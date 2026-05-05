@@ -4,8 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## v3.0.4 - 2026-05-05
+- Deprecated `fast_ignore` in `_errortools/ignore.py`.
+
 ## v3.0.3 - 2026-05-05
-- deprecated 4 type alias in `_errortools/typing.py`.
+- Deprecated 4 type alias in `_errortools/typing.py`.
 
 ## v3.0.2 - 2026-05-04
 - ~~Let mypyc OK.~~ Now use mypyc now.
