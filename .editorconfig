@@ -19,6 +19,7 @@ trim_trailing_whitespace = false
 
 [*.txt]
 trim_trailing_whitespace = false
+indent_size = 4
 
 [*.{yml,yaml,ini}]
 indent_size = 2

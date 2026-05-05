@@ -1,4 +1,12 @@
+# (Lines starting with # are comments)
+# Tips:
+#   Contributors are not sorted by initials, 
+#   but by contribution time.
+# Here are the real contributors
 aiwonderland
 qorexdev
 vgauraha62
 yangphysics
+# And here are bot contributors
+dependabot[bot]
+AbaAbaAba-bot-like[bot]
