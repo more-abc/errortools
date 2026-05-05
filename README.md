@@ -8,6 +8,7 @@ A lightweight Python exception handling utility library.
 ![This month commits](https://img.shields.io/github/commit-activity/m/more-abc/errortools)
 ![Past year commits](https://img.shields.io/github/commit-activity/y/more-abc/errortools)
 ![Total commits badge](https://img.shields.io/github/commit-activity/t/more-abc/errortools)
+![OS support](https://img.shields.io/badge/OS-macOS%20Linux%20Windows-red)
 
 ## Features
 - **Raise Exceptions**: `raises()`, `raises_all()`, `reraise()` — batch raising and exception conversion
