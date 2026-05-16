@@ -59,7 +59,7 @@ assert err.traceback          # full formatted traceback string
 | `exception` | `Exception \| None` | The original exception instance |
 | `traceback` | `str \| None` | Formatted traceback string for debugging |
 
-## Examples
+## Sorry, but there was more code examples!
 
 ```python
 # ── ignore as a decorator ──
