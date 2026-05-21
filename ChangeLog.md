@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## Release v3.1.0 - 2026-05-22
+- Release 3.1.0
+
 ## v3.0.4 - 2026-05-05
 - Deprecated `fast_ignore` in `_errortools/ignore.py`.
 
@@ -39,7 +42,7 @@ All notable changes to this project will be documented in this file.
 ## v2.5.1 - 2026-05-01
 - Improve compatibility across Python 3.8 to 3.15.
 
-## v2.5.0 - 2026-05-01
+## Release v2.5.0 - 2026-05-01
 - Release 2.5.0
 
 ## v2.4.4 - 2026-04-30

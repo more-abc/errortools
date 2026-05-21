@@ -2,7 +2,7 @@ import sys
 
 from setuptools import setup, Extension
 
-_VERSION: str = "3.0.4"
+_VERSION: str = "3.1.0"
 _CLI_INFO: dict[str, list[str]] = {
     "console_scripts": [
         "python -m errortools = _errortools.cli:main",
