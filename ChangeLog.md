@@ -47,7 +47,7 @@ All notable changes to this project will be documented in this file.
 
 ## v2.4.4 - 2026-04-30
 - Add Python 3.15 compatibility for `disjoint_base` imports by using `typing` on 3.15+ and `typing_extensions` on earlier versions.
-- Update packaging metadata for v2.4.4, including Python 3.15 classifier support and conditional dependency handling in `setup.py`.
+- Update packaging metadata for v2.4.4, including Python 3.15 classifier support and conditional dependency handling in ~~`setup.py`~~`pyproject.toml`.
 
 ## v2.4.3 - 2026-04-25
 - Show log level icons in default logging output.

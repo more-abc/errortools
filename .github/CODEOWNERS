@@ -6,14 +6,11 @@
 requirements-dev.txt         @more-abc/core-dev-team
 README.md                    @more-abc/core-dev-team @more-abc/doc
 ChangeLog.md                 @more-abc/core-dev-team @more-abc/doc
-setup.py                     @more-abc/core-dev-team
+pyproject.toml               @more-abc/core-dev-team
 build.bat                    @more-abc/core-dev-team
 
 .editorconfig                @aiwonderland @more-abc/core-dev-team
-.flake8                      @aiwonderland @more-abc/core-dev-team
 .gitignore                   @more-abc/core-dev-team
-pytest.ini                   @aiwonderland @more-abc/core-dev-team
-mypy.ini                     @aiwonderland @more-abc/core-dev-team
 
 AUTHORS.txt                  @more-abc/core-dev-team
 LICENSE.txt                  @more-abc/core-dev-team

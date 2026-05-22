@@ -132,9 +132,7 @@ errortools/
 ├── errortools/           # Public API (exports)
 ├── testing/              # Test suite
 ├── .github/              # GitHub templates and workflows
-├── setup.py              # Package configuration
-├── pytest.ini            # Pytest configuration
-└── ...
+└── pyproject.toml        # Package configuration
 ```
 
 ## Module Overview
@@ -148,12 +146,6 @@ errortools/
 - **typing.py**: Type aliases for common patterns
 - **...**
 
-## Configuration Files
-
-- [**.flake8**](../.flake8): Flake8 linter settings
-- [**mypy.ini**](../mypy.ini): MyPy type checker configuration
-- [**.editorconfig**](../.editorconfig): Editor configuration for consistency
-- [**pytest.ini**](../pytest.ini): Pytest test session settings
 
 ## Code of Conduct
 
