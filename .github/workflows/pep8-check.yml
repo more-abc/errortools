@@ -41,6 +41,9 @@ jobs:
       - name: Run flake8
         run: flake8
 
+      - name: Use flake8 to check doctests
+        run: flake8 --doctests
+
       - name: Run pyflakes
         run: python -m pyflakes _errortools/
 
