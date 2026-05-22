@@ -95,23 +95,23 @@ Before submitting a PR, ensure:
 ## Reporting Issues
 
 ### Bug Reports
-Please use the [bug report template](.github/ISSUE_TEMPLATE/bug_report.md) and include:
+Please use the [bug report template](ISSUE_TEMPLATE/bug_report.md) and include:
 - Python version and OS
 - Steps to reproduce
 - Expected vs. actual behavior
 - Error messages and tracebacks
 
 ### Feature Requests
-Use the [feature request template](.github/ISSUE_TEMPLATE/feature_request.md) and describe:
+Use the [feature request template](ISSUE_TEMPLATE/feature_request.md) and describe:
 - The problem you're solving
 - Your proposed solution
 - Alternative approaches you've considered
 
 ### Documentation Issues
-Use the [documentation template](.github/ISSUE_TEMPLATE/docs.md) to report unclear or missing documentation.
+Use the [documentation template](ISSUE_TEMPLATE/docs.md) to report unclear or missing documentation.
 
 ### Performance Issues
-Use the [performance template](.github/ISSUE_TEMPLATE/performance.md) to report performance bottlenecks.
+Use the [performance template](ISSUE_TEMPLATE/performance.md) to report performance bottlenecks.
 
 ## Project Structure
 
@@ -150,10 +150,10 @@ errortools/
 
 ## Configuration Files
 
-- **.flake8**: Flake8 linter settings
-- **mypy.ini**: MyPy type checker configuration
-- **.editorconfig**: Editor configuration for consistency
-- **...**
+- [**.flake8**](../.flake8): Flake8 linter settings
+- [**mypy.ini**](../mypy.ini): MyPy type checker configuration
+- [**.editorconfig**](../.editorconfig): Editor configuration for consistency
+- [**pytest.ini**](../pytest.ini): Pytest test session settings
 
 ## Code of Conduct
 
