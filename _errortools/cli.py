@@ -40,9 +40,7 @@ def parse_args(args: list[str] | None = None) -> argparse.Namespace:
                 "critical",
             ],
         )
-        parser.add_argument(
-            "--output", "-o", choices=["stderr", "stdout"], default="stderr"
-        )
+        parser.add_argument("--output", "-o", choices=["stderr", "stdout"], default="stderr")
         return parser.parse_args(args)
 
     prog = "errortools"
@@ -53,24 +51,14 @@ def parse_args(args: list[str] | None = None) -> argparse.Namespace:
     else:
         parser = argparse.ArgumentParser(description=desc, prog=prog)
 
-    parser.add_argument(
-        "-v", "--version", action="store_true", help="Show version and exit"
-    )
-    parser.add_argument(
-        "-c", "--copyrights", action="store_true", help="Show copyright information"
-    )
+    parser.add_argument("-v", "--version", action="store_true", help="Show version and exit")
+    parser.add_argument("-c", "--copyrights", action="store_true", help="Show copyright information")
     parser.add_argument("-a", "--author", action="store_true", help="Show author name")
     parser.add_argument("-e", "--email", action="store_true", help="Show author email")
-    parser.add_argument(
-        "-l", "--license", action="store_true", help="Show license type"
-    )
+    parser.add_argument("-l", "--license", action="store_true", help="Show license type")
     parser.add_argument("-u", "--url", action="store_true", help="Show project URL")
-    parser.add_argument(
-        "-i", "--info", action="store_true", help="Show all package information"
-    )
-    parser.add_argument(
-        "--run-tests", action="store_true", help="Run tests using pytest"
-    )
+    parser.add_argument("-i", "--info", action="store_true", help="Show all package information")
+    parser.add_argument("--run-tests", action="store_true", help="Run tests using pytest")
 
     return parser.parse_args(args)
 

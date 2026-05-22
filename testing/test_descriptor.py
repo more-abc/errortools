@@ -26,9 +26,7 @@ class TestErrorMsg:
             attr = ErrorMsg("Cannot modify")
 
         obj = MyClass()
-        with pytest.raises(
-            AttributeError, match="Modification of this attribute is not allowed!"
-        ):
+        with pytest.raises(AttributeError, match="Modification of this attribute is not allowed!"):
             obj.attr = "new value"
 
     def test_deletion_raises_attribute_error(self):
@@ -36,9 +34,7 @@ class TestErrorMsg:
             attr = ErrorMsg("Cannot delete")
 
         obj = MyClass()
-        with pytest.raises(
-            AttributeError, match="Deletion of this attribute is not allowed!"
-        ):
+        with pytest.raises(AttributeError, match="Deletion of this attribute is not allowed!"):
             del obj.attr
 
     def test_multiple_instances_hold_own_messages(self):
@@ -131,9 +127,7 @@ class TestNonBlankErrorMsg:
             msg = NonBlankErrorMsg("Error message")
 
         obj = MyClass()
-        with pytest.raises(
-            AttributeError, match="Deletion of this attribute is not allowed!"
-        ):
+        with pytest.raises(AttributeError, match="Deletion of this attribute is not allowed!"):
             del obj.msg
 
     def test_multiple_instances_work_independently(self):

@@ -28,9 +28,7 @@ def error_cache(maxsize: Optional[int] = 128) -> Callable[[_T], ErrorCacheWrappe
 # fmt: on
 
 
-def error_cache(  # type: ignore
-    func: Optional[_T] = None, maxsize: Optional[int] = DEFAULT_ERROR_CACHE_SIZE
-) -> Any:
+def error_cache(func: Optional[_T] = None, maxsize: Optional[int] = DEFAULT_ERROR_CACHE_SIZE) -> Any:  # type: ignore
     """
     Decorator to cache exceptions raised by a function.
 

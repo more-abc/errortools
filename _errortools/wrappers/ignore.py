@@ -107,9 +107,7 @@ class ErrorIgnoreWrapper(Generic[_T]):
         self._info.name = exc_type.__name__
         self._info.be_ignore = True
         self._info.count += 1
-        self._info.traceback = "".join(
-            traceback.format_exception(exc_type, exc_val, exc_tb)
-        )
+        self._info.traceback = "".join(traceback.format_exception(exc_type, exc_val, exc_tb))
         self._info.exception = exc_val
         return True
 

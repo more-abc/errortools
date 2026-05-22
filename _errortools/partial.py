@@ -74,9 +74,7 @@ ignoreSubclassOSError: Callable = partial(ignore_subclass, OSError)
 
 ignoreUserWarning: Callable = partial(ignore_warns, UserWarning)
 ignoreDeprecationWarning: Callable = partial(ignore_warns, DeprecationWarning)
-ignorePendingDeprecationWarning: Callable = partial(
-    ignore_warns, PendingDeprecationWarning
-)
+ignorePendingDeprecationWarning: Callable = partial(ignore_warns, PendingDeprecationWarning)
 ignoreRuntimeWarning: Callable = partial(ignore_warns, RuntimeWarning)
 ignoreSyntaxWarning: Callable = partial(ignore_warns, SyntaxWarning)
 ignoreFutureWarning: Callable = partial(ignore_warns, FutureWarning)

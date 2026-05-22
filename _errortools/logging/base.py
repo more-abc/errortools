@@ -343,10 +343,7 @@ class BaseLogger:
     # ------------------------------------------------------------------
 
     def __repr__(self) -> str:
-        return (
-            f"<{type(self).__name__} name={self._name!r} "
-            f"level={self._level.name!r} sinks={len(self._sinks)}>"
-        )
+        return f"<{type(self).__name__} name={self._name!r} " f"level={self._level.name!r} sinks={len(self._sinks)}>"
 
 
 # ======================================================================
@@ -418,9 +415,7 @@ class _CatchContext:
 class _OptLogger:
     """Thin wrapper returned by `BaseLogger.opt`."""
 
-    def __init__(
-        self, logger: BaseLogger, *, exception: bool, extra_depth: int
-    ) -> None:
+    def __init__(self, logger: BaseLogger, *, exception: bool, extra_depth: int) -> None:
         self._logger = logger
         self._exception = exception
         self._depth = extra_depth

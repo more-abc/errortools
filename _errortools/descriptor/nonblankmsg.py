@@ -45,8 +45,6 @@ class NonBlankErrorMsg:
 
         stripped_value = value.strip()
         if not stripped_value:
-            raise ValueError(
-                f"{name} can't be blank, must provide a valid error message"
-            )
+            raise ValueError(f"{name} can't be blank, must provide a valid error message")
 
         return stripped_value

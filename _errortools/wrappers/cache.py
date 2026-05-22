@@ -9,9 +9,7 @@ else:
 from typing import Any, Generic, NamedTuple, Optional, TypeVar
 
 _T = TypeVar("_T", bound=Callable[..., Any])
-_Key: TypeAlias = tuple[
-    str, tuple[Hashable, ...], tuple[tuple[Hashable, Hashable], ...]
-]
+_Key: TypeAlias = tuple[str, tuple[Hashable, ...], tuple[tuple[Hashable, Hashable], ...]]
 
 
 class CacheInfo(NamedTuple):
@@ -32,9 +30,7 @@ class ErrorCacheWrapper(Generic[_T]):
 
         # Validate maxsize
         if maxsize is not None and maxsize < 0:
-            raise ValueError(
-                f"maxsize must be None or a non-negative integer, got {maxsize!r}"
-            )
+            raise ValueError(f"maxsize must be None or a non-negative integer, got {maxsize!r}")
         self._maxsize = maxsize
         self._cache: OrderedDict[_Key, Exception] = OrderedDict()
 
@@ -66,17 +62,13 @@ class ErrorCacheWrapper(Generic[_T]):
             self._cache.pop(cache_key, None)
             return result
 
-    def _make_key(
-        self, args: tuple[Hashable, ...], kwargs: dict[str, Hashable]
-    ) -> _Key:
+    def _make_key(self, args: tuple[Hashable, ...], kwargs: dict[str, Hashable]) -> _Key:
         """Generate a unique hashable key."""
         sorted_kwargs = tuple(sorted(kwargs.items()))
         return (self._func_name, args, sorted_kwargs)
 
     # ---------------------- Cache control methods (like lru_cache) ----------------------
-    def get_cached_error(
-        self, *args: Hashable, **kwargs: Hashable
-    ) -> Optional[Exception]:
+    def get_cached_error(self, *args: Hashable, **kwargs: Hashable) -> Optional[Exception]:
         """Get the cached exception for the given arguments (if exists)."""
         cache_key = self._make_key(args, kwargs)
         if cache_key in self._cache:

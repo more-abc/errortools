@@ -99,13 +99,10 @@ def assert_raises(
     except Exception as exc:
         if not isinstance(exc, expected):
             raise AssertionError(
-                f"{func!r} raised {type(exc)!r}, expected one of "
-                f"{[e.__name__ for e in expected]}"
+                f"{func!r} raised {type(exc)!r}, expected one of " f"{[e.__name__ for e in expected]}"
             ) from exc
         return exc
-    raise AssertionError(
-        f"{func!r} did not raise; expected one of " f"{[e.__name__ for e in expected]}"
-    )
+    raise AssertionError(f"{func!r} did not raise; expected one of " f"{[e.__name__ for e in expected]}")
 
 
 if sys.version_info >= (3, 11):

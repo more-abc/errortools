@@ -63,9 +63,7 @@ class BaseGroup(Exception, ABC):
         return bool(self.errors)
 
     def __repr__(self) -> str:
-        return (
-            f"{type(self).__name__}(group_msg={self.group_msg!r}, errors={len(self)})"
-        )
+        return f"{type(self).__name__}(group_msg={self.group_msg!r}, errors={len(self)})"
 
 
 class GroupErrors(BaseGroup):
