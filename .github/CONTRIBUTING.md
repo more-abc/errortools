@@ -48,10 +48,10 @@ Before pushing, ensure everything passes:
 black .
 
 # Run linter
-flake8 .
+flake8
 
 # Type check
-mypy .
+mypy
 
 # Run tests with coverage
 pytest
@@ -130,17 +130,16 @@ errortools/
 │   ├── typing.py         # Type aliases
 │   └── ...
 ├── errortools/           # Public API (exports)
-├── tests/                # Test suite
+├── testing/              # Test suite
 ├── .github/              # GitHub templates and workflows
 ├── setup.py              # Package configuration
 ├── pytest.ini            # Pytest configuration
-├── requirements-dev.txt  # Development dependencies
 └── ...
 ```
 
 ## Module Overview
 
-- **ignore.py**: Context managers for suppressing exceptions (`ignore()`, `fast_ignore()`, `timeout()`, `retry()`)
+- **ignore.py**: Context managers for suppressing exceptions (`ignore()`, `timeout()`, `retry()`)
 - **raises.py**: Functions for raising exceptions (`raises()`, `raises_all()`, `reraise()`)
 - **future.py**: High-performance utilities (`super_fast_ignore()`, `ExceptionCollector`)
 - **classes/**: Custom exception bases and error codes
@@ -151,7 +150,6 @@ errortools/
 
 ## Configuration Files
 
-- **.black**: Black formatter configuration
 - **.flake8**: Flake8 linter settings
 - **mypy.ini**: MyPy type checker configuration
 - **.editorconfig**: Editor configuration for consistency
@@ -164,8 +162,8 @@ We are committed to providing a welcoming and inclusive environment. Please be r
 ## Questions?
 
 Feel free to:
-- Open an discussion for questions
-- Create a issue or discussion for feature ideas
+- [Open an discussion](https://github.com/more-abc/errortools/discussions) for questions
+- [Create a issue](https://github.com/more-abc/errortools/issues) or [discussion](https://github.com/more-abc/errortools/discussions) for feature ideas
 - Reach out to maintainers for guidance
 
 Thank you for contributing! 🎉
