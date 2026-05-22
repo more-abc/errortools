@@ -11,7 +11,7 @@ authors = [
 ]
 description = "errortools - a toolset for working with Python exceptions and warnings and logging."
 readme = "README.md"
-license = { file = "LICENSE" }
+license = { file = "LICENSE.txt" }
 url = "https://github.com/more-abc/errortools"
 requires-python = ">=3.8"
 
