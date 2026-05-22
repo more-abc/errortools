@@ -5,7 +5,7 @@ from setuptools import setup, Extension
 _VERSION: str = "3.1.0"
 _CLI_INFO: dict[str, list[str]] = {
     "console_scripts": [
-        "python -m errortools = _errortools.cli:main",
+        # "python -m errortools = _errortools.cli:main",
         "logger = _errortools.cli:main",
     ]
 }
