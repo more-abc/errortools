@@ -286,7 +286,7 @@ class BaseLogger:
         level: str | int | Level = Level.ERROR,
         reraise: bool = False,
         message: str = "An error has been caught in function '{}', process '{}', thread '{}'",
-    ) -> "_CatchContext":
+    ) -> _CatchContext:
         """Context manager / decorator that logs uncaught exceptions.
 
         Similar to loguru's ``logger.catch()``.
