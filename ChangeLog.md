@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## v3.1.4 - 2026-05-23
+- Add `BaseDescriptor` base class in `_errortools/descriptor/base.py` for shared descriptor logic.
+- Refactor `ErrorMsg` and `NonBlankErrorMsg` to inherit from `BaseDescriptor`.
+- Add tests for `BaseDescriptor` in `testing/test_descriptor.py`.
+
 ## v3.1.3 - 2026-05-23
 - Reduce cyclomatic complexity of `main()` in `_errortools/cli.py` (C901).
 - Reduce cyclomatic complexity of `retry.__call__` in `_errortools/ignore.py` (C901).

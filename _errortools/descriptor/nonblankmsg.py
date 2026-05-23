@@ -1,10 +1,12 @@
 from typing import Any, Optional
 
+from _errortools.descriptor.base import BaseDescriptor
+
 
 # NOTE: Validates the value is a string and not empty
 # after trimming leading/trailing whitespace.
 # Stores the cleaned (stripped) value on the instance.
-class NonBlankErrorMsg:
+class NonBlankErrorMsg(BaseDescriptor):
     """Descriptor that validates an attribute is a non-blank string after stripping whitespace.
 
     Args:
@@ -22,10 +24,7 @@ class NonBlankErrorMsg:
         ValueError: Error message can't be blank, must provide a valid error message
     """
 
-    __slots__ = ("_message",)
-
-    def __init__(self, message: str) -> None:
-        self._message = message
+    __slots__ = ()
 
     def __get__(self, instance: Optional[object], owner: type[object]) -> str:
         if instance is None:
@@ -35,9 +34,6 @@ class NonBlankErrorMsg:
     def __set__(self, instance: object, value: Any) -> None:
         validated_value = self.validate(self._message, value)
         instance.__dict__[self._message] = validated_value
-
-    def __delete__(self, instance: object) -> None:
-        raise AttributeError("Deletion of this attribute is not allowed!")
 
     def validate(self, name: str, value: str) -> str:
         if not isinstance(value, str):

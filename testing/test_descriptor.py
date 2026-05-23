@@ -1,9 +1,59 @@
-"""Tests for _errortools/descriptor — ErrorMsg/NonBlankErrorMsg descriptor."""
+"""Tests for _errortools/descriptor — BaseDescriptor/ErrorMsg/NonBlankErrorMsg descriptor."""
 
 import pytest
 
+from _errortools.descriptor.base import BaseDescriptor
 from _errortools.descriptor.errormsg import ErrorMsg
 from _errortools.descriptor.nonblankmsg import NonBlankErrorMsg
+
+
+# =============================================================================
+# BaseDescriptor
+# =============================================================================
+
+
+class TestBaseDescriptor:
+    def test_stores_message(self):
+        desc = BaseDescriptor("test message")
+        assert desc._message == "test message"
+
+    def test_get_raises_not_implemented(self):
+
+        class MyClass:
+            attr = BaseDescriptor("base")
+
+        obj = MyClass()
+        with pytest.raises(NotImplementedError):
+            _ = obj.attr
+
+    def test_set_raises_not_implemented(self):
+
+        class MyClass:
+            attr = BaseDescriptor("base")
+
+        obj = MyClass()
+        with pytest.raises(NotImplementedError):
+            obj.attr = "value"
+
+    def test_delete_raises_attribute_error(self):
+
+        class MyClass:
+            attr = BaseDescriptor("base")
+
+        obj = MyClass()
+        with pytest.raises(AttributeError, match="Deletion of this attribute is not allowed!"):
+            del obj.attr
+
+    def test_subclasses_inherit_slots(self):
+        assert "_message" in BaseDescriptor.__slots__
+        assert hasattr(ErrorMsg, "__slots__")
+        assert hasattr(NonBlankErrorMsg, "__slots__")
+
+    def test_errormsg_is_subclass(self):
+        assert issubclass(ErrorMsg, BaseDescriptor)
+
+    def test_nonblankerrormsg_is_subclass(self):
+        assert issubclass(NonBlankErrorMsg, BaseDescriptor)
 
 # =============================================================================
 # ErrorMsg Descriptor

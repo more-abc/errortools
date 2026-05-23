@@ -1,9 +1,11 @@
 from typing import Optional, NoReturn
 
+from _errortools.descriptor.base import BaseDescriptor
+
 
 # NOTE: The attribute returns the preset message when accessed.
 # Any attempt to modify or delete it raises an ``AttributeError``.
-class ErrorMsg:
+class ErrorMsg(BaseDescriptor):
     """Descriptor that creates a read-only attribute with a fixed message.
 
     Args:
@@ -22,16 +24,10 @@ class ErrorMsg:
         AttributeError: Deletion of this attribute is not allowed!
     """
 
-    __slots__ = ("_message",)
-
-    def __init__(self, message: str) -> None:
-        self._message = message
+    __slots__ = ()
 
     def __get__(self, instance: Optional[object], owner: type[object]) -> str:
         return self._message
 
     def __set__(self, instance: object, value: object) -> NoReturn:
         raise AttributeError("Modification of this attribute is not allowed!")
-
-    def __delete__(self, instance: object) -> NoReturn:
-        raise AttributeError("Deletion of this attribute is not allowed!")
