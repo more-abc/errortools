@@ -260,25 +260,7 @@ class retry:
         self._on = exc_types
         self._delay = delay
 
-    def __call__(self, func: Func) -> Func:
-        if inspect.iscoroutinefunction(func):
-
-            @wraps(func)
-            async def async_wrapper(*args: Any, **kwargs: Any) -> Any:
-                last_exc: BaseException | None = None
-                for attempt in range(self._times + 1):
-                    try:
-                        return await func(*args, **kwargs)
-                    except self._on as exc:
-                        last_exc = exc
-                        if attempt < self._times and self._delay:
-                            await asyncio.sleep(self._delay)
-                if last_exc is not None:
-                    raise last_exc
-                raise RuntimeError("No exception to raise")
-
-            return async_wrapper  # type: ignore
-
+    def _sync_retry(self, func: Func) -> Func:
         @wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             last_exc: BaseException | None = None
@@ -294,3 +276,25 @@ class retry:
             raise RuntimeError("No exception to raise")
 
         return wrapper  # type: ignore
+
+    def _async_retry(self, func: Func) -> Func:
+        @wraps(func)
+        async def async_wrapper(*args: Any, **kwargs: Any) -> Any:
+            last_exc: BaseException | None = None
+            for attempt in range(self._times + 1):
+                try:
+                    return await func(*args, **kwargs)
+                except self._on as exc:
+                    last_exc = exc
+                    if attempt < self._times and self._delay:
+                        await asyncio.sleep(self._delay)
+            if last_exc is not None:
+                raise last_exc
+            raise RuntimeError("No exception to raise")
+
+        return async_wrapper  # type: ignore
+
+    def __call__(self, func: Func) -> Func:
+        if inspect.iscoroutinefunction(func):
+            return self._async_retry(func)
+        return self._sync_retry(func)

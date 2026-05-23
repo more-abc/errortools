@@ -2,6 +2,7 @@
 
 import argparse
 import sys
+from collections.abc import Callable
 
 from _errortools._cli import _cmd_log, _print_info
 
@@ -63,6 +64,24 @@ def parse_args(args: list[str] | None = None) -> argparse.Namespace:
     return parser.parse_args(args)
 
 
+def _run_tests() -> None:
+    from testing.run_tests import run_tests
+
+    run_tests()
+
+
+_FLAG_ACTIONS: dict[str, Callable[[], None]] = {
+    "version": lambda: print(f"v{__version__}"),
+    "copyrights": lambda: print(__copyright__),
+    "author": lambda: print(f"Author: {__author__}"),
+    "email": lambda: print(f"Email: {__author_email__}"),
+    "license": lambda: print(f"License: {__license__}"),
+    "url": lambda: print(f"URL: {__url__}"),
+    "run_tests": _run_tests,
+    "info": _print_info,
+}
+
+
 def main() -> None:
     args = parse_args(sys.argv[1:])
 
@@ -70,26 +89,12 @@ def main() -> None:
         _cmd_log(args.message, args.level, args.output)
         return
 
-    if args.version:
-        print(f"v{__version__}")
-    elif args.copyrights:
-        print(__copyright__)
-    elif args.author:
-        print(f"Author: {__author__}")
-    elif args.email:
-        print(f"Email: {__author_email__}")
-    elif args.license:
-        print(f"License: {__license__}")
-    elif args.url:
-        print(f"URL: {__url__}")
-    elif args.run_tests:
-        from testing.run_tests import run_tests
+    for flag, action in _FLAG_ACTIONS.items():
+        if getattr(args, flag, False):
+            action()
+            return
 
-        run_tests()
-    elif args.info:
-        _print_info()
-    else:
-        parse_args(["--help"])
+    parse_args(["--help"])
 
 
 if __name__ == "__main__":

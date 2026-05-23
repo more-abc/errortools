@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "errortools"
-version = "3.1.2"
+version = "3.1.3"
 authors = [
   { name = "Evan Yang", email = "quantbit@126.com" }
 ]
