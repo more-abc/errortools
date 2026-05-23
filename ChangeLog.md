@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## v3.1.2 - 2026-05-23
+- Changed `except ValueError, OSError:` to `except (ValueError, OSError):` at `_errortools/errno.py` line 85.
+
 ## v3.1.1 - 2026-05-23
 -  Changed `except AttributeError, TypeError:` to `except (AttributeError, TypeError):` at `_errortools/errno.py` line 52.
 

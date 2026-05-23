@@ -82,5 +82,5 @@ def strerror(code: int) -> str:
 
     try:
         return os.strerror(code)
-    except ValueError, OSError:
+    except (ValueError, OSError):
         raise ValueError(f"Unknown error code: {code}")
