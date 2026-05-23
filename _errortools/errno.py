@@ -49,7 +49,7 @@ def get_all_errno_codes() -> dict[str, int]:
                 value = getattr(errno, name)
                 if isinstance(value, int):
                     codes[name] = value
-            except AttributeError, TypeError:
+            except (AttributeError, TypeError):
                 pass
     return codes
 

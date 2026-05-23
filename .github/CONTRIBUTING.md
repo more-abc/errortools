@@ -132,6 +132,7 @@ errortools/
 ├── errortools/           # Public API (exports)
 ├── testing/              # Test suite
 ├── .github/              # GitHub templates and workflows
+├── .flcke8               # Settings for flake8
 └── pyproject.toml        # Package configuration
 ```
 
