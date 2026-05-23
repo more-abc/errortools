@@ -17,7 +17,7 @@ Display package metadata and run tests.
 ### Usage
 
 ```bash
-python -merrortools [OPTIONS]
+python -m errortools [OPTIONS]
 ```
 
 ### Options
