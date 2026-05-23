@@ -68,6 +68,7 @@ custom-exceptions
 warnings
 future-module
 logging
+cli
 api-reference
 examples
 mascot
