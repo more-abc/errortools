@@ -5,14 +5,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "errortools"
-version = "3.1.0"
+version = "3.1.2"
 authors = [
   { name = "Evan Yang", email = "quantbit@126.com" }
 ]
 description = "errortools - a toolset for working with Python exceptions and warnings and logging."
 readme = "README.md"
 license = { file = "LICENSE.txt" }
-url = "https://github.com/more-abc/errortools"
 requires-python = ">=3.8"
 
 
@@ -32,43 +31,38 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
-  "Programming Language :: Python :: 3.15",
   "Operating System :: OS Independent",
   "Typing :: Typed",
 ]
 
 
-[project.entry-points.console_scripts]
+[project.urls]
+Homepage = "https://github.com/more-abc/errortools"
+
+
+[project.scripts]
 logger = "_errortools.cli:main"
 
 
-[project.package-data]
-errortools = ["py.typed"]
+[tool.setuptools.package-data]
+_errortools = ["py.typed"]
 
 
 [tool.setuptools.packages.find]
 where = ["."]
 
 
-[tool.setuptools.extension]
+[[tool.setuptools.ext-modules]]
 name = "_errortools._speedup"
 sources = ["_errortools/_speedup.c"]
 
 
-[tool.setuptools.extension.platform]
-# Windows: /O2
-win32.extra_compile_args = ["/O2"]
-# Linux/macOS: -O3 -march=native
-linux.extra_compile_args = ["-O3", "-march=native"]
-darwin.extra_compile_args = ["-O3", "-march=native"]
-
-
 [tool.black]
 line-length = 120
-target-version = ["py314"]
+target-version = ["py38"]
 
 
-[tool.pytest]
+[tool.pytest.ini_options]
 testpaths = ["testing"]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
@@ -92,14 +86,3 @@ warn_unused_configs = true
 warn_unused_ignores = true
 files = "_errortools/"
 exclude = ["testing/"]
-
-
-[tool.flake8]
-max-line-length = 120
-exclude = [
-    ".venv",
-    "testing",
-    "__pycache__",
-    "htmlcov",
-]
-ignore = ["E203", "E501", "W503"]
