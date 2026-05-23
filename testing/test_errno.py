@@ -106,5 +106,5 @@ class TestStrerror:
         try:
             expected = os.strerror(code)
             assert strerror(code) == expected
-        except ValueError, OSError:
+        except (ValueError, OSError):
             pass
