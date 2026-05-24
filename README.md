@@ -10,7 +10,6 @@ A lightweight Python exception handling utility library.
 ![Past year commits](https://img.shields.io/github/commit-activity/y/more-abc/errortools)
 ![Total commits badge](https://img.shields.io/github/commit-activity/t/more-abc/errortools)
 ![OS support](https://img.shields.io/badge/OS-macOS%20Linux%20Windows-red)
-[Chat on Discord](https://discord.gg/rFACp6sVd)
 
 ## Installation
 
