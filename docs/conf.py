@@ -9,7 +9,6 @@
 
 from _errortools.version import __version__, __version_tuple__
 
-
 project = "errortools"
 copyright = "(C) 2026 aiwonderland and more-abc team"
 author = "aiwonderland"
