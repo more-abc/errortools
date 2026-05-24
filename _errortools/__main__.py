@@ -36,8 +36,7 @@ def _debug_info() -> None:
     print(f"  Exec:      {sys.executable}")
 
     try:
-        from _errortools._speedup import fast_append_exception  # type: ignore[import-not-found]  # noqa: F401
-
+        __import__("_errortools._speedup")
         print("  C speedup: available")
     except ImportError:
         print("  C speedup: not available (pure Python fallback)")
