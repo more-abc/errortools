@@ -8,9 +8,9 @@ from _errortools.ignore import (
     ignore_subclass,
     ignore_warns,
     fast_ignore,
-    timeout,
-    retry,
 )
+from _errortools.decorator.timeout import timeout
+from _errortools.decorator.retry import retry
 from _errortools.errno import (
     get_errno_message,
     get_errno_name,

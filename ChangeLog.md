@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+
+## v3.1.7 - 2026-05-24
+- Move `timeout` decorator to `_errortools/decorator/timeout.py`.
+- Move `retry` decorator to `_errortools/decorator/retry.py`.
+- `_errortools/ignore.py` now re-exports from new locations for backwards compatibility.
+
 ## v3.1.6 - 2026-05-24
 - Add `suppress` and `convert` decorators in `_errortools/decorator/handlers.py`.
 - Add tests for `suppress` and `convert` in `testing/test_decorator.py`.
