@@ -6,7 +6,6 @@ from _errortools.descriptor.base import BaseDescriptor
 from _errortools.descriptor.errormsg import ErrorMsg
 from _errortools.descriptor.nonblankmsg import NonBlankErrorMsg
 
-
 # =============================================================================
 # BaseDescriptor
 # =============================================================================
@@ -54,6 +53,7 @@ class TestBaseDescriptor:
 
     def test_nonblankerrormsg_is_subclass(self):
         assert issubclass(NonBlankErrorMsg, BaseDescriptor)
+
 
 # =============================================================================
 # ErrorMsg Descriptor
