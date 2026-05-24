@@ -60,8 +60,10 @@ class TestSuperFastIgnorePerf:
         ns_per = _measure(fn)
         baseline_ns = _measure(_baseline_suppress)
         ratio = ns_per / baseline_ns
-        print(f"\nsuper_fast_ignore (suppress): {ns_per:.0f} ns/op, "
-              f"baseline: {baseline_ns:.0f} ns/op, ratio: {ratio:.2f}x")
+        print(
+            f"\nsuper_fast_ignore (suppress): {ns_per:.0f} ns/op, "
+            f"baseline: {baseline_ns:.0f} ns/op, ratio: {ratio:.2f}x"
+        )
         assert ratio < 3.0, f"Too slow: {ratio:.2f}x vs contextlib.suppress"
 
     def test_no_exception(self):
@@ -76,8 +78,10 @@ class TestSuperFastIgnorePerf:
         ns_per = _measure(fn)
         baseline_ns = _measure(baseline)
         ratio = ns_per / baseline_ns
-        print(f"\nsuper_fast_ignore (no-op): {ns_per:.0f} ns/op, "
-              f"baseline: {baseline_ns:.0f} ns/op, ratio: {ratio:.2f}x")
+        print(
+            f"\nsuper_fast_ignore (no-op): {ns_per:.0f} ns/op, "
+            f"baseline: {baseline_ns:.0f} ns/op, ratio: {ratio:.2f}x"
+        )
         assert ratio < 3.0
 
     def test_faster_than_stdlib_suppress(self):
@@ -87,8 +91,7 @@ class TestSuperFastIgnorePerf:
 
         ns_ours = _measure(fn)
         ns_stdlib = _measure(_baseline_suppress)
-        print(f"\nsuper_fast_ignore: {ns_ours:.0f} ns/op vs "
-              f"contextlib.suppress: {ns_stdlib:.0f} ns/op")
+        print(f"\nsuper_fast_ignore: {ns_ours:.0f} ns/op vs " f"contextlib.suppress: {ns_stdlib:.0f} ns/op")
 
 
 # =============================================================================
@@ -110,8 +113,10 @@ class TestSuperFastCatchPerf:
         ns_per = _measure(fn)
         baseline_ns = _measure(baseline)
         ratio = ns_per / baseline_ns
-        print(f"\nsuper_fast_catch: {ns_per:.0f} ns/op, "
-              f"baseline (suppress): {baseline_ns:.0f} ns/op, ratio: {ratio:.2f}x")
+        print(
+            f"\nsuper_fast_catch: {ns_per:.0f} ns/op, "
+            f"baseline (suppress): {baseline_ns:.0f} ns/op, ratio: {ratio:.2f}x"
+        )
         assert ratio < 5.0
 
     def test_no_exception(self):
@@ -126,8 +131,10 @@ class TestSuperFastCatchPerf:
         ns_per = _measure(fn)
         baseline_ns = _measure(baseline)
         ratio = ns_per / baseline_ns
-        print(f"\nsuper_fast_catch (no-op): {ns_per:.0f} ns/op, "
-              f"baseline (suppress): {baseline_ns:.0f} ns/op, ratio: {ratio:.2f}x")
+        print(
+            f"\nsuper_fast_catch (no-op): {ns_per:.0f} ns/op, "
+            f"baseline (suppress): {baseline_ns:.0f} ns/op, ratio: {ratio:.2f}x"
+        )
         assert ratio < 5.0
 
 
@@ -154,8 +161,7 @@ class TestSuperFastReraisePerf:
         ns_per = _measure(fn)
         baseline_ns = _measure(baseline)
         ratio = ns_per / baseline_ns
-        print(f"\nsuper_fast_reraise: {ns_per:.0f} ns/op, "
-              f"baseline: {baseline_ns:.0f} ns/op, ratio: {ratio:.2f}x")
+        print(f"\nsuper_fast_reraise: {ns_per:.0f} ns/op, " f"baseline: {baseline_ns:.0f} ns/op, ratio: {ratio:.2f}x")
         assert ratio < 5.0
 
 
@@ -183,8 +189,10 @@ class TestExceptionCollectorPerf:
         ns_per = _measure(fn, iters)
         baseline_ns = _measure(baseline, iters)
         ratio = ns_per / baseline_ns
-        print(f"\nExceptionCollector.catch x100: {ns_per:.0f} ns/op, "
-              f"baseline: {baseline_ns:.0f} ns/op, ratio: {ratio:.2f}x")
+        print(
+            f"\nExceptionCollector.catch x100: {ns_per:.0f} ns/op, "
+            f"baseline: {baseline_ns:.0f} ns/op, ratio: {ratio:.2f}x"
+        )
         assert ratio < 5.0
 
     def test_add_many(self):
@@ -204,8 +212,10 @@ class TestExceptionCollectorPerf:
         ns_per = _measure(fn, iters)
         baseline_ns = _measure(baseline, iters)
         ratio = ns_per / baseline_ns
-        print(f"\nExceptionCollector.add x1000: {ns_per:.0f} ns/op, "
-              f"baseline: {baseline_ns:.0f} ns/op, ratio: {ratio:.2f}x")
+        print(
+            f"\nExceptionCollector.add x1000: {ns_per:.0f} ns/op, "
+            f"baseline: {baseline_ns:.0f} ns/op, ratio: {ratio:.2f}x"
+        )
         assert ratio < 5.0
 
     def test_context_manager_overhead(self):
@@ -222,6 +232,8 @@ class TestExceptionCollectorPerf:
         ns_per = _measure(fn)
         baseline_ns = _measure(baseline)
         ratio = ns_per / baseline_ns
-        print(f"\nExceptionCollector CM overhead: {ns_per:.0f} ns/op, "
-              f"baseline: {baseline_ns:.0f} ns/op, ratio: {ratio:.2f}x")
+        print(
+            f"\nExceptionCollector CM overhead: {ns_per:.0f} ns/op, "
+            f"baseline: {baseline_ns:.0f} ns/op, ratio: {ratio:.2f}x"
+        )
         assert ratio < 20.0

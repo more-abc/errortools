@@ -56,7 +56,7 @@ class super_fast_catch:
         *excs: Exception types to catch. Empty means catch all.
 
     Example:
-    
+
         >>> with super_fast_catch(ValueError) as ctx:
         ...     raise ValueError("oops")
         >>> print(ctx.exception)
