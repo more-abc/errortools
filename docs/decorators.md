@@ -119,3 +119,101 @@ def new_feature():
 
 new_feature()  # Emits ExperimentalWarning
 ```
+
+## @suppress()
+
+Decorator that suppresses specified exceptions and returns a default value.
+
+```{versionadded} 3.1
+```
+
+### Basic usage
+
+```python
+from errortools import suppress
+
+@suppress(ZeroDivisionError, default=0)
+def divide(a, b):
+    return a / b
+
+divide(10, 2)  # 5.0
+divide(1, 0)   # 0
+```
+
+### Multiple exception types
+
+```python
+@suppress(ValueError, KeyError, default="N/A")
+def get_value(data, key):
+    return data[key]
+
+get_value({}, "missing")  # "N/A"
+```
+
+### Default is None
+
+```python
+@suppress(FileNotFoundError)
+def read_config(path):
+    with open(path) as f:
+        return f.read()
+
+read_config("missing.txt")  # None
+```
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `*exceptions` | `type[BaseException]` | Exception type(s) to suppress |
+| `default` | `Any` | Value to return when suppressed (default: `None`) |
+
+## @convert()
+
+Decorator that converts one exception type to another, preserving the exception chain.
+
+```{versionadded} 3.1
+```
+
+### Basic usage
+
+```python
+from errortools import convert
+
+@convert(KeyError, ValueError)
+def lookup(data, key):
+    return data[key]
+
+lookup({}, "x")
+# Raises: ValueError("'x'") with __cause__ = KeyError("'x'")
+```
+
+### Custom message
+
+```python
+@convert(KeyError, RuntimeError, message="configuration key not found")
+def get_config(config, key):
+    return config[key]
+
+get_config({}, "db_host")
+# Raises: RuntimeError("configuration key not found")
+```
+
+### Multiple source types
+
+```python
+@convert((KeyError, IndexError), ValueError)
+def access(data, index):
+    return data[index]
+
+access({}, "x")    # Raises ValueError
+access([], 99)     # Raises ValueError
+```
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `source` | `type \| tuple[type, ...]` | Exception type(s) to catch |
+| `target` | `type` | Exception type to raise instead |
+| `message` | `str \| None` | Custom message (default: original message) |
