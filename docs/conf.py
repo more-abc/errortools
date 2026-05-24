@@ -6,11 +6,15 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+
+from _errortools.version import __version__, __version_tuple__
+
+
 project = "errortools"
 copyright = "(C) 2026 aiwonderland and more-abc team"
 author = "aiwonderland"
-release = "3.1.0"
-version = "3.1.6"
+release = __version__
+version = f"{__version_tuple__[0]}.{__version_tuple__[1]}"
 
 
 # -- General configuration ---------------------------------------------------
@@ -29,10 +33,12 @@ html_static_path = ["_static"]
 extensions = [
     "myst_parser",
     "sphinx_rtd_theme",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.viewcode",
 ]
 
 source_suffix = {
-    ".rst": "restructuredtext",
+    # ".rst": "restructuredtext",
     ".md": "markdown",
 }
 
@@ -43,3 +49,9 @@ myst_enable_extensions = [
     "dollarmath",
     "tasklist",
 ]
+
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3", None),
+}
+
+autodoc_member_order = "bysource"
