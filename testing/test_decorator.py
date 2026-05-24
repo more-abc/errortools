@@ -6,6 +6,7 @@ import pytest
 
 from _errortools.decorator.cache import error_cache
 from _errortools.decorator.deprecated import deprecated, experimental
+from _errortools.decorator.handlers import suppress, convert
 
 # =============================================================================
 # deprecated decorator
@@ -359,3 +360,123 @@ class TestCacheInfo:
         assert info.misses == 1
         assert info.maxsize == 64
         assert info.currsize == 1
+
+
+# =============================================================================
+# suppress decorator
+# =============================================================================
+
+
+class TestSuppressDecorator:
+    def test_suppresses_and_returns_default(self):
+        @suppress(ZeroDivisionError, default=0)
+        def f(a, b):
+            return a / b
+
+        assert f(1, 0) == 0
+
+    def test_returns_normally_when_no_exception(self):
+        @suppress(ValueError, default=-1)
+        def f(x):
+            return int(x)
+
+        assert f("42") == 42
+
+    def test_default_is_none(self):
+        @suppress(ValueError)
+        def f():
+            raise ValueError("x")
+
+        assert f() is None
+
+    def test_unrelated_exception_propagates(self):
+        @suppress(ValueError, default=0)
+        def f():
+            raise TypeError("wrong")
+
+        with pytest.raises(TypeError):
+            f()
+
+    def test_multiple_exception_types(self):
+        @suppress(ValueError, KeyError, default="fallback")
+        def f(flag):
+            if flag == 1:
+                raise ValueError("v")
+            raise KeyError("k")
+
+        assert f(1) == "fallback"
+        assert f(2) == "fallback"
+
+    def test_preserves_function_name(self):
+        @suppress(Exception)
+        def my_func():
+            raise Exception("x")
+
+        assert my_func.__name__ == "my_func"
+
+
+# =============================================================================
+# convert decorator
+# =============================================================================
+
+
+class TestConvertDecorator:
+    def test_converts_exception_type(self):
+        @convert(KeyError, ValueError)
+        def f():
+            raise KeyError("missing")
+
+        with pytest.raises(ValueError) as exc_info:
+            f()
+        assert "missing" in str(exc_info.value)
+
+    def test_chains_original_exception(self):
+        @convert(KeyError, ValueError)
+        def f():
+            raise KeyError("orig")
+
+        with pytest.raises(ValueError) as exc_info:
+            f()
+        assert isinstance(exc_info.value.__cause__, KeyError)
+
+    def test_custom_message(self):
+        @convert(KeyError, RuntimeError, message="custom error")
+        def f():
+            raise KeyError("ignored")
+
+        with pytest.raises(RuntimeError, match="custom error"):
+            f()
+
+    def test_no_conversion_on_success(self):
+        @convert(KeyError, ValueError)
+        def f():
+            return 42
+
+        assert f() == 42
+
+    def test_unrelated_exception_propagates(self):
+        @convert(KeyError, ValueError)
+        def f():
+            raise TypeError("wrong")
+
+        with pytest.raises(TypeError):
+            f()
+
+    def test_multiple_source_types(self):
+        @convert((KeyError, IndexError), ValueError)
+        def f(flag):
+            if flag:
+                raise KeyError("k")
+            raise IndexError("i")
+
+        with pytest.raises(ValueError):
+            f(True)
+        with pytest.raises(ValueError):
+            f(False)
+
+    def test_preserves_function_name(self):
+        @convert(Exception, RuntimeError)
+        def my_func():
+            raise Exception("x")
+
+        assert my_func.__name__ == "my_func"

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## v3.1.6 - 2026-05-24
+- Add `suppress` and `convert` decorators in `_errortools/decorator/handlers.py`.
+- Add tests for `suppress` and `convert` in `testing/test_decorator.py`.
+
 ## v3.1.5 - 2026-05-24
 - Add `fast_suppress_exit` C function in `_errortools/_speedup.c` for optimized `__exit__` calls.
 - Optimize `super_fast_ignore` to use `fast_suppress_exit`, removing `cast` overhead.
