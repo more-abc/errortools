@@ -1,4 +1,4 @@
-"""Command-line interface."""
+"""Public command-line interface."""
 
 import argparse
 import sys
@@ -6,7 +6,7 @@ from collections.abc import Callable
 
 from _errortools._cli import _cmd_log, _print_info
 
-from .metadata import (
+from _errortools.metadata import (
     __description__,
     __copyright__,
     __author__,
@@ -14,7 +14,7 @@ from .metadata import (
     __license__,
     __url__,
 )
-from .version import __version__
+from _errortools.version import __version__
 
 
 def parse_args(args: list[str] | None = None) -> argparse.Namespace:

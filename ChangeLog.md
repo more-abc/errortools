@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 
 ## v3.1.7 - 2026-05-24
+- Split CLI: `python -m errortools` (public) and `python -m _errortools` (debug).
+- Add `--debug`, `--reset`, `--check`, `--list-features` to private debug CLI.
+
+## v3.1.7 - 2026-05-24
 - Move `timeout` decorator to `_errortools/decorator/timeout.py`.
 - Move `retry` decorator to `_errortools/decorator/retry.py`.
 - `_errortools/ignore.py` now re-exports from new locations for backwards compatibility.
