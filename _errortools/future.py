@@ -7,18 +7,21 @@ if sys.version_info <= (3, 10):
     from typing_extensions import TypeAlias
 else:
     from typing import TypeAlias
-from typing import cast, Literal
+from typing import Literal
 
 # Try to import C speedup
 try:
-    from _errortools._speedup import fast_issubclass_check, fast_append_exception  # type: ignore[import-not-found]
+    from _errortools._speedup import (  # type: ignore[import-not-found]
+        fast_append_exception,
+        fast_suppress_exit,
+    )
 except ImportError:
-
-    def fast_issubclass_check(typ, excs) -> bool:
-        return typ is not None and issubclass(typ, excs)
 
     def fast_append_exception(lst, exc) -> None:
         lst.append(exc)
+
+    def fast_suppress_exit(typ, excs) -> bool:
+        return typ is not None and issubclass(typ, excs)
 
 
 __all__ = [
@@ -43,7 +46,7 @@ class super_fast_ignore:
         return
 
     def __exit__(self, typ: _ExcType | None, *_) -> bool:
-        return cast(bool, fast_issubclass_check(typ, self.excs))
+        return bool(fast_suppress_exit(typ, self.excs))
 
 
 class super_fast_catch:
@@ -53,6 +56,7 @@ class super_fast_catch:
         *excs: Exception types to catch. Empty means catch all.
 
     Example:
+    
         >>> with super_fast_catch(ValueError) as ctx:
         ...     raise ValueError("oops")
         >>> print(ctx.exception)
@@ -68,7 +72,7 @@ class super_fast_catch:
         return self
 
     def __exit__(self, typ: _ExcType | None, val, *_) -> bool:
-        if not fast_issubclass_check(typ, self.excs):
+        if typ is None or not issubclass(typ, self.excs):
             return False
         self.exception = val
         return True
@@ -82,6 +86,7 @@ class super_fast_reraise:
         raise_as: Exception type to raise instead.
 
     Example:
+
         >>> with super_fast_reraise(KeyError, ValueError):
         ...     raise KeyError("missing")
         >>> # Raises ValueError: missing
@@ -112,6 +117,7 @@ class ExceptionCollector:
     Useful for batch operations where you want all errors, not just the first.
 
     Example:
+
         >>> collector = ExceptionCollector()
         >>> with collector:
         ...     collector.catch(int, "bad1")
@@ -172,7 +178,7 @@ class ExceptionCollector:
     def raise_all(self, message: str = "collected errors") -> None:
         """Raise all collected exceptions as ExceptionGroup."""
         if self._exceptions:
-            raise ExceptionGroup(message, cast(list[Exception], self._exceptions))
+            raise ExceptionGroup(message, self._exceptions)  # type: ignore[type-var]
 
     def clear(self) -> None:
         """Clear all exceptions."""

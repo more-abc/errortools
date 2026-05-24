@@ -87,6 +87,45 @@ static PyObject* fast_append_exception(PyObject* self, PyObject* const* args, Py
     Py_RETURN_NONE;
 }
 
+/* Fast suppress exit for context managers
+ *
+ * Combined None-check + issubclass optimized for __exit__ methods.
+ * Returns True (suppress) if typ is not None and is a subclass of excs,
+ * False otherwise. Never raises on None — just returns False.
+ *
+ * Args:
+ *   typ: The exception type (or None if no exception)
+ *   excs: The exception class(es) to match against (tuple)
+ *
+ * Returns:
+ *   True if exception should be suppressed, False otherwise
+ *   NULL on error with exception set
+ */
+static PyObject* fast_suppress_exit(PyObject* self, PyObject* const* args, Py_ssize_t nargs) {
+    if (nargs != 2) {
+        PyErr_Format(PyExc_TypeError,
+                     "fast_suppress_exit() takes exactly 2 arguments (%zd given)",
+                     nargs);
+        return NULL;
+    }
+
+    PyObject *typ = args[0];
+
+    if (typ == Py_None) {
+        Py_RETURN_FALSE;
+    }
+
+    int result = PyObject_IsSubclass(typ, args[1]);
+    if (result == -1) {
+        return NULL;
+    }
+
+    if (result) {
+        Py_RETURN_TRUE;
+    }
+    Py_RETURN_FALSE;
+}
+
 /* Method definitions */
 static PyMethodDef SpeedupMethods[] = {
     {
@@ -106,6 +145,14 @@ static PyMethodDef SpeedupMethods[] = {
         "Append an exception to a list with minimal overhead.\n"
         "Validates that the first argument is a list."
     },
+    {
+        "fast_suppress_exit",
+        (PyCFunction)fast_suppress_exit,
+        METH_FASTCALL,
+        "fast_suppress_exit(typ, excs) -> bool\n\n"
+        "Return True if typ is not None and is a subclass of excs.\n"
+        "Optimized for context manager __exit__ methods."
+    },
     {NULL, NULL, 0, NULL}  /* Sentinel */
 };
 
@@ -116,7 +163,8 @@ static struct PyModuleDef speedupmodule = {
     "C speedup module for errortools\n\n"
     "Provides optimized implementations of exception handling operations:\n"
     "  - fast_issubclass_check: Quick exception type hierarchy checking\n"
-    "  - fast_append_exception: Efficient exception list append operations",
+    "  - fast_append_exception: Efficient exception list append operations\n"
+    "  - fast_suppress_exit: Combined None-check + issubclass for __exit__",
     -1,                         /* size */
     SpeedupMethods               /* methods */
 };

@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-## v3.1.4 - 2026-05-23
+## v3.1.5 - 2026-05-24
+- Add `fast_suppress_exit` C function in `_errortools/_speedup.c` for optimized `__exit__` calls.
+- Optimize `super_fast_ignore` to use `fast_suppress_exit`, removing `cast` overhead.
+- Optimize `super_fast_catch.__exit__` with inline short-circuit check.
+- Remove `cast` call in `ExceptionCollector.raise_all`.
+- Add performance tests in `testing/benchmark/test_future_perf.py`.
+
+## v3.1.4 - 2026-05-24
 - Add `BaseDescriptor` base class in `_errortools/descriptor/base.py` for shared descriptor logic.
 - Refactor `ErrorMsg` and `NonBlankErrorMsg` to inherit from `BaseDescriptor`.
 - Add tests for `BaseDescriptor` in `testing/test_descriptor.py`.
