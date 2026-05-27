@@ -8,8 +8,8 @@ __all__ = [
     "HAS_PYTEST",
     "NO_ONE_CHANGE_VERSION",
 ]
-__version__ = "1.1.21"
-__version_tuple__ = (1, 1, 21)
+__version__ = "1.2.0"
+__version_tuple__ = (1, 2, 0)
 
 try:
     import pytest
