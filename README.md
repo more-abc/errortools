@@ -12,9 +12,13 @@ A lightweight Python exception handling utility library.
 ![OS support](https://img.shields.io/badge/OS-macOS%20Linux%20Windows-red)
 
 ## Installation
-
+### Use pip...
 ```bash
 pip install errortools
+```
+### ...or uv
+```bash
+uv add errortools
 ```
 
 ## Features
