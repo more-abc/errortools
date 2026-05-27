@@ -1,4 +1,4 @@
-"""Run tests. Usage: run `python tests/run_tests.py` or call run_tests() directly."""
+"""Run tests. Usage: run `python -m testing` or call run_tests() directly."""
 
 import subprocess
 import sys
@@ -7,10 +7,10 @@ from . import HAS_PYTEST
 
 
 def run_tests():
-    result = subprocess.run([sys.executable, "-m", "pytest"])
     if not HAS_PYTEST:
-        print("No pytest, skip runing. You can use `pip install pytest` to let it run")
+        print("No pytest, skip running. You can use `pip install pytest` to install it.")
         return False
+    result = subprocess.run([sys.executable, "-m", "pytest"])
     return result.returncode == 0
 
 
