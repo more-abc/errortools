@@ -1,5 +1,5 @@
 def _get_version_tuple(version: str) -> tuple[int, int, int]:
-    parts = [int(p) for p in version.split('.')]
+    parts = [int(p) for p in version.split(".")]
 
     major = parts[0] if len(parts) >= 1 else 0
     minor = parts[1] if len(parts) >= 2 else 0
