@@ -7,7 +7,6 @@ from _errortools.ignore import (
     ignore,
     ignore_subclass,
     ignore_warns,
-    fast_ignore,
 )
 from _errortools.decorator.timeout import timeout
 from _errortools.decorator.retry import retry
@@ -51,10 +50,6 @@ from _errortools.typing import (
     BaseErrorCodesType,
     PureBaseExceptionType,
     ContextExceptionType,
-    RuntimeError_,
-    LookupError_,
-    InputError,
-    AccessError,
     ExceptionType,
     WarningType,
     TracebackType,
@@ -83,9 +78,38 @@ from _errortools.metadata import (
     __slug__,
     __uid__,
 )
-import _errortools.future as future
-import _errortools.logging as logging
-import _errortools.partial as partial
+
+_DEPRECATED_NAMES: dict[str, tuple[str, str]] = {
+    "InputError": ("InputError", "Use InvalidInputError directly."),
+    "AccessError": ("AccessError", "Use AccessDeniedError directly."),
+    "LookupError_": ("LookupError_", "Use NotFoundError directly."),
+    "RuntimeError_": ("RuntimeError_", "Use RuntimeFailure or TimeoutFailure directly."),
+    "fast_ignore": ("fast_ignore", "Use errortools.future.super_fast_ignore instead."),
+}
+
+
+def __getattr__(name: str):
+    import importlib
+    import warnings
+
+    if name in _DEPRECATED_NAMES:
+        attr_name, reason = _DEPRECATED_NAMES[name]
+        warnings.warn(
+            f"errortools.{attr_name} is deprecated. {reason}",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return globals()[f"_{name}"] if f"_{name}" in globals() else globals().get(name)
+
+    if name in ("future", "logging", "partial"):
+        return importlib.import_module(f"_errortools.{name}")
+
+    raise AttributeError(f"module 'errortools' has no attribute {name!r}")
+
+
+def __dir__() -> list[str]:
+    return __all__
+
 
 __all__ = [
     # functions

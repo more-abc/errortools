@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## v3.1.12 - 2026-05-28
+- Add `__getattr__` to `errortools/__init__.py` for lazy-loading submodules (`future`, `logging`, `partial`).
+- Deprecated aliases (`fast_ignore`, `InputError`, `AccessError`, `LookupError_`, `RuntimeError_`) now emit `DeprecationWarning` on access.
+- Add `__dir__` to `errortools/__init__.py` so `dir(errortools)` includes all public names.
+
 ## v3.1.11 - 2026-05-28
 - Use autoflake to fix errors in `_errortools/classes/abc.py`.
 
