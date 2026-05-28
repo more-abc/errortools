@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## v3.1.10 - 2026-05-24
+- Useing `flake8-comprehensions` and `flake8-bugbear` plugins in flake8.
+
 ## v3.1.9 - 2026-05-24
 - Add function `_get_version_tuple` to get the `__version_tuple__` var in `_errortools/version.py`.
 
