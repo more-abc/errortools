@@ -321,7 +321,6 @@ class TestBind:
                 records.append(r)
 
         lg2 = BaseLogger()
-        from _errortools.logging.sink import BaseSink as BS
 
         lg2._sinks[0] = RawCapture()
         child = lg2.bind(request_id="xyz")

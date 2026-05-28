@@ -69,13 +69,11 @@ class ErrorCodeable(ABC):
     @abstractmethod
     def code(self) -> int:
         """Integer error code identifying this exception type."""
-        pass
 
     @property
     @abstractmethod
     def default_detail(self) -> str:
         """Fallback human-readable message used when no detail is provided."""
-        pass
 
 
 # ----------------------------------------------------------------------
@@ -123,7 +121,6 @@ class Warnable(ABC):
             stacklevel: Passed to ``warnings.warn``; ``2`` points at the
                 caller of ``emit``.
         """
-        pass
 
 
 # ----------------------------------------------------------------------
@@ -166,7 +163,6 @@ class Raiseable(ABC):
         Raises:
             self: Or a derived exception wrapping this object.
         """
-        pass
 
 
 # ----------------------------------------------------------------------

@@ -1,0 +1,51 @@
+name: Python Autoflake Check
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install autoflake
+      
+      - name: Run autoflake
+        run: autoflake --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports -r -i .
+
+      - name: Get app token for AbaAbaAba-bot-like[bot]
+        id: get-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: 3410340
+          private_key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+
+      - name: Commit & push as AbaAbaAba-bot-like[bot]
+        run: |
+          git config --local user.name "AbaAbaAba-bot-like[bot]"
+          git config --local user.email "AbaAbaAba-bot-like[bot]@users.noreply.github.com"
+          git add .
+          git commit -am "[Bot]: auto format code (black + autopep8)" || exit 0
+          git push https://x-access-token:${{ steps.get-token.outputs.token }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
