@@ -5,7 +5,10 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
-## v3.1.7 - 2026-05-24
+## v3.1.9 - 2026-05-24
+- Add function `_get_version_tuple` to get the `__version_tuple__` var in `_errortools/version.py`.
+
+## v3.1.8 - 2026-05-24
 - Split CLI: `python -m errortools` (public) and `python -m _errortools` (debug).
 - Add `--debug`, `--reset`, `--check`, `--list-features` to private debug CLI.
 
