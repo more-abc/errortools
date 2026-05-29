@@ -38,6 +38,7 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://github.com/more-abc/errortools"
+Documentation = "https://errortools.readthedocs.io/"
 
 
 [project.scripts]
