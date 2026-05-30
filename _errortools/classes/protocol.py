@@ -151,80 +151,90 @@ class UnicodeTranslateErrorLike(Protocol):
     reason: str
 
 
-if sys.version_info >= (3, 11):
-    _BaseExceptionT_co = TypeVar("_BaseExceptionT_co", bound=BaseException, covariant=True, default=BaseException)
-    _BaseExceptionT = TypeVar("_BaseExceptionT", bound=BaseException)
-    _ExceptionT_co = TypeVar("_ExceptionT_co", bound=Exception, covariant=True, default=Exception)
-    _ExceptionT = TypeVar("_ExceptionT", bound=Exception)
+_BaseExceptionT_co = TypeVar("_BaseExceptionT_co", bound=BaseException, covariant=True, default=BaseException)
+_BaseExceptionT = TypeVar("_BaseExceptionT", bound=BaseException)
+_ExceptionT_co = TypeVar("_ExceptionT_co", bound=Exception, covariant=True, default=Exception)
+_ExceptionT = TypeVar("_ExceptionT", bound=Exception)
 
-    @runtime_checkable
-    class BaseExceptionGroupLike(Protocol):
-        """.. versionadded:: 3.2"""
 
-        def __new__(cls, message: str, exceptions: Sequence[_BaseExceptionT_co], /) -> Self: ...
-        def __init__(self, message: str, exceptions: Sequence[_BaseExceptionT_co], /) -> None: ...
-        @property
-        def message(self) -> str: ...
-        @property
-        def exceptions(self) -> tuple[_BaseExceptionT_co | BaseExceptionGroup[_BaseExceptionT_co], ...]: ...
-        @overload
-        def subgroup(
-            self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...], /
-        ) -> ExceptionGroup[_ExceptionT] | None: ...
-        @overload
-        def subgroup(
-            self, matcher_value: type[_BaseExceptionT] | tuple[type[_BaseExceptionT], ...], /
-        ) -> BaseExceptionGroup[_BaseExceptionT] | None: ...
-        @overload
-        def subgroup(
-            self, matcher_value: Callable[[_BaseExceptionT_co | Self], bool], /
-        ) -> BaseExceptionGroup[_BaseExceptionT_co] | None: ...
-        @overload
-        def split(
-            self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...], /
-        ) -> tuple[ExceptionGroup[_ExceptionT] | None, BaseExceptionGroup[_BaseExceptionT_co] | None]: ...
-        @overload
-        def split(
-            self, matcher_value: type[_BaseExceptionT] | tuple[type[_BaseExceptionT], ...], /
-        ) -> tuple[BaseExceptionGroup[_BaseExceptionT] | None, BaseExceptionGroup[_BaseExceptionT_co] | None]: ...
-        @overload
-        def split(
-            self, matcher_value: Callable[[_BaseExceptionT_co | Self], bool], /
-        ) -> tuple[BaseExceptionGroup[_BaseExceptionT_co] | None, BaseExceptionGroup[_BaseExceptionT_co] | None]: ...
+@runtime_checkable
+class BaseExceptionGroupLike(Protocol):
+    """.. versionadded:: 3.2"""
 
-        # In reality it is `NonEmptySequence`:
-        @overload
-        def derive(self, excs: Sequence[_ExceptionT], /) -> ExceptionGroup[_ExceptionT]: ...
-        @overload
-        def derive(self, excs: Sequence[_BaseExceptionT], /) -> BaseExceptionGroup[_BaseExceptionT]: ...
-        def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
+    def __new__(cls, message: str, exceptions: Sequence[_BaseExceptionT_co], /) -> Self: ...
+    def __init__(self, message: str, exceptions: Sequence[_BaseExceptionT_co], /) -> None: ...
+    @property
+    def message(self) -> str: ...
+    @property
+    def exceptions(self) -> tuple[_BaseExceptionT_co | BaseExceptionGroup[_BaseExceptionT_co], ...]: ...
+    @overload
+    def subgroup(
+        self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...], /
+    ) -> ExceptionGroup[_ExceptionT] | None: ...
+    @overload
+    def subgroup(
+        self, matcher_value: type[_BaseExceptionT] | tuple[type[_BaseExceptionT], ...], /
+    ) -> BaseExceptionGroup[_BaseExceptionT] | None: ...
+    @overload
+    def subgroup(
+        self, matcher_value: Callable[[_BaseExceptionT_co | Self], bool], /
+    ) -> BaseExceptionGroup[_BaseExceptionT_co] | None: ...
+    @overload
+    def split(
+        self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...], /
+    ) -> tuple[ExceptionGroup[_ExceptionT] | None, BaseExceptionGroup[_BaseExceptionT_co] | None]: ...
+    @overload
+    def split(
+        self, matcher_value: type[_BaseExceptionT] | tuple[type[_BaseExceptionT], ...], /
+    ) -> tuple[BaseExceptionGroup[_BaseExceptionT] | None, BaseExceptionGroup[_BaseExceptionT_co] | None]: ...
+    @overload
+    def split(
+        self, matcher_value: Callable[[_BaseExceptionT_co | Self], bool], /
+    ) -> tuple[BaseExceptionGroup[_BaseExceptionT_co] | None, BaseExceptionGroup[_BaseExceptionT_co] | None]: ...
 
-    @runtime_checkable
-    class ExceptionGroupLike(Protocol):
-        """.. versionadded:: 3.2"""
+    # In reality it is `NonEmptySequence`:
+    @overload
+    def derive(self, excs: Sequence[_ExceptionT], /) -> ExceptionGroup[_ExceptionT]: ...
+    @overload
+    def derive(self, excs: Sequence[_BaseExceptionT], /) -> BaseExceptionGroup[_BaseExceptionT]: ...
+    def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
 
-        def __new__(cls, message: str, exceptions: Sequence[_ExceptionT_co], /) -> Self: ...
-        def __init__(self, message: str, exceptions: Sequence[_ExceptionT_co], /) -> None: ...
-        @property
-        def exceptions(self) -> tuple[_ExceptionT_co | ExceptionGroup[_ExceptionT_co], ...]: ...
 
-        # We accept a narrower type, but that's OK.
-        @overload
-        def subgroup(
-            self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...], /
-        ) -> ExceptionGroup[_ExceptionT] | None: ...
-        @overload
-        def subgroup(
-            self, matcher_value: Callable[[_ExceptionT_co | Self], bool], /
-        ) -> ExceptionGroup[_ExceptionT_co] | None: ...
-        @overload
-        def split(
-            self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...], /
-        ) -> tuple[ExceptionGroup[_ExceptionT] | None, ExceptionGroup[_ExceptionT_co] | None]: ...
-        @overload
-        def split(
-            self, matcher_value: Callable[[_ExceptionT_co | Self], bool], /
-        ) -> tuple[ExceptionGroup[_ExceptionT_co] | None, ExceptionGroup[_ExceptionT_co] | None]: ...
+@runtime_checkable
+class ExceptionGroupLike(Protocol):
+    """.. versionadded:: 3.2"""
+
+    def __new__(cls, message: str, exceptions: Sequence[_ExceptionT_co], /) -> Self: ...
+    def __init__(self, message: str, exceptions: Sequence[_ExceptionT_co], /) -> None: ...
+    @property
+    def exceptions(self) -> tuple[_ExceptionT_co | ExceptionGroup[_ExceptionT_co], ...]: ...
+
+    # We accept a narrower type, but that's OK.
+    @overload
+    def subgroup(
+        self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...], /
+    ) -> ExceptionGroup[_ExceptionT] | None: ...
+    @overload
+    def subgroup(
+        self, matcher_value: Callable[[_ExceptionT_co | Self], bool], /
+    ) -> ExceptionGroup[_ExceptionT_co] | None: ...
+    @overload
+    def split(
+        self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...], /
+    ) -> tuple[ExceptionGroup[_ExceptionT] | None, ExceptionGroup[_ExceptionT_co] | None]: ...
+    @overload
+    def split(
+        self, matcher_value: Callable[[_ExceptionT_co | Self], bool], /
+    ) -> tuple[ExceptionGroup[_ExceptionT_co] | None, ExceptionGroup[_ExceptionT_co] | None]: ...
+
+
+if sys.version_info < (3, 11):
+    del BaseExceptionGroupLike
+    del ExceptionGroupLike
+    del _BaseExceptionT_co
+    del _BaseExceptionT
+    del _ExceptionT_co
+    del _ExceptionT
 
 
 @runtime_checkable
