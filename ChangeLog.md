@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## v3.2.3 - 2026-05-30
+- - Fix max complexity error in `classes/protocol.py`.
+
 ## v3.2.2 - 2026-05-30
 - Add `ErrortoolsDeprecationWarning` warning class.
 - Now the deprecated features will warn `ErrortoolsDeprecationWarning`.
