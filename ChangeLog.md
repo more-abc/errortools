@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## v3.2.1 - 2026-05-29
+- Add 14 protocol classes about exceptions (like `ExceptionLike`, `ImportErrorLike`, `ExceptionGroupLike`).
+- Add tests for protocol classes (`test_protocols.py`).
+
 ## Release v3.2.0 - 2026-05-29
 - Release 3.2.0
 

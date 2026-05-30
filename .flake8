@@ -5,4 +5,4 @@ exclude =
     testing,
     __pycache__,
     htmlcov
-ignore = E203,E501,W503,B027,B042
+ignore = E203,E501,W503,B027,B042,E704,E301,W504
