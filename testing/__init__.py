@@ -2,6 +2,8 @@
 
 import warnings
 
+from _errortools.version import _get_version_tuple
+
 __all__ = [
     "__version__",
     "__version_tuple__",
@@ -9,7 +11,7 @@ __all__ = [
     "NO_ONE_CHANGE_VERSION",
 ]
 __version__ = "1.2.1"
-__version_tuple__ = (1, 2, 1)
+__version_tuple__ = _get_version_tuple(__version__)
 
 try:
     import pytest

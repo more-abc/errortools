@@ -22,6 +22,7 @@ from _errortools.classes.protocol import (
     GroupErrorsLike,
 )
 
+
 # ------------------------------
 # Helper Classes
 # ------------------------------
@@ -39,6 +40,7 @@ class DummyGroupError:
 
     def raise_group(self) -> None:
         raise Exception(self.group_msg)
+
 
 # ------------------------------
 # Tests for ExceptionLike
@@ -73,6 +75,7 @@ def test_exception_like_notes_feature_py311_plus():
     assert isinstance(exc.__notes__, list)
     assert exc.__notes__ == [test_note]
 
+
 # ------------------------------
 # Tests for SystemExitLike
 # ------------------------------
@@ -86,6 +89,7 @@ def test_system_exit_like_protocol():
     assert exit_ok.code == 0
     assert exit_err.code == 1
 
+
 # ------------------------------
 # Tests for StopIterationLike
 # ------------------------------
@@ -98,6 +102,7 @@ def test_stop_iteration_like_protocol():
     assert hasattr(exc1, "value")
     assert exc1.value is None
     assert exc2.value == 42
+
 
 # ------------------------------
 # Tests for OSErrorLike
@@ -120,6 +125,7 @@ def test_os_error_like_win32_extra_attr():
     exc = OSError(13, "Permission denied")
     assert hasattr(exc, "winerror")
 
+
 # ------------------------------
 # Tests for AttributeErrorLike (Python 3.10+)
 # ------------------------------
@@ -131,6 +137,7 @@ def test_attribute_error_like():
     assert hasattr(exc, "obj")
     assert exc.name == "foo"
 
+
 # ------------------------------
 # Tests for NameErrorLike (Python 3.10+)
 # ------------------------------
@@ -140,6 +147,7 @@ def test_name_error_like():
     assert isinstance(exc, NameErrorLike)
     assert hasattr(exc, "name")
     assert exc.name == "bar"
+
 
 # ------------------------------
 # Tests for ImportErrorLike
@@ -159,6 +167,7 @@ def test_import_error_like_name_from_py312_plus():
     exc = ImportError("import failed")
     assert hasattr(exc, "name_from")
 
+
 # ------------------------------
 # Tests for SyntaxErrorLike
 # ------------------------------
@@ -176,6 +185,7 @@ def test_syntax_error_like():
     assert exc.filename == "test.py"
     assert exc.lineno == 10
 
+
 # ------------------------------
 # Tests for BlockingIOErrorLike
 # ------------------------------
@@ -185,6 +195,7 @@ def test_blocking_io_error_like():
     assert isinstance(exc, BlockingIOErrorLike)
     assert hasattr(exc, "characters_written")
     assert exc.characters_written == 5
+
 
 # ------------------------------
 # Tests for Unicode Error Protocols
@@ -209,6 +220,7 @@ def test_unicode_translate_error_like():
     assert isinstance(exc, UnicodeTranslateErrorLike)
     assert exc.encoding is None
 
+
 # ------------------------------
 # Tests for Exception Group Protocols (Python 3.11+)
 # ------------------------------
@@ -227,6 +239,7 @@ def test_exception_group_like():
     group = ExceptionGroup("exception group", [inner_exc])
     assert isinstance(group, ExceptionGroupLike)
     assert isinstance(group, BaseExceptionGroupLike)
+
 
 # ------------------------------
 # Tests for GroupErrorsLike
