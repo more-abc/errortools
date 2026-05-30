@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
-## v3.2.1 - 2026-05-29
+## v3.2.2 - 2026-05-30
+- Add `ErrortoolsDeprecationWarning` warning class.
+- Now the deprecated features will warn `ErrortoolsDeprecationWarning`.
+
+## v3.2.1 - 2026-05-30
 - Add 14 protocol classes about exceptions (like `ExceptionLike`, `ImportErrorLike`, `ExceptionGroupLike`).
 - Add tests for protocol classes (`test_protocols.py`).
 

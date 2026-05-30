@@ -104,6 +104,10 @@ _DEPRECATED_NAMES: dict[str, tuple[str, str]] = {
 }
 
 
+class ErrortoolsDeprecationWarning(DeprecationWarning):
+    """Base class for warnings about deprecated features in errortools module."""
+
+
 def __getattr__(name: str):
     import importlib
     import warnings
@@ -112,7 +116,7 @@ def __getattr__(name: str):
         attr_name, reason = _DEPRECATED_NAMES[name]
         warnings.warn(
             f"errortools.{attr_name} is deprecated. {reason}",
-            DeprecationWarning,
+            ErrortoolsDeprecationWarning,
             stacklevel=2,
         )
         return globals()[f"_{name}"] if f"_{name}" in globals() else globals().get(name)
@@ -188,6 +192,7 @@ __all__ = [
     "UnicodeTranslateErrorLike",
     "AttributeErrorLike",
     "GroupErrorsLike",
+    "ErrortoolsDeprecationWarning",
     # for type hints
     "PureBaseExceptionType",
     "ContextExceptionType",
