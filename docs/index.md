@@ -68,6 +68,7 @@ custom-exceptions
 warnings
 future-module
 logging
+plugins
 cli
 api-reference
 examples
