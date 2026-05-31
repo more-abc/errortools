@@ -3,6 +3,10 @@ repos:
     rev: v4.6.0
     hooks:
       - id: trailing-whitespace
+        args: [--no-markdown-linebreak-extensions]
+
       - id: end-of-file-fixer
+        args: [--no-ensure-newline]
+
       - id: check-yaml
       - id: check-added-large-files
