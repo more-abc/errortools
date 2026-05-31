@@ -11,10 +11,10 @@ from _errortools.plugins import (
     Registry,
 )
 
-
 # =============================================================================
 # register & run
 # =============================================================================
+
 
 class TestPluginRegisterAndRun:
     def test_register_decorator(self):
@@ -48,6 +48,7 @@ class TestPluginRegisterAndRun:
 # list_all
 # =============================================================================
 
+
 class TestPluginList:
     def test_list_all_includes_registered_plugins(self):
         @register("plugin1")
@@ -67,6 +68,7 @@ class TestPluginList:
 # remove
 # =============================================================================
 
+
 class TestPluginRemove:
     def test_remove_existing_plugin(self):
         @register("toremove")
@@ -85,6 +87,7 @@ class TestPluginRemove:
 # =============================================================================
 # Registry class (static)
 # =============================================================================
+
 
 class TestRegistryClass:
     def test_static_register_and_get(self):

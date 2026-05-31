@@ -16,9 +16,11 @@ __all__ = [
 
 def register(name: str) -> Callable:
     """Register plugin (decorator)"""
+
     def decorator(func: Callable) -> Callable:
         _REGISTRY[name] = func
         return func
+
     return decorator
 
 
