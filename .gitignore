@@ -29,6 +29,7 @@ coverage.xml
 *.swo
 
 # Documentation (readthedocs/sphinx)
+_build/
 docs/_build/
 docs/_templates/
 docs/.doctrees/
