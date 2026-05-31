@@ -1,16 +1,10 @@
-name: Docs Build (for ReadTheDocs)
+name: Docs Build (RTD)
 
 on:
   push:
-    branches: [ main, master ]
-    paths:
-      - 'docs/**'
-      - '**.py'
+    branches: [ master ]
   pull_request:
-    branches: [ main, master ]
-    paths:
-      - 'docs/**'
-      - '**.py'
+    branches: [ master ]
 
 jobs:
   build:
@@ -29,7 +23,7 @@ jobs:
           pip install -r docs/requirements.txt
           pip install -e .
 
-      - name: Build docs (sphinx)
+      - name: Build docs
         run: |
           cd docs
           sphinx-build -b html . _build/html
