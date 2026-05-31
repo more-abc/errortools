@@ -161,7 +161,7 @@ class ContextException(PureBaseException):
     context: dict
     chain: list[dict]
     traceback: str
-    
+
     def with_context(self, **kwargs) -> Self
     def with_cause(self, cause: Exception) -> Self
 ```
@@ -176,19 +176,19 @@ Factory class for predefined error codes:
 class BaseErrorCodes:
     @staticmethod
     def invalid_input(detail: str = "") -> InvalidInputError
-    
+
     @staticmethod
     def access_denied(detail: str = "") -> AccessDeniedError
-    
+
     @staticmethod
     def not_found(detail: str = "") -> NotFoundError
-    
+
     @staticmethod
     def runtime_failure(detail: str = "") -> RuntimeFailure
-    
+
     @staticmethod
     def timeout_failure(detail: str = "") -> TimeoutFailure
-    
+
     @staticmethod
     def configuration_error(detail: str = "") -> ConfigurationError
 ```
@@ -200,22 +200,22 @@ class BaseErrorCodes:
 ```python
 class BaseWarning(UserWarning):
     default_detail: str
-    
+
     @classmethod
     def emit(cls, detail: str = "") -> None
-    
+
     @staticmethod
     def deprecated(detail: str) -> DeprecatedWarning
-    
+
     @staticmethod
     def performance(detail: str) -> PerformanceWarning
-    
+
     @staticmethod
     def resource(detail: str) -> ResourceUsageWarning
-    
+
     @staticmethod
     def runtime_behaviour(detail: str) -> RuntimeBehaviourWarning
-    
+
     @staticmethod
     def configuration(detail: str) -> ConfigurationWarning
 ```
@@ -259,7 +259,7 @@ class ExceptionCollector:
     has_errors: bool
     count: int
     exceptions: list[Exception]
-    
+
     def catch(self, callable: Callable, *args, **kwargs) -> None
     def raise_all(self, message: str) -> None
 ```
@@ -341,6 +341,6 @@ UnicodeEncodeErrorLike
 UnicodeTranslateErrorLike
 BaseExceptionGroupLike
 ExceptionGroupLike
-# For `GroupErrors` class 
+# For `GroupErrors` class
 GroupErrorsLike
 ```

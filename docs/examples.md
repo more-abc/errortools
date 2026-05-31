@@ -65,10 +65,10 @@ from errortools.logging import logger
 
 def process_batch(items: list[dict]) -> None:
     collector = ExceptionCollector()
-    
+
     for item in items:
         collector.catch(process_item, item)
-    
+
     if collector.has_errors:
         logger.error(
             "Failed to process {} out of {} items",
@@ -101,20 +101,20 @@ def load_config(path: str) -> dict:
     with ignore(FileNotFoundError) as err:
         with open(path) as f:
             config = json.load(f)
-    
+
     if err.be_ignore:
         ConfigurationWarning.emit(f"Config file {path} not found, using defaults")
         config = get_default_config()
-    
+
     # Validate required fields
     required = ["host", "port", "database"]
     missing = [k for k in required if k not in config]
-    
+
     if missing:
         raise BaseErrorCodes.configuration_error(
             f"Missing required config: {', '.join(missing)}"
         )
-    
+
     logger.info("Configuration loaded from {}", path)
     return config
 ```
@@ -126,14 +126,14 @@ from errortools.future import super_fast_ignore
 
 def process_large_dataset(data: list[dict]) -> list[str]:
     results = []
-    
+
     for item in data:
         # Use super_fast_ignore in tight loops
         with super_fast_ignore(KeyError, TypeError):
             # Optional field processing
             value = transform(item.get("optional_field"))
             results.append(value)
-    
+
     return results
 ```
 
@@ -154,9 +154,9 @@ def handle_request(request_id: str, user_id: int):
         user_id=user_id,
         service="user-service"
     )
-    
+
     req_log.info("Request started")
-    
+
     try:
         # Process request
         result = process_user_request(user_id)
@@ -193,7 +193,7 @@ def call_external_service():
     with reraise((ConnectionError, TimeoutError), ServiceError):
         # External library calls
         response = external_lib.request()
-    
+
     # All connection/timeout errors converted to ServiceError
     return response
 ```
@@ -208,11 +208,11 @@ def validate_user_token(token: str) -> dict:
     # Expensive validation
     if not is_valid_format(token):
         raise ValueError("Invalid token format")
-    
+
     response = auth_service.validate(token)
     if not response.ok:
         raise PermissionError("Token validation failed")
-    
+
     return response.data
 
 # First call with invalid token raises and caches
@@ -253,7 +253,7 @@ def process_pipeline(data: dict):
         validate_data(data)
         transform_data(data)
         save_data(data)
-    
+
     if err.be_ignore:
         logger.error(
             "Pipeline failed: {} - {}",
@@ -262,6 +262,6 @@ def process_pipeline(data: dict):
         )
         # Handle error or re-raise
         return None
-    
+
     return data
 ```

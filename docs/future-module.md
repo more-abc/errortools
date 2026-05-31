@@ -78,7 +78,7 @@ collector.catch(float, "bad3")
 # Check if any errors occurred
 if collector.has_errors:
     print(f"Collected {collector.count} errors")
-    
+
     # Raise all as ExceptionGroup
     collector.raise_all("batch operation failed")
 ```

@@ -29,7 +29,7 @@ from errortools.logging import logger
 # Suppress exceptions with metadata
 with ignore(KeyError) as err:
     _ = {}["missing"]
-    
+
 print(err.be_ignore)  # True
 print(err.exception)  # KeyError('missing')
 

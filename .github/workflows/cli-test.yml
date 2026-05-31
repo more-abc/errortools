@@ -58,24 +58,24 @@ jobs:
 
       - name: Test --run-tests
         run: python -m errortools --run-tests
-        
+
       - name: Test log info, stdout
-        run: logger --level info --output stdout "Hello from CI" 
+        run: logger --level info --output stdout "Hello from CI"
 
       - name: Test log warning, stderr
-        run: logger --level warning --output stderr "Warning from CI" 
+        run: logger --level warning --output stderr "Warning from CI"
 
       - name: Test log debug level
-        run: logger --level debug --output stdout "Debug message" 
+        run: logger --level debug --output stdout "Debug message"
 
       - name: Test log error level
         run: logger --level error --output stderr "Error message"
 
       - name: Test log critical level
-        run: logger --level critical --output stderr "Critical message" 
+        run: logger --level critical --output stderr "Critical message"
 
       - name: Test logger entry point (console script)
-        run: logger --level info --output stdout "Logger entry point test" 
+        run: logger --level info --output stdout "Logger entry point test"
 
       - name: Verify --version output format
         run: |
