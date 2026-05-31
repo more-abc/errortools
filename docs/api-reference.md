@@ -322,3 +322,25 @@ ContextExceptionType = type[ContextException]
 TracebackType = types.TracebackType
 FrameType = types.FrameType
 ```
+
+## Protocols
+
+```python
+# For `Exception` classes
+ExceptionLike
+SystemExitLike
+StopIterationLike
+OSErrorLike
+AttributeErrorLike
+NameErrorLike
+ImportErrorLike
+SyntaxErrorLike
+BlockingIOErrorLike
+UnicodeDecodeErrorLike
+UnicodeEncodeErrorLike
+UnicodeTranslateErrorLike
+BaseExceptionGroupLike
+ExceptionGroupLike
+# For `GroupErrors` class 
+GroupErrorsLike
+```
