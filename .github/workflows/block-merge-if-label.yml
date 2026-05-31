@@ -25,7 +25,19 @@ jobs:
               "Awaiting review",
               "🧪 Test PR",
               "DO-NOT-MERGE",
-              "🔧 wontfix"
+              "🔧 wontfix",
+              "🛑 invalid",
+              "🚫 duplicate",
+              "*1",
+              "*2",
+              "*3",
+              "*4",
+              "TODO",
+              "~ai-slog",
+              "~flood",
+              "~garbage",
+              "~spam",
+              "~troll"
             ];
 
             const prLabels = context.payload.pull_request.labels.map(l => l.name);
