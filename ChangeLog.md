@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## v3.2.5 - 2026-05-31
+- Add `.. versionadded:: 3.2` in `_errortools/plugin.py`.
+
 ## v3.2.4 - 2026-05-31
 - Add ultra-lightweight plugin system in `_errortools/plugins.py`.
 - Expose plugin APIs to top-level errortools module.

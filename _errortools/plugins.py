@@ -15,7 +15,11 @@ __all__ = [
 
 
 def register(name: str) -> Callable:
-    """Register plugin (decorator)"""
+    """
+    Register plugin (decorator)
+
+    .. versionadded:: 3.2
+    """
 
     def decorator(func: Callable) -> Callable:
         _REGISTRY[name] = func
@@ -25,7 +29,11 @@ def register(name: str) -> Callable:
 
 
 def get(name: str, default: Any = None) -> Any:
-    """Get registered plugin"""
+    """
+    Get registered plugin
+
+    .. versionadded:: 3.2
+    """
     plugin = _REGISTRY.get(name)
     if plugin is None:
         if default is not None:
@@ -35,21 +43,33 @@ def get(name: str, default: Any = None) -> Any:
 
 
 def remove(name: str) -> None:
-    """Remove a plugin"""
+    """
+    Remove a plugin
+
+    .. versionadded:: 3.2
+    """
     _REGISTRY.pop(name, None)
 
 
 def list_all() -> list[str]:
-    """List all plugin names"""
+    """
+    List all plugin names
+
+    .. versionadded:: 3.2
+    """
     return list(_REGISTRY.keys())
 
 
 def run(name: str, *args, **kwargs) -> Any:
-    """Run plugin"""
+    """Run plugin
+
+    .. versionadded:: 3.2"""
     return get(name)(*args, **kwargs)
 
 
 class Registry:
+    """.. versionadded:: 3.2"""
+
     @staticmethod
     def register(name: str, func: Callable) -> None:
         _REGISTRY[name] = func
