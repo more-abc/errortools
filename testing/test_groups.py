@@ -104,7 +104,6 @@ class TestGroupErrors:
         assert exc_types == {ValueError, TypeError}
 
 
-
 # =============================================================================
 # BaseGroup — abstract interface
 # =============================================================================
