@@ -51,6 +51,8 @@ _errortools = ["py.typed"]
 
 [tool.setuptools.packages.find]
 where = ["."]
+include = ["errortools", "_errortools", "testing"]
+exclude = ["htmlcov", ".*", "docs"]
 
 
 [[tool.setuptools.ext-modules]]
