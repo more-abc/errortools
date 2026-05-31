@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## v3.2.4 - 2026-05-31
+- Add ultra-lightweight plugin system in `_errortools/plugins.py`.
+- Expose plugin APIs to top-level errortools module.
+- Add complete test suite for plugin system in `tests/test_plugins.py`.
+
 ## v3.2.3 - 2026-05-30
 - - Fix max complexity error in `classes/protocol.py`.
 

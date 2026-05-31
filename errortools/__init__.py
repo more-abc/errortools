@@ -2,6 +2,8 @@
 errortools - a toolset for working with Python exceptions and warnings and logging.
 """
 
+from typing import Any
+
 from _errortools.raises import raises, assert_raises, raises_all, reraise
 from _errortools.ignore import (
     ignore,
@@ -71,6 +73,7 @@ from _errortools.typing import (
     TracebackType,
     FrameType,
 )
+from _errortools.plugins import run, register, list_all, get, remove, Registry
 from _errortools.descriptor.errormsg import ErrorMsg
 from _errortools.descriptor.nonblankmsg import NonBlankErrorMsg
 from _errortools.version import (
@@ -124,12 +127,27 @@ def __getattr__(name: str):
     if name in ("future", "logging", "partial"):
         return importlib.import_module(f"_errortools.{name}")
 
+    try:
+        return get(name)
+    except ValueError:
+        pass
+
     raise AttributeError(f"module 'errortools' has no attribute {name!r}")
 
 
 def __dir__() -> list[str]:
     return __all__
 
+
+class PluginNamespace:
+    def __getattr__(self, name: str) -> Any:
+        plugin = get(name)
+        if plugin is None:
+            raise AttributeError(f"Plugin {name!r} not found")
+        return plugin
+
+
+plugins = PluginNamespace()
 
 __all__ = [
     # functions
@@ -204,6 +222,13 @@ __all__ = [
     "RuntimeError_",
     "ExceptionType",
     "WarningType",
+    # plugins
+    "register",
+    "get",
+    "list_all",
+    "run",
+    "remove",
+    "Registry",
     # metadata
     "__version__",
     "__version_tuple__",
@@ -227,3 +252,5 @@ __all__ = [
     "logging",
     "partial",
 ]
+
+__all__.append("plugins")
