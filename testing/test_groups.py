@@ -11,6 +11,7 @@ from _errortools.classes.group import GroupErrors, BaseGroup
 # =============================================================================
 
 
+@pytest.mark.skipif(sys.version_info < (3, 10), reason="Requires Python 3.10+")
 class TestGroupErrors:
     def test_starts_empty(self):
         g = GroupErrors()
@@ -102,9 +103,6 @@ class TestGroupErrors:
         exc_types = {type(e) for e in exc_info.value.exceptions}
         assert exc_types == {ValueError, TypeError}
 
-
-if sys.version_info <= (3, 10):
-    del TestGroupErrors
 
 
 # =============================================================================
