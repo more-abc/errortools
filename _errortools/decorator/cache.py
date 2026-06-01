@@ -9,7 +9,6 @@ from typing import (
     overload,
 )
 
-from ..const import DEFAULT_ERROR_CACHE_SIZE
 from ..wrappers.cache import ErrorCacheWrapper
 
 _T = TypeVar("_T", bound=Callable[..., Any])
@@ -28,7 +27,7 @@ def error_cache(maxsize: Optional[int] = 128) -> Callable[[_T], ErrorCacheWrappe
 # fmt: on
 
 
-def error_cache(func: Optional[_T] = None, maxsize: Optional[int] = DEFAULT_ERROR_CACHE_SIZE) -> Any:  # type: ignore
+def error_cache(func: Optional[_T] = None, maxsize: Optional[int] = 128) -> Any:  # type: ignore
     """
     Decorator to cache exceptions raised by a function.
 

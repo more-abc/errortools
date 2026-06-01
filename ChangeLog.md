@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## v3.2.6 - 2026-06-01
+- Deleted the 4 constants in `_errortools/const.py`.
+- Deleted tests for `_errortools/const.py`.
+
 ## v3.2.5 - 2026-05-31
 - Add `.. versionadded:: 3.2` in `_errortools/plugin.py`.
 

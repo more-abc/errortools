@@ -14,12 +14,6 @@ from .ignore import (
     retry,
 )
 from .decorator.cache import error_cache
-from .const import (
-    LARGE_ERROR_CACHE_SIZE,
-    SMALL_ERROR_CACHE_SIZE,
-    DEFAULT_ERROR_CACHE_SIZE,
-    UNLIMITED_ERROR_CACHE,
-)
 
 # ------------------------------------------------------------------
 # ignore: Common exception shortcuts
@@ -114,10 +108,10 @@ retry_5_delay_1s: Callable = partial(retry, times=5, delay=1)
 # error cache presets
 # ------------------------------------------------------------------
 
-unlimited_error_cache: Callable = partial(error_cache, maxsize=UNLIMITED_ERROR_CACHE)
-lru_error_cache: Callable = partial(error_cache, maxsize=DEFAULT_ERROR_CACHE_SIZE)
-small_error_cache: Callable = partial(error_cache, maxsize=SMALL_ERROR_CACHE_SIZE)
-large_error_cache: Callable = partial(error_cache, maxsize=LARGE_ERROR_CACHE_SIZE)
+unlimited_error_cache: Callable = partial(error_cache, maxsize=1024)
+lru_error_cache: Callable = partial(error_cache, maxsize=128)
+small_error_cache: Callable = partial(error_cache, maxsize=64)
+large_error_cache: Callable = partial(error_cache, maxsize=None)
 
 
 # ------------------------------------------------------------------
