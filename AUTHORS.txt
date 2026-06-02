@@ -10,3 +10,4 @@ yangphysics
 # And here are bot contributors
 dependabot[bot]
 AbaAbaAba-bot-like[bot]
+pre-commit-ci[bot]
