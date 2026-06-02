@@ -11,6 +11,9 @@ build.bat                    @more-abc/core-dev-team
 
 .editorconfig                @aiwonderland @more-abc/core-dev-team
 .flake8                      @aiwonderland @more-abc/core-dev-team
+.pre-commit-config.yaml      @more-abc/core-dev-team
+<!-- .pre-commit-hooks.yaml       @more-abc/core-dev-team -->
+
 .gitignore                   @more-abc/core-dev-team
 
 AUTHORS.txt                  @more-abc/core-dev-team
