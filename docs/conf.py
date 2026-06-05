@@ -38,6 +38,7 @@ extensions = [
     "sphinx_rtd_theme",
     "sphinx.ext.intersphinx",
     "sphinx.ext.viewcode",
+    "sphinx_copybutton",
 ]
 
 source_suffix = {
@@ -46,6 +47,17 @@ source_suffix = {
 }
 
 html_theme = "furo"
+html_title = f"errortools {version}"
+html_theme_options = {
+    "navigation_with_keys": True,
+    "sidebar_hide_name": False,
+    "light_css_variables": {
+        "color-brand-primary": "#4F46E5",
+    },
+    "dark_css_variables": {
+        "color-brand-primary": "#A78BFA",
+    },
+}
 
 myst_enable_extensions = [
     "colon_fence",
