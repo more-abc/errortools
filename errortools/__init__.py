@@ -2,6 +2,7 @@
 errortools - a toolset for working with Python exceptions and warnings and logging.
 """
 
+import sys
 from typing import Any
 
 from _errortools.raises import raises, assert_raises, raises_all, reraise
@@ -149,6 +150,13 @@ class PluginNamespace:
 
 plugins = PluginNamespace()
 
+_PYTHON_3_11_CAN_USE: list[str] = [
+    "GroupErrors",
+    "BaseGroup",
+    "BaseExceptionGroupLike",
+    "ExceptionGroupLike",
+    "GroupErrorsLike",
+]
 __all__ = [
     # functions
     "raises",
@@ -173,8 +181,6 @@ __all__ = [
     "TracebackType",
     "FrameType",
     # classes
-    "GroupErrors",
-    "BaseGroup",
     "BaseErrorCodes",
     "InvalidInputError",
     "NotFoundError",
@@ -197,8 +203,6 @@ __all__ = [
     "ContextException",
     "Error",
     "ExceptionLike",
-    "ExceptionGroupLike",
-    "BaseExceptionGroupLike",
     "BlockingIOErrorLike",
     "NameErrorLike",
     "StopIterationLike",
@@ -209,7 +213,6 @@ __all__ = [
     "UnicodeEncodeErrorLike",
     "UnicodeTranslateErrorLike",
     "AttributeErrorLike",
-    "GroupErrorsLike",
     "ErrortoolsDeprecationWarning",
     # for type hints
     "PureBaseExceptionType",
@@ -254,3 +257,6 @@ __all__ = [
 ]
 
 __all__.append("plugins")
+
+if sys.version_info >= (3, 11):
+    __all__.append(_PYTHON_3_11_CAN_USE)

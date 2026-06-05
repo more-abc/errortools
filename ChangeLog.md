@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## v3.3.1 - 2026-06-05
+- Improve compatibility in `errortools/__init__.py` to Python 3.11 (for `ExceptionGroup` compatibility).
+
 ## Release v3.3.0 - 2026-06-02
 - Release 3.3.0
 
