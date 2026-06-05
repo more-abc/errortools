@@ -19,7 +19,7 @@ from _errortools.errno import (
     get_all_errno_codes,
     is_valid_errno,
 )
-from _errortools.classes.group import BaseGroup, GroupErrors
+from _errortools.classes.group import BaseGroup, GroupErrors  # noqa: F401
 from _errortools.decorator.cache import error_cache
 from _errortools.decorator.deprecated import deprecated, experimental
 from _errortools.decorator.handlers import suppress, convert
@@ -48,7 +48,7 @@ from _errortools.classes.abc import (
     Raiseable,
     Error,
 )
-from _errortools.classes.protocol import (
+from _errortools.classes.protocol import (  # noqa: F401
     ExceptionLike,
     ExceptionGroupLike,
     BaseExceptionGroupLike,

@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## v3.3.2 - 2026-06-05
+- Fixed flake8 F401 error in `errortools/__init__.py`.
+
 ## v3.3.1 - 2026-06-05
 - Improve compatibility in `errortools/__init__.py` to Python 3.11 (for `ExceptionGroup` compatibility).
 
