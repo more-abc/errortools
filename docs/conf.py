@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-from _errortools.version import __version__, __version_tuple__
+from _errortools.version import __version_tuple__
 import os
 import sys
 
