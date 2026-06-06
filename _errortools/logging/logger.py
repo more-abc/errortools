@@ -10,4 +10,4 @@ from .level import Level
 # Create the default global logger.
 # It ships with a single stderr sink at DEBUG level (mirrors loguru's default).
 logger: BaseLogger = BaseLogger(name="errortools")
-logger.add(sys.stderr, level=Level.DEBUG, colorize=None)
+logger.add(sys.stderr, level=Level.TRACE, colorize=None)
