@@ -16,8 +16,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/..")
 project = "errortools"
 copyright = "(C) 2026 aiwonderland and more-abc team"
 author = "aiwonderland"
-release = __version__
-version = f"{__version_tuple__[0]}.{__version_tuple__[1]}"
+release = f"{__version_tuple__[0]}.{__version_tuple__[1]}"
+version = f"{__version_tuple__[0]}.{__version_tuple__[1]}.{__version_tuple__[2]}"
 
 
 # -- General configuration ---------------------------------------------------
