@@ -1,5 +1,5 @@
 """
-Tests for _errortools/logging/ — Level, Record, sinks, BaseLogger.
+Tests for _errortools/logging/ — ~~Level~~, ~~Record~~, ~~sinks~~, ~~BaseLogger~~.
 
 Deprecated file.
 """
