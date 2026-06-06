@@ -768,7 +768,7 @@ class TestOptLogger:
     # --- depth offset --- #
 
     def test_opt_depth_increases_caller_frame_distance(self):
-        from _errortools.logging.record import make_record
+        pass
 
         records: list[Record] = []
 
