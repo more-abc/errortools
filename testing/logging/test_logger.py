@@ -5,7 +5,7 @@ import io
 import pytest
 
 from _errortools.logging import BaseLogger, Level, Record, StreamSink
-from testing.logging.test_logging_deprecated_file import _make_logger
+from testing.logging.helper import _make_logger
 
 # =============================================================================
 # BaseLogger — level methods

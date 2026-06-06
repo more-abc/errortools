@@ -18,18 +18,6 @@ from _errortools.logging import (
     logger,
 )
 
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
-
-
-def _make_logger(*args, **kwargs) -> tuple[BaseLogger, io.StringIO]:
-    buf = io.StringIO()
-    lg = BaseLogger(*args, **kwargs)
-    lg.add(buf, level=Level.TRACE, colorize=False)
-    return lg, buf
-
-
 # =============================================================================
 # Global logger singleton
 # =============================================================================
