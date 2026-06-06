@@ -758,7 +758,7 @@ class TestOptLogger:
         out = self._out(buf)
         assert "LookupError" in out
         assert "via opt" in out
-        assert "ERROR" in out   # exception() logs at ERROR level
+        assert "ERROR" in out  # exception() logs at ERROR level
 
     def test_opt_no_exception_by_default(self):
         lg, buf = self._make_logger()
@@ -811,7 +811,7 @@ class TestLogMethod:
 
     def test_log_by_level_number(self):
         lg, buf = self._make()
-        lg.log(30, "by number")   # WARNING
+        lg.log(30, "by number")  # WARNING
         assert "WARNING" in buf.getvalue()
 
     def test_log_by_level_object(self):
