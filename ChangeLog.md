@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## v3.3.3 - 2026-06-06
+- Fix #53 to import `_check_methods` from `_collections_abc` module in `_errortools/classes/abc.py`.
+
 ## v3.3.2 - 2026-06-05
 - Fixed flake8 F401 error in `errortools/__init__.py`.
 

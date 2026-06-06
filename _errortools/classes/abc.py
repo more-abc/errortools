@@ -1,5 +1,6 @@
 from typing import Any, Literal, Union
 from abc import ABC, abstractmethod
+from _collections_abc import _check_methods  # type: ignore[attr-defined]
 import copy
 import shutil
 import csv
@@ -10,23 +11,6 @@ if sys.version_info >= (3, 15):
     from typing import disjoint_base
 else:
     from typing_extensions import disjoint_base
-
-
-def _check_methods(C: type[Any], *methods: str) -> Union[bool, Literal[NotImplemented]]:  # type: ignore
-    """Check methods in `C`. If has, return `True`, else `NotImplemented`."""
-    # from `_collections_abc.py`.
-    # Copyright 2007 Google, Inc. All Rights Reserved.
-    # Licensed to PSF under a Contributor Agreement.
-    mro: tuple[type[Any], ...] = C.__mro__  # Added type hints for mro var
-    for method in methods:
-        for B in mro:
-            if method in B.__dict__:
-                if B.__dict__[method] is None:
-                    return NotImplemented
-                break
-        else:
-            return NotImplemented
-    return True
 
 
 # ----------------------------------------------------------------------
