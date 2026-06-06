@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import datetime
 import io
+import os
+import sys
 import threading
 from pathlib import Path
 
@@ -671,3 +674,409 @@ class TestGlobalLogger:
     def test_repr(self):
         r = repr(logger)
         assert "BaseLogger" in r or "errortools" in r
+
+
+# =============================================================================
+# _OptLogger (returned by logger.opt(...))
+# =============================================================================
+
+
+class TestOptLogger:
+
+    def _make_logger(self) -> tuple[BaseLogger, io.StringIO]:
+        buf = io.StringIO()
+        lg = BaseLogger()
+        lg.add(buf, level=Level.TRACE, colorize=False)
+        return lg, buf
+
+    def _out(self, buf: io.StringIO) -> str:
+        return buf.getvalue()
+
+    # --- relay for every severity level --- #
+
+    def test_opt_trace(self):
+        lg, buf = self._make_logger()
+        lg.set_level("TRACE")
+        lg.opt().trace("opt trace")
+        assert "TRACE" in self._out(buf)
+        assert "opt trace" in self._out(buf)
+
+    def test_opt_debug(self):
+        lg, buf = self._make_logger()
+        lg.opt().debug("opt debug")
+        assert "DEBUG" in self._out(buf)
+        assert "opt debug" in self._out(buf)
+
+    def test_opt_info(self):
+        lg, buf = self._make_logger()
+        lg.opt().info("opt info")
+        assert "INFO" in self._out(buf)
+        assert "opt info" in self._out(buf)
+
+    def test_opt_success(self):
+        lg, buf = self._make_logger()
+        lg.opt().success("opt success")
+        assert "SUCCESS" in self._out(buf)
+        assert "opt success" in self._out(buf)
+
+    def test_opt_warning(self):
+        lg, buf = self._make_logger()
+        lg.opt().warning("opt warning")
+        assert "WARNING" in self._out(buf)
+        assert "opt warning" in self._out(buf)
+
+    def test_opt_error(self):
+        lg, buf = self._make_logger()
+        lg.opt().error("opt error")
+        assert "ERROR" in self._out(buf)
+        assert "opt error" in self._out(buf)
+
+    def test_opt_critical(self):
+        lg, buf = self._make_logger()
+        lg.opt().critical("opt critical")
+        assert "CRITICAL" in self._out(buf)
+        assert "opt critical" in self._out(buf)
+
+    # --- exception=true --- #
+
+    def test_opt_exception_attaches_traceback(self):
+        lg, buf = self._make_logger()
+        try:
+            raise RuntimeError("opt boom")
+        except RuntimeError:
+            lg.opt(exception=True).error("handled")
+        out = self._out(buf)
+        assert "RuntimeError" in out
+        assert "handled" in out
+
+    def test_opt_exception_method(self):
+        lg, buf = self._make_logger()
+        try:
+            raise LookupError("opt lookup")
+        except LookupError:
+            lg.opt(exception=True).exception("via opt")
+        out = self._out(buf)
+        assert "LookupError" in out
+        assert "via opt" in out
+        assert "ERROR" in out   # exception() logs at ERROR level
+
+    def test_opt_no_exception_by_default(self):
+        lg, buf = self._make_logger()
+        lg.opt().error("plain")
+        assert "Traceback" not in self._out(buf)
+
+    # --- depth offset --- #
+
+    def test_opt_depth_increases_caller_frame_distance(self):
+        from _errortools.logging.record import make_record
+
+        records: list[Record] = []
+
+        class Capture(StreamSink):
+            def emit(self, record):
+                records.append(record)
+
+        lg = BaseLogger()
+        lg.add(Capture(sys.stderr, colorize=False))
+
+        # depth=0  → caller is the line inside _relay (inside _OptLogger)
+        # depth>0  → caller moves up the stack toward this test method
+        lg.opt(depth=0).info("depth zero")
+        depth_zero_file = records[-1].file
+
+        lg.opt(depth=4).info("depth four")
+        depth_four_file = records[-1].file
+
+        assert depth_zero_file != depth_four_file
+
+
+# =============================================================================
+# BaseLogger.log() — direct arbitrary-level dispatch
+# =============================================================================
+
+
+class TestLogMethod:
+
+    def _make(self):
+        buf = io.StringIO()
+        lg = BaseLogger()
+        lg.add(buf, level=Level.TRACE, colorize=False)
+        return lg, buf
+
+    def test_log_by_level_name(self):
+        lg, buf = self._make()
+        lg.log("info", "by name")
+        assert "INFO" in buf.getvalue()
+        assert "by name" in buf.getvalue()
+
+    def test_log_by_level_number(self):
+        lg, buf = self._make()
+        lg.log(30, "by number")   # WARNING
+        assert "WARNING" in buf.getvalue()
+
+    def test_log_by_level_object(self):
+        lg, buf = self._make()
+        lg.log(Level.CRITICAL, "by obj")
+        assert "CRITICAL" in buf.getvalue()
+
+    def test_log_below_threshold_is_dropped(self):
+        lg, buf = self._make()
+        lg.set_level(Level.ERROR)
+        lg.log(Level.DEBUG, "too quiet")
+        assert "too quiet" not in buf.getvalue()
+
+    def test_log_with_positional_args(self):
+        lg, buf = self._make()
+        lg.log(Level.INFO, "val={}", 42)
+        assert "val=42" in buf.getvalue()
+
+    def test_log_with_keyword_args(self):
+        lg, buf = self._make()
+        lg.log(Level.INFO, "x={x}", x="y")
+        assert "x=y" in buf.getvalue()
+
+    def test_log_with_exception_true(self):
+        lg, buf = self._make()
+        try:
+            raise OSError("direct log exc")
+        except OSError:
+            lg.log(Level.ERROR, "caught", exception=True)
+        out = buf.getvalue()
+        assert "OSError" in out
+        assert "caught" in out
+
+
+# =============================================================================
+# BaseLogger — sink error handling
+# =============================================================================
+
+
+class TestSinkErrorHandling:
+
+    def test_broken_sink_swallowed(self):
+        class BrokenSink(StreamSink):
+            def emit(self, record):  # type: ignore[override]
+                raise RuntimeError("boom")
+
+        buf = io.StringIO()
+        lg = BaseLogger()
+        lg.add(BrokenSink(sys.stderr, colorize=False))
+        lg.add(buf, colorize=False)
+        lg.info("should survive")
+        assert "should survive" in buf.getvalue()
+
+    def test_multiple_broken_sinks_all_swallowed(self):
+        class Broken(StreamSink):
+            def emit(self, record):  # type: ignore[override]
+                raise ValueError("x")
+
+        buf = io.StringIO()
+        lg = BaseLogger()
+        lg.add(Broken(sys.stderr, colorize=False))
+        lg.add(Broken(sys.stderr, colorize=False))
+        lg.add(buf, colorize=False)
+        lg.info("multi broken")
+        assert "multi broken" in buf.getvalue()
+
+
+# =============================================================================
+# Record — completeness checks
+# =============================================================================
+
+
+class TestRecordCompleteness:
+
+    def test_record_time_is_aware_datetime(self):
+        from _errortools.logging.record import make_record
+
+        rec = make_record(Level.INFO, "t", "root", 1, False, {})
+        assert isinstance(rec.time, datetime.datetime)
+        assert rec.time.tzinfo is not None
+
+    def test_record_caller_info_populated(self):
+        from _errortools.logging.record import make_record
+
+        rec = make_record(Level.INFO, "m", "root", 1, False, {})
+        assert rec.file  # non-empty string
+        assert rec.line >= 1
+        assert rec.function
+
+    def test_record_thread_fields(self):
+        from _errortools.logging.record import make_record
+
+        rec = make_record(Level.INFO, "m", "root", 1, False, {})
+        assert rec.thread_id == threading.current_thread().ident
+        assert rec.thread_name == threading.current_thread().name
+
+    def test_record_process_id(self):
+        from _errortools.logging.record import make_record
+
+        rec = make_record(Level.INFO, "m", "root", 1, False, {})
+        assert rec.process_id == os.getpid()
+
+
+# =============================================================================
+# catch() — advanced usage
+# =============================================================================
+
+
+class TestCatchAdvanced:
+
+    def _make(self):
+        buf = io.StringIO()
+        lg = BaseLogger()
+        lg.add(buf, level=Level.TRACE, colorize=False)
+        return lg, buf
+
+    def test_catch_multiple_exception_types(self):
+        lg, buf = self._make()
+        with lg.catch(ZeroDivisionError, ValueError):
+            1 / 0  # type: ignore
+        assert "ZeroDivisionError" in buf.getvalue()
+
+        buf.truncate(0)
+        buf.seek(0)
+        with lg.catch(ZeroDivisionError, ValueError):
+            raise ValueError("multi")
+        assert "ValueError" in buf.getvalue()
+
+    def test_catch_level_parameter(self):
+        lg, buf = self._make()
+        with lg.catch(level=Level.WARNING):
+            raise RuntimeError("warn level")
+        out = buf.getvalue()
+        assert "WARNING" in out
+        assert "RuntimeError" in out
+
+    def test_catch_message_parameter(self):
+        lg, buf = self._make()
+        custom_msg = "CUSTOM-CAUGHT"
+        with lg.catch(ValueError, message=custom_msg):
+            raise ValueError("x")
+        assert custom_msg in buf.getvalue()
+
+    def test_catch_decorator_no_exception_normal_return(self):
+        lg, buf = self._make()
+
+        @lg.catch(ValueError)
+        def good():
+            return 42
+
+        assert good() == 42
+        assert buf.getvalue() == ""
+
+    def test_catch_context_no_exception(self):
+        lg, buf = self._make()
+        with lg.catch():
+            pass
+        assert buf.getvalue() == ""
+
+
+# =============================================================================
+# FileSink — retention
+# =============================================================================
+
+
+class TestFileSinkRetention:
+
+    def test_retention_keeps_only_n_files(self, tmp_path):
+        log_path = tmp_path / "ret.log"
+        # rotation=1 byte forces rotation on every emit, retention=2 keeps only 2
+        sink = FileSink(log_path, rotation=1, retention=2)
+        from _errortools.logging.record import make_record
+
+        for i in range(5):
+            sink.emit(make_record(Level.INFO, f"msg{i}", "root", 1, False, {}))
+        sink.close()
+
+        rotated = list(tmp_path.glob("ret.*.log"))
+        assert len(rotated) <= 2
+
+
+# =============================================================================
+# StreamSink — TTY auto-detection
+# =============================================================================
+
+
+class TestStreamSinkTTY:
+
+    def test_tty_auto_colorize_true(self):
+        class FakeTTY:
+            def isatty(self):
+                return True
+
+            def write(self, s: str) -> None:
+                pass
+
+            def flush(self) -> None:
+                pass
+
+        sink = StreamSink(FakeTTY())  # type: ignore[arg-type]
+        assert sink._colorize is True
+
+    def test_non_tty_auto_colorize_false(self):
+        buf = io.StringIO()  # normal StringIO is not a tty
+        sink = StreamSink(buf, colorize=None)
+        assert sink._colorize is False
+
+
+# =============================================================================
+# BaseLogger.__repr__
+# =============================================================================
+
+
+class TestRepr:
+
+    def test_repr_shows_name_level_sink_count(self):
+        lg = BaseLogger(name="test_repr")
+        r = repr(lg)
+        assert "BaseLogger" in r
+        assert "test_repr" in r
+        assert "DEBUG" in r
+        assert "sinks=0" in r
+
+    def test_repr_shows_sink_count_after_add(self):
+        lg = BaseLogger()
+        lg.add(io.StringIO(), colorize=False)
+        r = repr(lg)
+        assert "sinks=1" in r
+
+
+# =============================================================================
+# _format_record — edge cases
+# =============================================================================
+
+
+class TestFormatRecord:
+
+    def test_custom_fmt_all_placeholders(self):
+        buf = io.StringIO()
+        sink = StreamSink(buf, fmt="{level}:{name}:{message}", colorize=False)
+        from _errortools.logging.record import make_record
+
+        sink.emit(make_record(Level.INFO, "hi", "my_logger", 1, False, {}))
+        assert "INFO:my_logger:hi" in buf.getvalue()
+
+    def test_default_format_includes_location(self):
+        buf = io.StringIO()
+        sink = StreamSink(buf, colorize=False)
+        from _errortools.logging.record import make_record
+
+        sink.emit(make_record(Level.WARNING, "loc", "root", 1, False, {}))
+        out = buf.getvalue()
+        assert "WARNING" in out
+        assert "loc" in out
+
+    def test_traceback_appended_to_formatted_line(self):
+        buf = io.StringIO()
+        sink = StreamSink(buf, colorize=False)
+        from _errortools.logging.record import make_record
+
+        try:
+            raise TypeError("fmt exc")
+        except TypeError:
+            rec = make_record(Level.ERROR, "err msg", "root", 1, True, {})
+        sink.emit(rec)
+        out = buf.getvalue()
+        assert "TypeError" in out
+        assert "err msg" in out
