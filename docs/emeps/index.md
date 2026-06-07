@@ -1,5 +1,11 @@
 # EMEP (Errortools Module Enhancement Proposal)
 
-### Index:
-- [EMEP 1 - How to make an EMEP?](emep1.md)
-- More EMEPs will be appended here sequentially
+All proposals for enhancing errortools.
+
+## Index
+
+```{toctree}
+:maxdepth: 1
+
+emep1
+```

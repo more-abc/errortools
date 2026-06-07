@@ -85,4 +85,4 @@ with ignore_warns():  # Suppress all warnings
 | `fast_ignore()` | Low | None | Production hot paths |
 | `super_fast_ignore()` | Minimal | None | Critical performance paths |
 
-See [Future Module](future-module.md) for `super_fast_ignore()`.
+See [Future Module](future_module.md) for `super_fast_ignore()`.

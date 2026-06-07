@@ -92,5 +92,5 @@ req_log.info("Request received")
 ## Next Steps
 
 - Explore [Core Features](core-features.md) for detailed documentation
-- Check [Examples](examples.md) for real-world use cases
-- Review [API Reference](api-reference.md) for complete API documentation
+- Check [Examples](../examples/index.md) for real-world use cases
+- Review [API Reference](../api_reference/index.md) for complete API documentation

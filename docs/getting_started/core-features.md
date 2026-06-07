@@ -11,7 +11,7 @@ Tools for catching and suppressing exceptions gracefully:
 - **`ignore_subclass()`** - Suppress any subclass of a base exception
 - **`ignore_warns()`** - Suppress warnings
 
-See [Exception Handling](exception-handling.md) for details.
+See [Exception Handling](../user_guide/exception_handling.md) for details.
 
 ## Raising Exceptions
 
@@ -22,7 +22,7 @@ Utilities for raising and converting exceptions:
 - **`reraise()`** - Convert exception types on the fly
 - **`assert_raises()`** - Assert a callable raises specific exceptions
 
-See [Raising Exceptions](raising-exceptions.md) for details.
+See [Raising Exceptions](../user_guide/raising_exceptions.md) for details.
 
 ## Decorators
 
@@ -34,7 +34,7 @@ Function decorators for common patterns:
 - **`@deprecated()`** - Mark functions as deprecated
 - **`@experimental()`** - Mark functions as experimental
 
-See [Decorators](decorators.md) for details.
+See [Decorators](../user_guide/decorators.md) for details.
 
 ## Custom Exceptions
 
@@ -44,7 +44,7 @@ Structured exception classes with error codes and context:
 - **`ContextException`** - Adds trace IDs and context dict
 - **`BaseErrorCodes`** - Predefined error code factory
 
-See [Custom Exceptions](custom-exceptions.md) for details.
+See [Custom Exceptions](../user_guide/custom_exceptions.md) for details.
 
 ## Warnings
 
@@ -55,4 +55,4 @@ Structured warning classes with factory methods:
 - **`PerformanceWarning`** - Performance warnings
 - **`ResourceUsageWarning`** - Resource usage warnings
 
-See [Warnings](warnings.md) for details.
+See [Warnings](../user_guide/warnings.md) for details.

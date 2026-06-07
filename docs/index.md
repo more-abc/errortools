@@ -58,22 +58,14 @@ pip install errortools
 maxdepth: 2
 caption: Contents
 ---
-installation
-quickstart
-core-features
-exception-handling
-raising-exceptions
-decorators
-custom-exceptions
-warnings
-future-module
-logging
-plugins
-cli
-api-reference
-examples
-mascot
-```
 
-## EMEP (Errortools Module Enhancement Proposal) index
-[index](emeps/index.md)
+getting_started/index
+user_guide/index
+api_reference/index
+cli_tools/index
+examples/index
+extending/index
+faq/mascot
+emeps/index
+whatsnew/index
+```
