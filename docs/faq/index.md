@@ -199,7 +199,7 @@ def validate_token(token: str) -> dict:
 Use `ignore_warns()` the same way you would suppress standard-library warnings:
 
 ```python
-from errortools import ignore_warns, DeprecatedWarning
+from errortools import ignore_warns
 
 with ignore_warns(DeprecatedWarning):
     legacy_function()
