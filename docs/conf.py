@@ -38,8 +38,11 @@ extensions = [
     "sphinx_rtd_theme",
     "sphinx.ext.intersphinx",
     "sphinx.ext.viewcode",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.napoleon",
     "sphinx_copybutton",
 ]
+
 
 source_suffix = {
     # ".rst": "restructuredtext",
@@ -65,8 +68,15 @@ myst_enable_extensions = [
     "tasklist",
 ]
 
+
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
 }
 
+
 autodoc_member_order = "bysource"
+autodoc_default_options = {
+    "members": True,
+    "undoc-members": True,
+    "show-inheritance": True,
+}
