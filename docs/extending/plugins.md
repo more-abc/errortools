@@ -94,13 +94,32 @@ print(list_all())
 
 `remove()` is idempotent—calling it with a name that does not exist does nothing.
 
+You can check whether a plugin exists without risk of raising:
+
+```python
+from errortools import has
+
+if has("json_serialize"):
+    ...
+```
+
+To remove **all** plugins at once (useful in test teardown):
+
+```python
+from errortools import clear
+
+clear()
+```
+
 ## Error handling
 
 | Situation | Behaviour |
 |-----------|-----------|
 | `get("unknown")` | Raises `ValueError: Plugin 'unknown' is not registered` |
 | `get("unknown", default=f)` | Returns `f` |
+| `get("unknown", default=None)` | Returns `None` (since 3.3.5) |
 | `run("unknown")` | Raises `ValueError` (no default path) |
+| `has("unknown")` | Returns `False` |
 
 ## Practical example: environment-based alert backend
 
@@ -155,11 +174,13 @@ Retrieve a registered plugin.
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `name` | `str` | Plugin identifier. |
-| `default` | `Any` | Value returned when the plugin is missing. If `None`, a `ValueError` is raised instead. |
+| `default` | `Any` | Value returned when the plugin is missing. If not provided, a `ValueError` is raised instead. |
 
 **Returns:** The registered callable, or `default`.
 
-**Raises:** `ValueError` — if the plugin does not exist and no `default` was supplied.
+**Raises:** `ValueError` — if the plugin does not exist and no *default* was supplied.
+
+**Note:** Starting from **3.3.5**, passing `default=None` is correctly honored and returns `None` instead of raising.
 
 ### `run(name: str, *args, **kwargs) -> Any`
 
@@ -185,6 +206,20 @@ Return a snapshot of currently registered plugin names.
 
 Delete a plugin from the registry. No-op if the name is absent.
 
+### `has(name: str) -> bool`
+
+Check whether a plugin is registered.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `name` | `str` | Plugin identifier. |
+
+**Returns:** `True` if the plugin exists, otherwise `False`.
+
+### `clear() -> None`
+
+Remove **all** plugins from the registry. This is useful for test isolation or resetting state.
+
 ### `class Registry`
 
 Programmatic equivalent of the top-level functions, exposed as a class for IDE discoverability.
@@ -193,7 +228,10 @@ Programmatic equivalent of the top-level functions, exposed as a class for IDE d
 |--------|---------------|
 | `Registry.register(name, func)` | `register(name)(func)` |
 | `Registry.get(name)` | `get(name)` |
+| `Registry.has(name)` | `has(name)` |
 | `Registry.list_all()` | `list_all()` |
+| `Registry.remove(name)` | `remove(name)` |
+| `Registry.clear()` | `clear()` |
 
 ## See also
 

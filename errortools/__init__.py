@@ -74,7 +74,7 @@ from _errortools.typing import (
     TracebackType,
     FrameType,
 )
-from _errortools.plugins import run, register, list_all, get, remove, Registry
+from _errortools.plugins import run, register, list_all, get, has, remove, clear, Registry
 from _errortools.descriptor.errormsg import ErrorMsg
 from _errortools.descriptor.nonblankmsg import NonBlankErrorMsg
 from _errortools.version import (
@@ -228,9 +228,11 @@ __all__ = [
     # plugins
     "register",
     "get",
+    "has",
     "list_all",
     "run",
     "remove",
+    "clear",
     "Registry",
     # metadata
     "__version__",
