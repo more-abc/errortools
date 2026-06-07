@@ -65,6 +65,7 @@ api_reference/index
 cli_tools/index
 examples/index
 extending/index
+faq/index
 faq/mascot
 emeps/index
 whatsnew/index
