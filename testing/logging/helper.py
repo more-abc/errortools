@@ -5,8 +5,9 @@
 # ---------------------------------------------------------------------------
 
 
-from _errortools.logging import BaseLogger, Level
+from __future__ import annotations
 
+from _errortools.logging import BaseLogger, Level
 
 import io
 

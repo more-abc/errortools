@@ -1,5 +1,7 @@
 """Logging tests for record."""
 
+from __future__ import annotations
+
 from _errortools.logging.level import Level
 from _errortools.logging.record import Record
 

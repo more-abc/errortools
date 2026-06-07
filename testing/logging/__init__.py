@@ -1,4 +1,4 @@
 from _errortools.version import _get_version_tuple
 
-__version__ = "0.1.0"
+__version__ = "0.1.4"
 __version_tuple__ = _get_version_tuple(__version__)

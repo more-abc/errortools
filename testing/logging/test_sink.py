@@ -247,3 +247,51 @@ class TestRecordCompleteness:
 
         rec = make_record(Level.INFO, "m", "root", 1, False, {})
         assert rec.process_id == os.getpid()
+
+
+# =============================================================================
+# FileSink — retention
+# =============================================================================
+
+
+class TestFileSinkRetention:
+
+    def test_retention_keeps_only_n_files(self, tmp_path):
+        log_path = tmp_path / "ret.log"
+        # rotation=1 byte forces rotation on every emit, retention=2 keeps only 2
+        sink = FileSink(log_path, rotation=1, retention=2)
+        from _errortools.logging.record import make_record
+
+        for i in range(5):
+            sink.emit(make_record(Level.INFO, f"msg{i}", "root", 1, False, {}))
+        sink.close()
+
+        rotated = list(tmp_path.glob("ret.*.log"))
+        assert len(rotated) <= 2
+
+
+# =============================================================================
+# StreamSink — TTY auto-detection
+# =============================================================================
+
+
+class TestStreamSinkTTY:
+
+    def test_tty_auto_colorize_true(self):
+        class FakeTTY:
+            def isatty(self):
+                return True
+
+            def write(self, s: str) -> None:
+                pass
+
+            def flush(self) -> None:
+                pass
+
+        sink = StreamSink(FakeTTY())  # type: ignore[arg-type]
+        assert sink._colorize is True
+
+    def test_non_tty_auto_colorize_false(self):
+        buf = io.StringIO()  # normal StringIO is not a tty
+        sink = StreamSink(buf, colorize=None)
+        assert sink._colorize is False
