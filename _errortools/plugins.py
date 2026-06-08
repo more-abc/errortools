@@ -36,7 +36,7 @@ def get(name: str, default: Any = _UNSET) -> Any:
     Args:
         name: Plugin identifier.
         default: Value returned when the plugin is missing.
-            If not provided, a :class:`ValueError` is raised instead.
+            If not provided, a `ValueError` is raised instead.
 
     Raises:
         ValueError: If the plugin does not exist and no *default* was supplied.

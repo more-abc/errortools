@@ -15,47 +15,57 @@ __all__ = [
     "UnicodeDecodeErrorLike",
     "UnicodeEncodeErrorLike",
     "UnicodeTranslateErrorLike",
-    "BaseExceptionGroupLike",
-    "ExceptionGroupLike",
     "GroupErrorsLike",
 ]
+
+if sys.version_info >= (3, 11):
+    __all__ += [
+        "BaseExceptionGroupLike",
+        "ExceptionGroupLike",
+    ]
 
 
 @runtime_checkable
 class ExceptionLike(Protocol):
-    """.. versionadded:: 3.2"""
+    """Protocol describing the common interface of all exceptions.
+
+    Matches any `BaseException` subclass at runtime.
+
+    .. versionadded:: 3.2
+    """
 
     args: tuple[Any, ...]
-    # __cause__: BaseException | None
-    # __context__: BaseException | None
-    # __suppress_context__: bool
-    # __traceback__: TracebackType | None
-
-    # if sys.version_info >= (3, 11):
-    #     __notes__: list[str]
 
 
 @runtime_checkable
-class SystemExitLike(Protocol):
-    """.. versionadded:: 3.2"""
+class SystemExitLike(ExceptionLike, Protocol):
+    """Protocol for exceptions that carry an exit code.
+
+    .. versionadded:: 3.2
+    """
 
     code: int | str | None
 
 
 @runtime_checkable
-class StopIterationLike(Protocol):
-    """.. versionadded:: 3.2"""
+class StopIterationLike(ExceptionLike, Protocol):
+    """Protocol for exceptions that signal the end of an iteration.
+
+    .. versionadded:: 3.2
+    """
 
     value: Any
 
 
 @runtime_checkable
-class OSErrorLike(Protocol):
-    """.. versionadded:: 3.2"""
+class OSErrorLike(ExceptionLike, Protocol):
+    """Protocol for OS-level errors with errno / strerror metadata.
+
+    .. versionadded:: 3.2
+    """
 
     errno: int | None
     strerror: str | None
-    # filename, filename2 are actually str | bytes | None
     filename: str | bytes | None
     filename2: str | bytes | None
 
@@ -66,25 +76,31 @@ class OSErrorLike(Protocol):
 if sys.version_info >= (3, 10):
 
     @runtime_checkable
-    class AttributeErrorLike(Protocol):
-        """.. versionadded:: 3.2"""
+    class AttributeErrorLike(ExceptionLike, Protocol):
+        """Protocol for attribute access errors (Python 3.10+).
+
+        .. versionadded:: 3.2
+        """
 
         name: str | None
         obj: Any
 
     @runtime_checkable
-    class NameErrorLike(Protocol):
-        """.. versionadded:: 3.2"""
+    class NameErrorLike(ExceptionLike, Protocol):
+        """Protocol for unbound name errors (Python 3.10+).
+
+        .. versionadded:: 3.2
+        """
 
         name: str | None
 
-else:
-    pass
-
 
 @runtime_checkable
-class ImportErrorLike(Protocol):
-    """.. versionadded:: 3.2"""
+class ImportErrorLike(ExceptionLike, Protocol):
+    """Protocol for import failures carrying *name*, *path*, and *msg*.
+
+    .. versionadded:: 3.2
+    """
 
     def __init__(self, *args: object, name: str | None = None, path: str | None = None) -> None: ...
 
@@ -96,8 +112,11 @@ class ImportErrorLike(Protocol):
 
 
 @runtime_checkable
-class SyntaxErrorLike(Protocol):
-    """.. versionadded:: 3.2"""
+class SyntaxErrorLike(ExceptionLike, Protocol):
+    """Protocol for compile-time syntax errors with source location.
+
+    .. versionadded:: 3.2
+    """
 
     msg: str
     filename: str | None
@@ -112,15 +131,21 @@ class SyntaxErrorLike(Protocol):
 
 
 @runtime_checkable
-class BlockingIOErrorLike(Protocol):
-    """.. versionadded:: 3.2"""
+class BlockingIOErrorLike(ExceptionLike, Protocol):
+    """Protocol for non-blocking I/O errors reporting *characters_written*.
+
+    .. versionadded:: 3.2
+    """
 
     characters_written: int
 
 
 @runtime_checkable
-class UnicodeDecodeErrorLike(Protocol):
-    """.. versionadded:: 3.2"""
+class UnicodeDecodeErrorLike(ExceptionLike, Protocol):
+    """Protocol for decoding failures.
+
+    .. versionadded:: 3.2
+    """
 
     encoding: str
     object: bytes
@@ -130,8 +155,11 @@ class UnicodeDecodeErrorLike(Protocol):
 
 
 @runtime_checkable
-class UnicodeEncodeErrorLike(Protocol):
-    """.. versionadded:: 3.2"""
+class UnicodeEncodeErrorLike(ExceptionLike, Protocol):
+    """Protocol for encoding failures.
+
+    .. versionadded:: 3.2
+    """
 
     encoding: str
     object: bytes
@@ -141,8 +169,11 @@ class UnicodeEncodeErrorLike(Protocol):
 
 
 @runtime_checkable
-class UnicodeTranslateErrorLike(Protocol):
-    """.. versionadded:: 3.2"""
+class UnicodeTranslateErrorLike(ExceptionLike, Protocol):
+    """Protocol for translation failures.
+
+    .. versionadded:: 3.2
+    """
 
     encoding: None
     object: str
@@ -158,8 +189,11 @@ _ExceptionT = TypeVar("_ExceptionT", bound=Exception)
 
 
 @runtime_checkable
-class BaseExceptionGroupLike(Protocol):
-    """.. versionadded:: 3.2"""
+class BaseExceptionGroupLike(ExceptionLike, Protocol):
+    """Protocol for `BaseExceptionGroup` (Python 3.11+).
+
+    .. versionadded:: 3.2
+    """
 
     def __new__(cls, message: str, exceptions: Sequence[_BaseExceptionT_co], /) -> Self: ...
     def __init__(self, message: str, exceptions: Sequence[_BaseExceptionT_co], /) -> None: ...
@@ -201,8 +235,11 @@ class BaseExceptionGroupLike(Protocol):
 
 
 @runtime_checkable
-class ExceptionGroupLike(Protocol):
-    """.. versionadded:: 3.2"""
+class ExceptionGroupLike(ExceptionLike, Protocol):
+    """Protocol for `ExceptionGroup` (Python 3.11+).
+
+    .. versionadded:: 3.2
+    """
 
     def __new__(cls, message: str, exceptions: Sequence[_ExceptionT_co], /) -> Self: ...
     def __init__(self, message: str, exceptions: Sequence[_ExceptionT_co], /) -> None: ...
@@ -239,7 +276,10 @@ if sys.version_info < (3, 11):
 
 @runtime_checkable
 class GroupErrorsLike(Protocol):
-    """.. versionadded:: 3.2"""
+    """Protocol for exception-group helpers that collect and raise grouped errors.
+
+    .. versionadded:: 3.2
+    """
 
     def __init__(self, group_msg: str) -> None: ...
 
