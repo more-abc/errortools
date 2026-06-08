@@ -201,7 +201,7 @@ Use `ignore_warns()` the same way you would suppress standard-library warnings:
 ```python
 from errortools import ignore_warns
 
-with ignore_warns(DeprecatedWarning):
+with ignore_warns(DeprecationWarning):
     legacy_function()
 ```
 
