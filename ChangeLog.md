@@ -5,15 +5,16 @@ All notable changes to this project will be documented in this file.
 ## ~~[Unreleased]~~
 
 
+## Release v3.4.0 - 2026-06-09
+- Release 3.4.0
+
 ## v3.3.6 - 2026-06-08
 - Optimize `_errortools/classes/protocol.py`: fix `__all__` on Python < 3.11, remove dead code, and expand docstrings.
-
 
 ## v3.3.5 - 2026-06-07
 - Fix `get()` sentinel bug so `default=None` is correctly honored.
 - Add `has()`, `clear()`, and `Registry.remove()` to plugin system.
 - Improve test coverage for `_errortools/plugins.py`.
-
 
 ## v3.3.4 - 2026-06-06
 - Set `logger`'s floor level to `Level.TRACE` (the lowest level).
