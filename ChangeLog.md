@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## ~~[Unreleased]~~
 
 
+## v3.4.1 - 2026-06-11
+- Add remove time in deprecated 4 type alias in `_errortools/typing.py`.
+
 ## Release v3.4.0 - 2026-06-09
 - Release 3.4.0
 
