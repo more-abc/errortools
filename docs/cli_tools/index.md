@@ -83,3 +83,23 @@ $ logger "Connection failed" -l error
 # Write to stdout instead of stderr
 $ logger "Build started" -l info -o stdout
 ```
+
+### Interactive shell
+
+Launch an interactive Python REPL with pre-imported logging shortcuts:
+
+```bash
+logger shell
+```
+
+```
+errortools Logger Shell REPL 3.14.3 (tags/v3.14.3:323c59a, Feb  3 2026, 16:04:56) [MSC v.1944 64 bit (AMD64)] on win32
+Pre-imported shortcuts: info, debug, error, warning, critical, trace, success, exception, catch
+Pre-imported types: logger, Level, LEVELS, BaseLogger, Record, StreamSink, FileSink, CallableSink
+Pre-imported std-lib: Logger, Handler, Filter, Formatter
+Type "help", "copyright", "credits" or "license" for more information.
+>>> info("Hello from the shell")
+>>> debug("Variable x = {}", 42)
+>>> with catch():
+...     1 / 0
+```

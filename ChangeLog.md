@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 ## ~~[Unreleased]~~
 
 
+## v3.4.2 - 2026-06-12
+- Add interactive `logger shell` REPL with pre-imported logging shortcuts and std-lib logging base classes.
+
+
 ## v3.4.1 - 2026-06-11
 - Add remove time in deprecated 4 type alias in `_errortools/typing.py`.
 

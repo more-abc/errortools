@@ -86,6 +86,11 @@ def main() -> None:
     args = parse_args(sys.argv[1:])
 
     if "logger" in sys.argv[0]:
+        if args.message == "shell":
+            from _errortools._logger_shell import start_shell
+
+            start_shell()
+            return
         _cmd_log(args.message, args.level, args.output)
         return
 
