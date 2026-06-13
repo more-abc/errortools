@@ -89,7 +89,7 @@ class BaseSink(ABC):
     def emit(self, record: Record) -> None:
         """Write *record* to this sink."""
 
-    def close(self) -> None:
+    def close(self) -> None:  # noqa: B027
         """Optional cleanup called when sink is removed."""
 
 

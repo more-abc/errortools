@@ -2,6 +2,7 @@
 
 from abc import abstractmethod, ABC
 import sys
+from typing import Any
 
 __all__ = [
     "BaseGroup",
@@ -21,7 +22,7 @@ class BaseGroup(Exception, ABC):
         group_msg: The message attached to the raised group.
     """
 
-    def __init__(self, group_msg: str = "multiple errors") -> None:
+    def __init__(self, group_msg: str = "multiple errors", *args: Any) -> None:
         """Initialise the group with a message.
 
         Args:
@@ -29,6 +30,7 @@ class BaseGroup(Exception, ABC):
                 Defaults to ``"multiple errors"``.
         """
         self.group_msg = group_msg
+        super().__init__(group_msg, *args)
 
     @property
     @abstractmethod

@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 ## ~~[Unreleased]~~
 
 
+## v3.4.4 - 2026-06-12
+- Fix flake8 error W504 and E704 in `_errortools/classes/protocol.py`.
+- Fix flake8 error B042 in `_errortools\classes\group.py`.
+- Fix flake8 error B027 in `_errortools\logging\sink.py`.
+
 ## v3.4.3 - 2026-06-12
 - Fix flake8 W504 error in `_errortools/classes/protocol.py`.
 
