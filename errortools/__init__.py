@@ -157,6 +157,10 @@ _PYTHON_3_11_CAN_USE: list[str] = [
     "ExceptionGroupLike",
     "GroupErrorsLike",
 ]
+_PYTHON_3_10_CAN_USE: list[str] = [
+    "NameErrorLike",
+    "AttributeErrorLike",
+]
 __all__ = [
     # functions
     "raises",
@@ -204,7 +208,6 @@ __all__ = [
     "Error",
     "ExceptionLike",
     "BlockingIOErrorLike",
-    "NameErrorLike",
     "StopIterationLike",
     "SystemExitLike",
     "ImportErrorLike",
@@ -212,7 +215,6 @@ __all__ = [
     "UnicodeDecodeErrorLike",
     "UnicodeEncodeErrorLike",
     "UnicodeTranslateErrorLike",
-    "AttributeErrorLike",
     "ErrortoolsDeprecationWarning",
     # for type hints
     "PureBaseExceptionType",
@@ -262,3 +264,6 @@ __all__.append("plugins")
 
 if sys.version_info >= (3, 11):
     __all__.append(_PYTHON_3_11_CAN_USE)
+
+if sys.version_info >= (3, 10):
+    __all__.append(_PYTHON_3_10_CAN_USE)

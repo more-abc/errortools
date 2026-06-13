@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## ~~[Unreleased]~~
 
 
+## v3.4.5 - 2026-06-12
+- Improve compatibility in `errortools/__init__.py` to Python 3.10 (for `NameErrorLike` and `AttributeErrorLike` compatibility).
+
 ## v3.4.4 - 2026-06-12
 - Fix flake8 error W504 and E704 in `_errortools/classes/protocol.py`.
 - Fix flake8 error B042 in `_errortools\classes\group.py`.

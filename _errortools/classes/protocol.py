@@ -7,8 +7,6 @@ __all__ = [
     "SystemExitLike",
     "StopIterationLike",
     "OSErrorLike",
-    "AttributeErrorLike",
-    "NameErrorLike",
     "ImportErrorLike",
     "SyntaxErrorLike",
     "BlockingIOErrorLike",
@@ -22,6 +20,11 @@ if sys.version_info >= (3, 11):
     __all__ += [
         "BaseExceptionGroupLike",
         "ExceptionGroupLike",
+    ]
+if sys.version_info >= (3, 10):
+    __all__ += [
+        "AttributeErrorLike",
+        "NameErrorLike",
     ]
 
 
