@@ -5,13 +5,16 @@ All notable changes to this project will be documented in this file.
 ## ~~[Unreleased]~~
 
 
+## v3.4.6 - 2026-06-12
+- Add more comments in `_errortools/ignore.py`.
+
 ## v3.4.5 - 2026-06-12
 - Improve compatibility in `errortools/__init__.py` to Python 3.10 (for `NameErrorLike` and `AttributeErrorLike` compatibility).
 
 ## v3.4.4 - 2026-06-12
 - Fix flake8 error W504 and E704 in `_errortools/classes/protocol.py`.
-- Fix flake8 error B042 in `_errortools\classes\group.py`.
-- Fix flake8 error B027 in `_errortools\logging\sink.py`.
+- Fix flake8 error B042 in `_errortools/classes/group.py`.
+- Fix flake8 error B027 in `_errortools/logging/sink.py`.
 
 ## v3.4.3 - 2026-06-12
 - Fix flake8 W504 error in `_errortools/classes/protocol.py`.
@@ -139,8 +142,8 @@ All notable changes to this project will be documented in this file.
 - Optimize exception handling functions in _speedup.c
 
 ## Release v3.0.0 - 2026-05-03
-- Fix flake8 error F811 in `_errortools\wrappers\cache.py`.
-- Fix flake8 error W293 in `_errortools\wrappers\ignore.py`.
+- Fix flake8 error F811 in `_errortools/wrappers/cache.py`.
+- Fix flake8 error W293 in `_errortools/wrappers/ignore.py`.
 
 ## v2.5.5 - 2026-05-03
 - Improve compatibility for `TypeAlias` across Python 3.8 to 3.15 in some files.

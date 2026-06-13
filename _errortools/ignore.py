@@ -79,6 +79,9 @@ ignore = ErrorIgnoreWrapper
         -  `ignore_subclass` — suppress exceptions including subclasses
         -  `retry` — automatic retry on exception
     """
+# NOTE: Any exception raised inside the ``with`` block that is an instance of one
+# of *errors* is caught and discarded.  All other exceptions propagate
+# unchanged.  Execution resumes after the ``with`` block.
 
 
 class fast_ignore:
@@ -135,6 +138,10 @@ def ignore_subclass(base: ExceptionType) -> Iterator[None]:
         ...     raise IndexError("out of range")  # IndexError ⊆ LookupError
         ... # suppressed — execution continues here
     """
+    # NOTE: Similar to `ignore`, but accepts a single base class and suppresses
+    # every exception whose type satisfies ``issubclass(type(exc), base)``.
+    # Useful when you want to express intent explicitly — "ignore anything
+    # derived from X" — rather than listing concrete types.
     try:
         yield
     except BaseException as exc:
@@ -155,6 +162,9 @@ def ignore_warns(*categories: type[Warning]) -> Iterator[None]:
         ...     warnings.warn("old api", DeprecationWarning)
         ... # no warning emitted
     """
+    # NOTE: Uses `warnings.catch_warnings` and `warnings.simplefilter`
+    # to silence any warning whose category is one of *categories* for the
+    # duration of the ``with`` block.  All other warnings are unaffected.
     with warnings.catch_warnings():
         for category in categories:
             warnings.filterwarnings("ignore", category=category)
