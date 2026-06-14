@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## ~~[Unreleased]~~
 
 
+## v3.4.8 - 2026-06-13
+- Add example cli in `_errortools/version.py`, `_errortools/metadata.py` and `_errortools/plugins.py`.
+
 ## v3.4.7 - 2026-06-13
 - Change format of `_errortools/classes/protocol.py` back to black's format.
 

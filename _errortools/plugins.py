@@ -132,3 +132,7 @@ class Registry:
     @staticmethod
     def clear() -> None:
         clear()
+
+
+if __name__ == "__main__":
+    print(f"All plugins: {list_all()}")

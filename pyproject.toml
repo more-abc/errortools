@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "errortools"
-version = "3.4.7"
+version = "3.4.8"
 authors = [
   { name = "Evan Yang", email = "quantbit@126.com" }
 ]
@@ -63,6 +63,7 @@ sources = ["_errortools/_speedup.c"]
 [tool.black]
 line-length = 120
 target-version = ["py38"]
+extend-exclude = "_errortools/classes/protocol.py"
 
 
 [tool.pytest.ini_options]

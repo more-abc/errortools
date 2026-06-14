@@ -12,3 +12,20 @@ __fullname__ = na.generate_name(__title__, __author__)
 __slug__ = na.generate_slug(__title__, __author__)
 __signature__ = na.generate_signature(__title__, __author__)
 __uid__ = na.generate_id(__title__, __author__)
+
+if __name__ == "__main__":
+    show_items: list[tuple[str, str]] = [
+        ("author", __author__),
+        ("author email", __author_email__),
+        ("title", __title__),
+        ("description", __description__),
+        ("license", __license__),
+        ("url", __url__),
+        ("fullname", __fullname__),
+        ("slug", __slug__),
+        ("signature", __signature__),
+        ("uid", __uid__),
+    ]
+
+    for label, value in show_items:
+        print(f"{label}: {value}")
