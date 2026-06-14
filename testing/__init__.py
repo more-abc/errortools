@@ -10,7 +10,7 @@ __all__ = [
     "HAS_PYTEST",
     "NO_ONE_CHANGE_VERSION",
 ]
-__version__ = "1.3.6"
+__version__ = "1.3.7"
 __version_tuple__ = _get_version_tuple(__version__)
 
 try:

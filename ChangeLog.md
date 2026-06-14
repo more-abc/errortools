@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## ~~[Unreleased]~~
 
 
+## v3.4.7 - 2026-06-13
+- Change format of `_errortools/classes/protocol.py` back to black's format.
+
 ## v3.4.6 - 2026-06-12
 - Add more comments in `_errortools/ignore.py`.
 
