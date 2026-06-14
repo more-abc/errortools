@@ -10,7 +10,6 @@ from _errortools.metadata import (
     __license__,
     __title__,
     __url__,
-    __uid__,
     __fullname__,
     __signature__,
     __slug__,
