@@ -207,33 +207,33 @@ class BaseExceptionGroupLike(ExceptionLike, Protocol):
 
     @overload
     def subgroup(
-        self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...], /
-    ) -> ExceptionGroup[_ExceptionT] | None: ...
+        self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...],
+        /) -> ExceptionGroup[_ExceptionT] | None: ...
 
     @overload
     def subgroup(
-        self, matcher_value: type[_BaseExceptionT] | tuple[type[_BaseExceptionT], ...], /
-    ) -> BaseExceptionGroup[_BaseExceptionT] | None: ...
+        self, matcher_value: type[_BaseExceptionT] | tuple[type[_BaseExceptionT], ...],
+        /) -> BaseExceptionGroup[_BaseExceptionT] | None: ...
 
     @overload
     def subgroup(
-        self, matcher_value: Callable[[_BaseExceptionT_co | Self], bool], /
-    ) -> BaseExceptionGroup[_BaseExceptionT_co] | None: ...
+        self, matcher_value: Callable[[_BaseExceptionT_co | Self], bool],
+        /) -> BaseExceptionGroup[_BaseExceptionT_co] | None: ...
 
     @overload
     def split(
-        self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...], /
-    ) -> tuple[ExceptionGroup[_ExceptionT] | None, BaseExceptionGroup[_BaseExceptionT_co] | None]: ...
+        self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...],
+        /) -> tuple[ExceptionGroup[_ExceptionT] | None, BaseExceptionGroup[_BaseExceptionT_co] | None]: ...
 
     @overload
     def split(
-        self, matcher_value: type[_BaseExceptionT] | tuple[type[_BaseExceptionT], ...], /
-    ) -> tuple[BaseExceptionGroup[_BaseExceptionT] | None, BaseExceptionGroup[_BaseExceptionT_co] | None]: ...
+        self, matcher_value: type[_BaseExceptionT] | tuple[type[_BaseExceptionT], ...],
+        /) -> tuple[BaseExceptionGroup[_BaseExceptionT] | None, BaseExceptionGroup[_BaseExceptionT_co] | None]: ...
 
     @overload
     def split(
-        self, matcher_value: Callable[[_BaseExceptionT_co | Self], bool], /
-    ) -> tuple[BaseExceptionGroup[_BaseExceptionT_co] | None, BaseExceptionGroup[_BaseExceptionT_co] | None]: ...
+        self, matcher_value: Callable[[_BaseExceptionT_co | Self], bool],
+        /) -> tuple[BaseExceptionGroup[_BaseExceptionT_co] | None, BaseExceptionGroup[_BaseExceptionT_co] | None]: ...
 
     # In reality it is `NonEmptySequence`:
     @overload
@@ -258,23 +258,23 @@ class ExceptionGroupLike(ExceptionLike, Protocol):
     # We accept a narrower type, but that's OK.
     @overload
     def subgroup(
-        self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...], /
-    ) -> ExceptionGroup[_ExceptionT] | None: ...
+        self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...],
+        /) -> ExceptionGroup[_ExceptionT] | None: ...
 
     @overload
     def subgroup(
-        self, matcher_value: Callable[[_ExceptionT_co | Self], bool], /
-    ) -> ExceptionGroup[_ExceptionT_co] | None: ...
+        self, matcher_value: Callable[[_ExceptionT_co | Self], bool],
+        /) -> ExceptionGroup[_ExceptionT_co] | None: ...
 
     @overload
     def split(
-        self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...], /
-    ) -> tuple[ExceptionGroup[_ExceptionT] | None, ExceptionGroup[_ExceptionT_co] | None]: ...
+        self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...],
+        /) -> tuple[ExceptionGroup[_ExceptionT] | None, ExceptionGroup[_ExceptionT_co] | None]: ...
 
     @overload
     def split(
-        self, matcher_value: Callable[[_ExceptionT_co | Self], bool], /
-    ) -> tuple[ExceptionGroup[_ExceptionT_co] | None, ExceptionGroup[_ExceptionT_co] | None]: ...
+        self, matcher_value: Callable[[_ExceptionT_co | Self], bool],
+        /) -> tuple[ExceptionGroup[_ExceptionT_co] | None, ExceptionGroup[_ExceptionT_co] | None]: ...
 
 
 if sys.version_info < (3, 11):
