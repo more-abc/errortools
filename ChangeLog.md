@@ -2,8 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
-## ~~[Unreleased]~~
+## [Unreleased]
 
+
+## v3.4.9 - 2026-06-14
+- Refactor `_errortools/cli.py` to improve robustness, structure and consistency.
+- Replace fragile `"logger" in sys.argv[0]` substring test with a basename-based `_detect_mode()` helper (handles `.exe`, `.py`, `.pyw`, `.pyz`, `.sh` suffixes) so paths like `my_logger_tool` or `/usr/bin/logger` no longer mis-detect the CLI family.
+- Cache the detected mode at import time as `_CLI_MODE: Final[str]` instead of recomputing on every call.
+- Split `parse_args()` into `_build_errortools_parser()` and `_build_logger_parser()` so each CLI family owns its own argument schema.
+- Extract `_make_parser(prog, description)` helper to deduplicate the Python 3.14+ `color=True` branch.
+- Replace `args.message == "shell"` dispatch anti-pattern with `args.subcmd` checks plus a defensive fallback branch.
+- Split each `--*` flag action into its own named function (`_show_version`, `_show_author`, …) and mark `_FLAG_ACTIONS` as `Final`.
+- Unify `--version` output (`errortools 3.4.9`) with the format already used by `--info`.
+- Add a friendly `ImportError` handler for `--run-tests` so missing test extras produce an actionable message and exit code 2 instead of a traceback.
+- Switch `parse_args`/`main` signatures to `Sequence[str] | None` for broader caller compatibility and enable `from __future__ import annotations` for PEP 604 syntax on Python 3.8+.
+- Add module-level docstring documenting both CLI families.
 
 ## v3.4.8 - 2026-06-13
 - Add example cli in `_errortools/version.py`, `_errortools/metadata.py` and `_errortools/plugins.py`.

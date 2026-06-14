@@ -1,6 +1,6 @@
 # Command-Line Interface
 
-errortools ships two CLI entry points: `python -m errortools` for package information, and `logger` for emitting log messages from the shell.
+errortools ships two CLI entry points: `python -m errortools` (or simply `errortools` after install) for package information and developer tooling, and `logger` for emitting log messages from the shell.
 
 ## Installation
 
@@ -10,13 +10,19 @@ Both commands become available after installing the package:
 pip install errortools
 ```
 
+```{note}
+After installation you can use the `errortools` and `logger` console scripts directly. The examples below show both forms interchangeably.
+```
+
 ## `errortools` command
 
-Display package metadata and run tests.
+Display package metadata and run the test suite.
 
 ### Usage
 
 ```bash
+errortools [OPTIONS]
+# or, equivalently:
 python -m errortools [OPTIONS]
 ```
 
@@ -36,13 +42,13 @@ python -m errortools [OPTIONS]
 ### Examples
 
 ```bash
-# Print version
-$ python -m errortools -v
-v3.1.2
+# Print version (matches the format used by --info)
+$ errortools -v
+errortools 3.4.9
 
 # Print all metadata
-$ python -m errortools -i
-errortools vx.x.x
+$ errortools -i
+errortools v3.4.9
   errortools - a toolset for working with Python exceptions and warnings and logging.
   Author:    Evan Yang <quantbit@126.com>
   License:   MIT
@@ -56,40 +62,55 @@ $ errortools --run-tests
 
 ## `logger` command
 
-Emit a single log message from the command line using the errortools structured logger.
+Emit a single log message from the command line, or open an interactive debug shell, using the errortools structured logger.
 
 ### Usage
 
 ```bash
-logger MESSAGE [OPTIONS]
+logger <subcommand> [OPTIONS]
 ```
 
-### Options
+### Subcommands
+
+| Subcommand | Description |
+|------------|-------------|
+| `emit` | Emit a single log message to stdout or stderr |
+| `shell` | Launch an interactive logger REPL debug shell |
+
+### `logger emit`
+
+```bash
+logger emit MESSAGE [OPTIONS]
+```
+
+#### Options
 
 | Option | Short | Description |
 |--------|-------|-------------|
 | `--level` | `-l` | Log level: `trace`, `debug`, `info`, `success`, `warning`, `error`, `critical` (default: `info`) |
 | `--output` | `-o` | Output stream: `stderr` or `stdout` (default: `stderr`) |
 
-### Examples
+#### Examples
 
 ```bash
-# Info-level message (default)
-$ logger "Deployment complete"
+# Info-level message (default) to stderr
+$ logger emit "Deployment complete"
 
 # Error-level message
-$ logger "Connection failed" -l error
+$ logger emit "Connection failed" --level error
 
-# Write to stdout instead of stderr
-$ logger "Build started" -l info -o stdout
+# Short flags
+$ logger emit "Build started" -l info -o stdout
 ```
 
-### Interactive shell
+### `logger shell`
 
-Launch an interactive Python REPL with pre-imported logging shortcuts:
+Launch an interactive Python REPL with pre-imported logging shortcuts.
+
+#### Examples
 
 ```bash
-logger shell
+$ logger shell
 ```
 
 ```
@@ -103,3 +124,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> with catch():
 ...     1 / 0
 ```
+
+## Mode detection
+
+The `errortools` module dispatches between the two CLI families by inspecting the **basename** of `sys.argv[0]`. If it resolves to `logger` (with optional `.exe` / `.py` suffix), the logger dispatcher is used; otherwise the errortools dispatcher is used. This means paths such as `my_logger_tool` are no longer mistaken for the `logger` command.

@@ -8,7 +8,7 @@ def _get_version_tuple(version: str) -> tuple[int, int, int]:
     return (major, minor, patch)
 
 
-__version__: str = "3.4.8"
+__version__: str = "3.4.9"
 __version_tuple__: tuple[int, int, int] = _get_version_tuple(__version__)
 __commit_id__: str | None = None
 
