@@ -33,5 +33,5 @@ jobs:
           pip install pytest pytest-cov
           pip install -e .
 
-      - name: Run all tests (pytest)
-        run: python -m errortools --run-tests
+      - name: Run all tests (pytest) and doctests
+        run: pytest --doctest-modules
