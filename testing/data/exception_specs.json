@@ -1,0 +1,67 @@
+{
+  "description": "Exception (type, message) specs for raises / raises_all / assert_raises.",
+  "single_error_single_message": [
+    {"type": "ValueError", "message": "bad value"},
+    {"type": "KeyError", "message": "missing"},
+    {"type": "TypeError", "message": "wrong type"},
+    {"type": "RuntimeError", "message": "boom"},
+    {"type": "ZeroDivisionError", "message": "div by zero"},
+    {"type": "IndexError", "message": "out of range"},
+    {"type": "AttributeError", "message": "no such attribute"},
+    {"type": "FileNotFoundError", "message": "no such file"}
+  ],
+  "multiple_errors_multiple_messages": [
+    {
+      "errors": ["ValueError", "TypeError", "KeyError"],
+      "messages": ["bad", "wrong", "missing"],
+      "expected_count": 9
+    },
+    {
+      "errors": ["RuntimeError", "ZeroDivisionError"],
+      "messages": ["r1", "r2", "r3", "r4"],
+      "expected_count": 8
+    },
+    {
+      "errors": ["LookupError"],
+      "messages": ["only one"],
+      "expected_count": 1
+    }
+  ],
+  "custom_baseerror_cases": [
+    {
+      "type": "KeyError",
+      "message": "k",
+      "baseerror": "LookupError",
+      "should_raise": true
+    },
+    {
+      "type": "IndexError",
+      "message": "i",
+      "baseerror": "LookupError",
+      "should_raise": true
+    },
+    {
+      "type": "ValueError",
+      "message": "v",
+      "baseerror": "LookupError",
+      "should_raise": false
+    },
+    {
+      "type": "TypeError",
+      "message": "t",
+      "baseerror": "Exception",
+      "should_raise": true
+    },
+    {
+      "type": "KeyboardInterrupt",
+      "message": "k",
+      "baseerror": "Exception",
+      "should_raise": false
+    }
+  ],
+  "empty_inputs": [
+    {"errors": [], "messages": ["any"], "should_raise": false},
+    {"errors": ["ValueError"], "messages": [], "should_raise": false},
+    {"errors": [], "messages": [], "should_raise": false}
+  ]
+}

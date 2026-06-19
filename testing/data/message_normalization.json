@@ -1,0 +1,36 @@
+{
+  "description": "Whitespace/blank-message edge cases for NonBlankErrorMsg descriptor.",
+  "valid_inputs": [
+    {"input": "  hello  ", "expected": "hello"},
+    {"input": "no_whitespace", "expected": "no_whitespace"},
+    {"input": "\ttext\t", "expected": "text"},
+    {"input": "\n  body  \n", "expected": "body"},
+    {"input": "leading", "expected": "leading"},
+    {"input": "trailing   ", "expected": "trailing"},
+    {"input": "  middle  spaces  ", "expected": "middle  spaces"},
+    {"input": "a", "expected": "a"},
+    {"input": "0", "expected": "0"},
+    {"input": "Multi\nline\nstring", "expected": "Multi\nline\nstring"}
+  ],
+  "blank_inputs": [
+    {"input": ""},
+    {"input": "   "},
+    {"input": "\t"},
+    {"input": "\n"},
+    {"input": " \t \n "},
+    {"input": "\t\n  \t"}
+  ],
+  "non_string_inputs": [
+    {"input": null},
+    {"input": 0},
+    {"input": 1},
+    {"input": -1},
+    {"input": 3.14},
+    {"input": []},
+    {"input": ["x"]},
+    {"input": {}},
+    {"input": {"k": "v"}},
+    {"input": true},
+    {"input": false}
+  ]
+}

@@ -4,8 +4,6 @@ import warnings
 
 from _errortools.version import _get_version_tuple
 
-from . import run_tests
-
 __all__ = [
     "__version__",
     "__version_tuple__",
@@ -36,3 +34,8 @@ if __version__ == _NOTHING:
     )
 else:
     NO_ONE_CHANGE_VERSION = False
+
+# NOTE: Importing run_tests at the *bottom* of the module prevents a circular
+# import: ``run_tests`` reads ``HAS_PYTEST`` from this package, so it must be
+# imported only after that attribute has been defined.
+from . import run_tests  # noqa: E402

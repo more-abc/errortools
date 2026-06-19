@@ -1,0 +1,53 @@
+{
+  "description": "Scenarios for the @suppress decorator.",
+  "cases": [
+    {
+      "name": "zerodivision_returns_default",
+      "exception_type": "ZeroDivisionError",
+      "default": 0,
+      "operation": "divide",
+      "args": [1, 0],
+      "expected": 0
+    },
+    {
+      "name": "keyerror_returns_default_dict",
+      "exception_type": "KeyError",
+      "default": "missing",
+      "operation": "dict_lookup",
+      "args": [{"a": 1}, "b"],
+      "expected": "missing"
+    },
+    {
+      "name": "valueerror_returns_default_int",
+      "exception_type": "ValueError",
+      "default": -1,
+      "operation": "int_parse",
+      "args": ["not-a-number"],
+      "expected": -1
+    },
+    {
+      "name": "indexerror_returns_default_list",
+      "exception_type": "IndexError",
+      "default": null,
+      "operation": "list_index",
+      "args": [[1, 2, 3], 10],
+      "expected": null
+    },
+    {
+      "name": "filenotfound_returns_default",
+      "exception_type": "FileNotFoundError",
+      "default": "",
+      "operation": "open_file",
+      "args": ["__definitely_not_existing__.txt"],
+      "expected": ""
+    },
+    {
+      "name": "default_none_when_unspecified",
+      "exception_type": "ValueError",
+      "default": null,
+      "operation": "raise_value",
+      "args": [],
+      "expected": null
+    }
+  ]
+}

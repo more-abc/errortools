@@ -1,0 +1,27 @@
+{
+  "description": "Warning category scenarios for ignore_warns.",
+  "single_category": [
+    {"category": "DeprecationWarning", "warning_message": "old api"},
+    {"category": "UserWarning", "warning_message": "user warning"},
+    {"category": "FutureWarning", "warning_message": "future api"},
+    {"category": "RuntimeWarning", "warning_message": "runtime note"},
+    {"category": "SyntaxWarning", "warning_message": "syntax note"},
+    {"category": "PendingDeprecationWarning", "warning_message": "pending deprecation"}
+  ],
+  "multiple_categories": [
+    {"categories": ["DeprecationWarning", "UserWarning"], "messages": ["first", "second"]},
+    {"categories": ["FutureWarning", "PendingDeprecationWarning"], "messages": ["future", "pending"]}
+  ],
+  "unrelated_propagates": [
+    {"suppressed": ["DeprecationWarning"], "raised": "UserWarning", "expected": "UserWarning"},
+    {"suppressed": ["UserWarning"], "raised": "RuntimeWarning", "expected": "RuntimeWarning"},
+    {"suppressed": ["FutureWarning", "DeprecationWarning"], "raised": "SyntaxWarning", "expected": "SyntaxWarning"}
+  ],
+  "no_args_suppresses_all": [
+    {"raised": "UserWarning"},
+    {"raised": "DeprecationWarning"},
+    {"raised": "FutureWarning"},
+    {"raised": "RuntimeWarning"},
+    {"raised": "ImportWarning"}
+  ]
+}

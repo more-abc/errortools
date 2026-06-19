@@ -1,0 +1,67 @@
+{
+  "description": "Source/raised type pairs for the @convert decorator.",
+  "cases": [
+    {
+      "name": "keyerror_to_valueerror",
+      "source": "KeyError",
+      "raise": "KeyError('missing')",
+      "target": "ValueError",
+      "expected_type": "ValueError",
+      "expected_message_substring": "missing"
+    },
+    {
+      "name": "keyerror_to_runtimeerror",
+      "source": "KeyError",
+      "raise": "KeyError('bad')",
+      "target": "RuntimeError",
+      "expected_type": "RuntimeError",
+      "expected_message_substring": "bad"
+    },
+    {
+      "name": "valueerror_to_typeerror",
+      "source": "ValueError",
+      "raise": "ValueError('wrong')",
+      "target": "TypeError",
+      "expected_type": "TypeError",
+      "expected_message_substring": "wrong"
+    },
+    {
+      "name": "indexerror_to_valueerror",
+      "source": "IndexError",
+      "raise": "IndexError('out of range')",
+      "target": "ValueError",
+      "expected_type": "ValueError",
+      "expected_message_substring": "out of range"
+    },
+    {
+      "name": "zerodivision_to_runtimeerror",
+      "source": "ZeroDivisionError",
+      "raise": "ZeroDivisionError('div by zero')",
+      "target": "RuntimeError",
+      "expected_type": "RuntimeError",
+      "expected_message_substring": "div by zero"
+    }
+  ],
+  "chained_cases": [
+    {"source": "KeyError", "raise": "KeyError('orig')", "target": "ValueError"},
+    {"source": "ValueError", "raise": "ValueError('v')", "target": "TypeError"},
+    {"source": "IndexError", "raise": "IndexError('i')", "target": "RuntimeError"}
+  ],
+  "tuple_sources": [
+    {
+      "name": "keyerror_or_indexerror_to_valueerror",
+      "sources": ["KeyError", "IndexError"],
+      "raise": "KeyError('k')",
+      "target": "ValueError"
+    },
+    {
+      "name": "keyerror_or_indexerror_to_valueerror_2",
+      "sources": ["KeyError", "IndexError"],
+      "raise": "IndexError('i')",
+      "target": "ValueError"
+    }
+  ],
+  "custom_message": [
+    {"source": "KeyError", "raise": "KeyError('ignored')", "target": "RuntimeError", "message": "conversion error"}
+  ]
+}

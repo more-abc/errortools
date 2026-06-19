@@ -1,0 +1,29 @@
+{
+  "description": "Scenarios for the @retry decorator.",
+  "success_cases": [
+    {"times": 1, "fails_before_success": 0, "expected_call_count": 1},
+    {"times": 3, "fails_before_success": 0, "expected_call_count": 1},
+    {"times": 5, "fails_before_success": 1, "expected_call_count": 2},
+    {"times": 5, "fails_before_success": 4, "expected_call_count": 5},
+    {"times": 10, "fails_before_success": 9, "expected_call_count": 10}
+  ],
+  "exhaustion_cases": [
+    {"times": 1, "fails_before_success": 5, "expected_call_count": 1},
+    {"times": 2, "fails_before_success": 5, "expected_call_count": 2},
+    {"times": 3, "fails_before_success": 100, "expected_call_count": 3}
+  ],
+  "unrelated_propagates": [
+    {"times": 5, "raise": "RuntimeError('always')", "expected_call_count": 1, "expected": "RuntimeError"},
+    {"times": 5, "raise": "TypeError('always')", "expected_call_count": 1, "expected": "TypeError"},
+    {"times": 5, "raise": "KeyError('always')", "expected_call_count": 1, "expected": "KeyError"}
+  ],
+  "exception_types": [
+    {"exception": "ValueError", "should_retry": true},
+    {"exception": "KeyError", "should_retry": true},
+    {"exception": "TypeError", "should_retry": true},
+    {"exception": "ZeroDivisionError", "should_retry": true},
+    {"exception": "RuntimeError", "should_retry": true},
+    {"exception": "IndexError", "should_retry": true},
+    {"exception": "AttributeError", "should_retry": true}
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "description": "Scenarios for ignore / fast_ignore / ignore_subclass context managers.",
+  "suppress_cases": [
+    {"types": ["KeyError"], "raise": "KeyError('missing')"},
+    {"types": ["ValueError"], "raise": "ValueError('bad')"},
+    {"types": ["KeyError", "ValueError"], "raise": "ValueError('one of them')"},
+    {"types": ["KeyError", "ValueError"], "raise": "KeyError('one of them')"},
+    {"types": ["TypeError"], "raise": "TypeError('wrong type')"},
+    {"types": ["ZeroDivisionError"], "raise": "ZeroDivisionError('div')"}
+  ],
+  "propagate_cases": [
+    {"types": ["KeyError"], "raise": "ValueError('different type')", "expected": "ValueError"},
+    {"types": ["KeyError", "ValueError"], "raise": "RuntimeError('unrelated')", "expected": "RuntimeError"},
+    {"types": ["TypeError"], "raise": "IndexError('not in list')", "expected": "IndexError"}
+  ],
+  "subclass_cases": [
+    {"base": "LookupError", "raise": "KeyError('k')"},
+    {"base": "LookupError", "raise": "IndexError('i')"},
+    {"base": "LookupError", "raise": "LookupError('l')"},
+    {"base": "Exception", "raise": "ValueError('v')"},
+    {"base": "ArithmeticError", "raise": "ZeroDivisionError('z')"}
+  ],
+  "subclass_propagates": [
+    {"base": "LookupError", "raise": "ValueError('not lookup')", "expected": "ValueError"},
+    {"base": "ArithmeticError", "raise": "KeyError('not arithmetic')", "expected": "KeyError"}
+  ]
+}
