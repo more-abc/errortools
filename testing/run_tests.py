@@ -10,7 +10,7 @@ def run_tests():
     if not HAS_PYTEST:
         print("No pytest, skip running. You can use `pip install pytest` to install it.")
         return False
-    result = subprocess.run([sys.executable, "-m", "pytest"])
+    result = subprocess.run([sys.executable, "-m", "pytest", "--doctest-modules"])
     return result.returncode == 0
 
 
