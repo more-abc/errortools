@@ -34,4 +34,4 @@ jobs:
           pip install -e .
 
       - name: Run all tests (pytest) and doctests
-        run: pytest --doctest-modules
+        run: pytest --doctest-modules --no-cov

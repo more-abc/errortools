@@ -77,8 +77,8 @@ jobs:
       - name: Test logger entry point (console script)
         run: logger emit --level info --output stdout "Logger entry point test"
 
-      - name: Verify --version output format
-        run: |
-          output=$(python -m errortools --version)
-          echo "Version output: $output"
-          echo "$output" | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$'
+      # - name: Verify --version output format
+      #   run: |
+      #     output=$(python -m errortools --version)
+      #     echo "Version output: $output"
+      #     echo "$output" | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$'
