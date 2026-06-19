@@ -17,10 +17,12 @@ try:
     )
 except ImportError:
 
-    def fast_append_exception(lst, exc) -> None:
+    def fast_append_exception(lst: list[BaseException], exc: BaseException) -> None:
         lst.append(exc)
 
-    def fast_suppress_exit(typ, excs) -> bool:
+    def fast_suppress_exit(
+        typ: type[BaseException] | None, excs: type[BaseException] | tuple[type[BaseException], ...]
+    ) -> bool:
         return typ is not None and issubclass(typ, excs)
 
 
