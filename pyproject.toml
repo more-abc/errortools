@@ -62,7 +62,7 @@ sources = ["_errortools/_speedup.c"]
 
 [tool.black]
 line-length = 120
-target-version = ["py38"]
+target-version = ["py313"]
 extend-exclude = "_errortools/classes/protocol.py"
 
 
@@ -84,7 +84,7 @@ addopts = [
 
 
 [tool.mypy]
-python_version = "3.14"
+python_version = "3.13"
 warn_return_any = true
 warn_unused_configs = true
 warn_unused_ignores = true
