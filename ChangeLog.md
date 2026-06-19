@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## v3.4.10 - 2026-06-19
+- Refactor and improve compatibility in `_errortools/_speedup.c`.
+
 ## v3.4.9 - 2026-06-14
 - Refactor `_errortools/cli.py` to improve robustness, structure and consistency.
 - Replace fragile `"logger" in sys.argv[0]` substring test with a basename-based `_detect_mode()` helper (handles `.exe`, `.py`, `.pyw`, `.pyz`, `.sh` suffixes) so paths like `my_logger_tool` or `/usr/bin/logger` no longer mis-detect the CLI family.
@@ -83,7 +86,7 @@ All notable changes to this project will be documented in this file.
 - Add complete test suite for plugin system in `tests/test_plugins.py`.
 
 ## v3.2.3 - 2026-05-30
-- - Fix max complexity error in `classes/protocol.py`.
+- Fix max complexity error in `classes/protocol.py`.
 
 ## v3.2.2 - 2026-05-30
 - Add `ErrortoolsDeprecationWarning` warning class.
