@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## Release v3.5.0 - 2026-06-20
+- Release 3.5.0
+
 ## v3.4.11 - 2026-06-19
 - Refactor type hints of `fast_append_exception` and `fast_suppress_exit` in `_errortools/future.py`.
 
