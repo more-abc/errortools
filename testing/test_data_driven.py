@@ -51,9 +51,10 @@ class TestErrnoDataDriven:
         expected_name = case["name"]
         if sys.platform == "linux" and expected_name == "EILSEQ" and code == 42:
             pytest.skip("EILSEQ code mismatch on Linux platform")
-        from _errortools.errno import get_errno_name
+        from _errortools.errno import get_errno_name, is_valid_errno
 
         assert get_errno_name(code) == expected_name
+        assert is_valid_errno(code) is True
 
     @pytest.mark.parametrize("case", loader.errno_cases(), ids=lambda c: c["name"])
     def test_valid_code_message_is_non_empty(self, case):
