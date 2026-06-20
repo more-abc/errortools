@@ -52,6 +52,7 @@ class TestErrnoDataDriven:
         if sys.platform == "linux" and expected_name == "EILSEQ" and code == 42:
             pytest.skip("EILSEQ code mismatch on Linux platform")
         from _errortools.errno import get_errno_name
+
         assert get_errno_name(code) == expected_name
 
     @pytest.mark.parametrize("case", loader.errno_cases(), ids=lambda c: c["name"])
