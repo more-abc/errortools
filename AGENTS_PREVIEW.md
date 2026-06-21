@@ -248,7 +248,7 @@ CI workflows (see `.github/workflows/`) re-run these on every PR:
 ## 7. Anti-patterns to Avoid
 
 - ❌ Editing anything under `errortools/` **except** `__init__.py` and the three lazy submodule accessors (`future.py`, `logging.py`, `partial.py`).
-- ❌ Using `X | None` in public type hints (project supports Python 3.8).
+<!-- - ❌ Using `X | None` in public type hints (project supports Python 3.8). -->
 - ❌ Catching `BaseException` indiscriminately — narrow with explicit tuples.
 - ❌ Adding mutable default arguments; use `None` + sentinel.
 - ❌ Swallowing exceptions silently in new code; document any deliberate suppression.
