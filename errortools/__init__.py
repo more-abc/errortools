@@ -84,6 +84,8 @@ from _errortools.version import (
     version,
     version_tuple,
     commit_id,
+    VersionInfo,
+    get_version_tuple,
 )
 from _errortools.metadata import (
     __author__,
@@ -216,6 +218,8 @@ __all__ = [
     "UnicodeEncodeErrorLike",
     "UnicodeTranslateErrorLike",
     "ErrortoolsDeprecationWarning",
+    "VersionInfo",
+    "get_version_tuple",
     # for type hints
     "PureBaseExceptionType",
     "ContextExceptionType",

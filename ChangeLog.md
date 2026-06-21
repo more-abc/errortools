@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## v3.5.1 - 2026-06-21
+- Rename `_get_version_tuple` function in `_errortools/version.py` to `get_version_tuple` and add it to the public API.
+- Add new class `VersionInfo` in `_errortools/version.py`.
+- Add comprehensive tests for `VersionInfo` and `get_version_tuple` in `testing/meta/test_version.py` (43 new tests covering construction, `from_str`, `to_tuple`, dunder methods, equality, ordering, sorting, and public-API exposure).
+- Add a dedicated doctest module `testing/doctest/test_version.py` with 55 doctests that double as runnable documentation for `VersionInfo` and `get_version_tuple`.
+- Use `typing.Final` in `_errortools/version.py`.
+
 ## Release v3.5.0 - 2026-06-20
 - Release 3.5.0
 
@@ -227,14 +234,14 @@ All notable changes to this project will be documented in this file.
 - Add comprehensive test suite for future utilities (36 tests)
 
 ## v2.3.3 - 2026-04-19
-- Refactor and optimize _errortools/errno.py.
-- Change tests/test_errno.py to refactor version.
+- Refactor and optimize `_errortools/errno.py`.
+- Change `tests/test_errno.py` to refactor version.
 
 ## v2.3.2 - 2026-04-19
-- Use `typing.Final` in _errortools/logging/level.py.
+- Use `typing.Final` in `_errortools/logging/level.py`.
 
 ## v2.3.1 - 2026-04-19
-- Use `typing.Final` in _errortools/const.py.
+- Use `typing.Final` in `_errortools/const.py`.
 
 ## Release v2.3.0 - 2026-04-19
 - Release 2.3.0

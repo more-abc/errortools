@@ -2,6 +2,31 @@
 
 Complete API documentation for errortools.
 
+```{toctree}
+---
+maxdepth: 2
+caption: Contents
+---
+version
+```
+
+## Version Utilities
+
+Lightweight helpers for representing, parsing, and comparing the
+package's own ``(major, minor, patch)`` version triple programmatically.
+
+- [`VersionInfo`](version.md#versioninfo) — a hashable, totally-ordered
+  dataclass for an individual version triple.
+- [`get_version_tuple`](version.md#get_version_tuple) — parse a
+  dotted-decimal version string into a ``(major, minor, patch)`` tuple.
+- The module-level constants
+  [`__version__`](version.md#module-level-constants) /
+  [`__version_tuple__`](version.md#module-level-constants) /
+  [`__commit_id__`](version.md#module-level-constants) (with their
+  lower-case aliases) expose the *current* package release.
+
+See [Version Utilities](version.md) for the full reference.
+
 ## Exception Handling
 
 ### ignore()
