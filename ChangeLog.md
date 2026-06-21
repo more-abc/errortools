@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## v3.5.3 - 2026-06-21
+- Add `# type: ignore[no-any-return]` in `_errortools/version.py` line 92 (in `VersionInfo.__ne__`, commit 7e0a72)
+
 ## v3.5.2 - 2026-06-21
 - Fix `VersionInfo.__ne__` return type error by mypy (In github workflows)
 

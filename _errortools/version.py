@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from types import NotImplementedType
-from typing import Final
+from typing import Final, cast
 
 __all__ = [
     "VersionInfo",
@@ -89,7 +89,7 @@ class VersionInfo:
     def __ne__(self, other: object) -> bool | NotImplementedType:
         result = self.__eq__(other)
         if result is NotImplemented:
-            return result
+            return result  # type: ignore[no-any-return]
         return not result
 
     def __lt__(self, other: object) -> bool:
@@ -156,7 +156,7 @@ def get_version_tuple(version: str) -> tuple[int, int, int]:
     return (major, minor, patch)
 
 
-__version__: Final[str] = "3.5.2"
+__version__: Final[str] = "3.5.3"
 __version_tuple__: Final[tuple[int, int, int]] = get_version_tuple(__version__)
 __commit_id__: Final[str | None] = None
 
