@@ -51,7 +51,7 @@ errortools/
 │   ├── run_tests.py             # Test runner entry point
 │   ├── data/                    # Data-driven fixtures
 │   ├── doctest/                 # Doctest collection
-│   ├── classes/ · decorator/ · descriptor/ · logging/   # Sub-suite directories
+│   ├── classes/ · logging/   # Sub-suite directories
 │   └── benchmark/ · meta/ · submodules/                  # Misc. test categories
 │
 ├── docs/                        # Sphinx documentation (readthedocs.io)
