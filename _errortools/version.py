@@ -1,10 +1,14 @@
 """Version information for the errortools package.
 
-This module exposes the package version as both a dotted-decimal string
-(``__version__``) and a ``(major, minor, patch)`` integer triple
+This module exposes the package version as a dotted-decimal string
+(``__version__``), a comparable :class:`VersionInfo` value object
+(``__version_info__``) and a ``(major, minor, patch)`` integer triple
 (``__version_tuple__``), plus an optional git commit identifier
-(``__commit_id__``).  A small :class:`VersionInfo` value object is also
-provided for callers that want to compare versions programmatically.
+(``__commit_id__``).
+
+The structured form is convenient for callers that want to compare
+versions programmatically (``v < VersionInfo(4, 0, 0)``, etc.) and
+mirrors the convention used by :data:`sys.version_info`.
 """
 
 from __future__ import annotations
@@ -17,9 +21,11 @@ __all__ = [
     "VersionInfo",
     "get_version_tuple",
     "__version__",
+    "__version_info__",
     "__version_tuple__",
     "__commit_id__",
     "version",
+    "version_info",
     "version_tuple",
     "commit_id",
 ]
@@ -34,6 +40,7 @@ class VersionInfo:
     can be used as dictionary keys or stored in sets.
 
     Example:
+
         >>> v = VersionInfo(3, 5, 1)
         >>> str(v)
         '3.5.1'
@@ -59,6 +66,7 @@ class VersionInfo:
         contains a non-numeric component.
 
         Example:
+
             >>> VersionInfo.from_str("3.5.1")
             VersionInfo(major=3, minor=5, patch=1)
             >>> VersionInfo.from_str("3.2")
@@ -156,19 +164,25 @@ def get_version_tuple(version: str) -> tuple[int, int, int]:
     return (major, minor, patch)
 
 
-__version__: Final[str] = "3.5.3"
-__version_tuple__: Final[tuple[int, int, int]] = get_version_tuple(__version__)
+# The structured form of the current release.  ``__version_info__`` is the
+# canonical, comparable representation; ``__version_tuple__`` is a
+# backwards-compatible plain-tuple alias derived from it via ``to_tuple()``.
+__version__: Final[str] = "3.5.4"
+__version_info__: Final[VersionInfo] = VersionInfo.from_str(__version__)
+__version_tuple__: Final[tuple[int, int, int]] = __version_info__.to_tuple()
 __commit_id__: Final[str | None] = None
 
 # Convenient lower-case aliases mirroring the dunder names.  They point
 # to the *same* objects so identity-based assertions (e.g. ``x is y``)
 # continue to hold.
 version: Final[str] = __version__
+version_info: Final[VersionInfo] = __version_info__
 version_tuple: Final[tuple[int, int, int]] = __version_tuple__
 commit_id: Final[str | None] = __commit_id__
 
 
 if __name__ == "__main__":
     print(f"errortools version: {__version__}")
+    print(f"errortools version (info): {__version_info__}")
     print(f"errortools version (tuple): {__version_tuple__}")
     print(f"errortools commit id: {__commit_id__}")

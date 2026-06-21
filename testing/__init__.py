@@ -11,7 +11,7 @@ __all__ = [
     "NO_ONE_CHANGE_VERSION",
     "run_tests",
 ]
-__version__ = "1.4.3"
+__version__ = "1.4.4"
 __version_tuple__ = get_version_tuple(__version__)
 
 try:

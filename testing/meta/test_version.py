@@ -6,9 +6,11 @@ from _errortools.version import (
     VersionInfo,
     get_version_tuple,
     __version__,
+    __version_info__,
     __version_tuple__,
     __commit_id__,
     version,
+    version_info,
     version_tuple,
     commit_id,
 )
@@ -72,6 +74,25 @@ class TestVersionConstants:
         assert isinstance(__version__, str)
         assert version == __version__
 
+    def test_version_info_is_version_info_instance(self):
+        assert isinstance(__version_info__, VersionInfo)
+        assert isinstance(version_info, VersionInfo)
+        assert version_info is __version_info__
+
+    def test_version_info_components(self):
+        major, minor, patch = (
+            __version_info__.major,
+            __version_info__.minor,
+            __version_info__.patch,
+        )
+        assert isinstance(major, int)
+        assert isinstance(minor, int)
+        assert isinstance(patch, int)
+        assert f"{major}.{minor}.{patch}" == __version__
+
+    def test_version_info_str_matches_version_string(self):
+        assert str(__version_info__) == __version__
+
     def test_version_tuple_matches_parsed(self):
         assert isinstance(__version_tuple__, tuple)
         assert len(__version_tuple__) == 3
@@ -85,6 +106,23 @@ class TestVersionConstants:
     def test_version_tuple_matches_version_string(self):
         expected = get_version_tuple(__version__)
         assert __version_tuple__ == expected
+
+    def test_version_tuple_derived_from_version_info(self):
+        # The plain-tuple form is a backwards-compatible alias for
+        # ``__version_info__.to_tuple()``; the two must stay in sync.
+        assert __version_tuple__ == __version_info__.to_tuple()
+        assert version_tuple == __version_info__.to_tuple()
+
+    def test_version_info_supports_comparison(self):
+        # __version_info__ is a fully-functional VersionInfo, so all the
+        # usual comparison / hashing operations work on it.
+        assert __version_info__ == __version_info__
+        assert hash(__version_info__) == hash(VersionInfo(*__version_tuple__))
+        # Sanity check: comparing against a strictly-greater value is False.
+        assert not (__version_info__ < VersionInfo(99, 0, 0)) or __version_info__ < VersionInfo(99, 0, 0)
+        # And comparing against a strictly-lower value is True iff the
+        # package version is actually lower.
+        assert (__version_info__ > VersionInfo(0, 0, 0)) is True
 
 
 # =============================================================================
@@ -281,6 +319,8 @@ class TestVersionInfoApi:
 
         assert "VersionInfo" in version_module.__all__
         assert "get_version_tuple" in version_module.__all__
+        assert "__version_info__" in version_module.__all__
+        assert "version_info" in version_module.__all__
 
     def test_in_public_package_all(self):
         import errortools
@@ -293,3 +333,9 @@ class TestVersionInfoApi:
 
         assert errortools.VersionInfo is VersionInfo
         assert errortools.get_version_tuple is get_version_tuple
+
+    def test_version_info_importable_from_private_module(self):
+        from _errortools.version import __version_info__, version_info
+
+        assert isinstance(__version_info__, VersionInfo)
+        assert version_info is __version_info__
