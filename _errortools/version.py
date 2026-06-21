@@ -10,6 +10,7 @@ provided for callers that want to compare versions programmatically.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from types import NotImplementedType
 from typing import Final
 
 __all__ = [
@@ -85,7 +86,7 @@ class VersionInfo:
             return NotImplemented
         return self.to_tuple() == other.to_tuple()
 
-    def __ne__(self, other: object) -> bool:
+    def __ne__(self, other: object) -> bool | NotImplementedType:
         result = self.__eq__(other)
         if result is NotImplemented:
             return result
@@ -155,7 +156,7 @@ def get_version_tuple(version: str) -> tuple[int, int, int]:
     return (major, minor, patch)
 
 
-__version__: Final[str] = "3.5.1"
+__version__: Final[str] = "3.5.2"
 __version_tuple__: Final[tuple[int, int, int]] = get_version_tuple(__version__)
 __commit_id__: Final[str | None] = None
 

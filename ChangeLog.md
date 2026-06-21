@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## v3.5.2 - 2026-06-21
+- Fix `VersionInfo.__ne__` return type error by mypy (In github workflows)
+
 ## v3.5.1 - 2026-06-21
 - Rename `_get_version_tuple` function in `_errortools/version.py` to `get_version_tuple` and add it to the public API.
 - Add new class `VersionInfo` in `_errortools/version.py`.
