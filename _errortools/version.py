@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from types import NotImplementedType
-from typing import Final, cast
+from typing import Final
 
 __all__ = [
     "VersionInfo",
