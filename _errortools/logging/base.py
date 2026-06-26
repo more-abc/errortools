@@ -5,7 +5,7 @@ from __future__ import annotations
 import sys
 import threading
 from collections.abc import Callable
-from typing import Any, IO
+from typing import Any, IO, Union
 
 from .level import Level, get_level
 from .record import make_record
@@ -45,7 +45,7 @@ class BaseLogger:
     def __init__(
         self,
         name: str = "errortools",
-        extra: dict[str, Any] | None = None,
+        extra: Union[dict[str, Any], None] = None,
     ) -> None:
         self._name = name
         self._extra: dict[str, Any] = extra or {}
@@ -60,14 +60,14 @@ class BaseLogger:
 
     def add(
         self,
-        sink: IO[str] | str | Callable[[str], None] | BaseSink,
+        sink: Union[IO[str], str, Callable[[str], None], BaseSink],
         *,
-        level: str | int | Level = Level.DEBUG,
-        colorize: bool | None = None,
+        level: Union[str, int, Level] = Level.DEBUG,
+        colorize: Union[bool, None] = None,
         rotation: int = 0,
         retention: int = 0,
         encoding: str = "utf-8",
-        fmt: str | None = None,
+        fmt: Union[str, None] = None,
     ) -> int:
         """Register a new sink and return its integer handle.
 
@@ -123,7 +123,7 @@ class BaseLogger:
             self._sink_id += 1
         return sid
 
-    def remove(self, sink_id: int | None = None) -> None:
+    def remove(self, sink_id: Union[int, None] = None) -> None:
         """Remove a sink by its ID, or remove **all** sinks if ``sink_id`` is ``None``.
 
         Args:
@@ -141,7 +141,7 @@ class BaseLogger:
     # Level control
     # ------------------------------------------------------------------
 
-    def set_level(self, level: str | int | Level) -> None:
+    def set_level(self, level: Union[str, int, Level]) -> None:
         """Set the global minimum level for this logger.
 
         Individual sinks can still have their own, stricter filters.
@@ -187,7 +187,7 @@ class BaseLogger:
 
     def log(
         self,
-        level: str | int | Level,
+        level: Union[str, int, Level],
         message: str,
         *args: Any,
         exception: bool = False,
@@ -283,7 +283,7 @@ class BaseLogger:
     def catch(
         self,
         *exceptions: type[BaseException],
-        level: str | int | Level = Level.ERROR,
+        level: Union[str, int, Level] = Level.ERROR,
         reraise: bool = False,
         message: str = "An error has been caught in function '{}', process '{}', thread '{}'",
     ) -> _CatchContext:
@@ -358,7 +358,7 @@ class _CatchContext:
         self,
         logger: BaseLogger,
         exceptions: tuple[type[BaseException], ...],
-        level: str | int | Level,
+        level: Union[str, int, Level],
         reraise: bool,
         message: str,
     ) -> None:
@@ -374,8 +374,8 @@ class _CatchContext:
 
     def __exit__(
         self,
-        exc_type: type[BaseException] | None,
-        exc_val: BaseException | None,
+        exc_type: Union[type[BaseException], None],
+        exc_val: Union[BaseException, None],
         exc_tb: Any,
     ) -> bool:
         if exc_type is None or not issubclass(exc_type, self._exceptions):

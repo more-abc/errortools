@@ -3,7 +3,7 @@
 import sys
 from contextlib import contextmanager
 from itertools import product
-from typing import Callable, Any
+from typing import Callable, Any, Union
 from collections.abc import Iterable, Iterator
 
 __all__ = ["raises", "assert_raises", "raises_all", "reraise"]
@@ -150,7 +150,7 @@ if sys.version_info >= (3, 11):
 
 @contextmanager
 def reraise(
-    catch: type[Exception] | tuple[type[Exception], ...],
+    catch: Union[type[Exception], tuple[type[Exception], ...]],
     raise_as: type[Exception],
 ) -> Iterator[None]:
     """Context manager that catches *catch* and re-raises it as *raise_as*.

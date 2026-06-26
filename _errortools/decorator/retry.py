@@ -5,7 +5,7 @@ Retry decorator for sync and async functions.
 from __future__ import annotations
 
 from functools import wraps
-from typing import Any, Callable, TypeVar
+from typing import Any, Callable, TypeVar, Union
 import asyncio
 import inspect
 import time
@@ -44,7 +44,7 @@ class retry:
     def __init__(
         self,
         times: int,
-        on: ExceptionType | ExceptionTypes = Exception,
+        on: Union[ExceptionType, ExceptionTypes] = Exception,
         delay: float = 0,
     ) -> None:
         if times < 0:
@@ -62,7 +62,7 @@ class retry:
     def _sync_retry(self, func: Func) -> Func:
         @wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
-            last_exc: BaseException | None = None
+            last_exc: Union[BaseException, None] = None
             for attempt in range(self._times + 1):
                 try:
                     return func(*args, **kwargs)
@@ -79,7 +79,7 @@ class retry:
     def _async_retry(self, func: Func) -> Func:
         @wraps(func)
         async def async_wrapper(*args: Any, **kwargs: Any) -> Any:
-            last_exc: BaseException | None = None
+            last_exc: Union[BaseException, None] = None
             for attempt in range(self._times + 1):
                 try:
                     return await func(*args, **kwargs)

@@ -4,11 +4,12 @@ import argparse
 import shutil
 import sys
 from pathlib import Path
+from typing import Union
 
 from _errortools.version import __version__
 
 
-def _parse_args(args: list[str] | None = None) -> argparse.Namespace:
+def _parse_args(args: Union[list[str], None] = None) -> argparse.Namespace:
     desc = "errortools internal debug tools"
 
     if sys.version_info >= (3, 14):

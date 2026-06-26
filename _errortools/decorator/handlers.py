@@ -5,10 +5,10 @@ Decorator-based exception handling utilities.
 """
 
 from functools import wraps
-from typing import Callable, TypeVar, Any
+from typing import Callable, TypeVar, Any, Union
 
 _F = TypeVar("_F", bound=Callable[..., Any])
-_ExcTypes = type[BaseException] | tuple[type[BaseException], ...]
+_ExcTypes = Union[type[BaseException], tuple[type[BaseException], ...]]
 
 
 def suppress(
@@ -52,7 +52,7 @@ def suppress(
 def convert(
     source: _ExcTypes,
     target: type[BaseException],
-    message: str | None = None,
+    message: Union[str, None] = None,
 ) -> Callable[[_F], _F]:
     """Decorator that converts one exception type to another.
 

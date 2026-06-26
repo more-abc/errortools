@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## v3.5.5 - 2026-06-26
+- Change PEP 604 union type hints (e.g. `a | b`) to `Union[a, b]` form across all source files for compatibility with Python 3.8 and 3.9.
+
 ## v3.5.4 - 2026-06-21
 - Add `version_info` and `__version_info__` in `_errortools/version.py`.
 
