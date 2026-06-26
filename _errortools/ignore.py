@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Iterator, Callable
 from contextlib import contextmanager
-from typing import Any, TypeVar
+from typing import Any, TypeVar, Union
 import warnings
 
 from .wrappers.ignore import ErrorIgnoreWrapper
@@ -119,7 +119,7 @@ class fast_ignore:
     def __enter__(self) -> None:
         return
 
-    def __exit__(self, typ: ExceptionType | None, _, __) -> bool:
+    def __exit__(self, typ: Union[ExceptionType, None], _, __) -> bool:
         if typ is None:
             return False
         return typ in self._excs

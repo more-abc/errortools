@@ -1,6 +1,6 @@
 import uuid
 import traceback
-from typing import Any, Optional
+from typing import Any, Optional, Union
 
 __all__ = [
     "PureBaseException",
@@ -28,7 +28,7 @@ class PureBaseException(Exception):
     code: int = -1
     default_detail: str = "An error occurred."
 
-    def __init__(self, detail: str | None = None) -> None:
+    def __init__(self, detail: Union[str, None] = None) -> None:
         """
         Pure Base Exception Initialization
         Args:
@@ -63,7 +63,7 @@ class ContextException(PureBaseException):
     Inherits from pure base exception, providing trace ID, context management, exception chain, and simplified stack trace
     """
 
-    def __init__(self, detail: str | None = None) -> None:
+    def __init__(self, detail: Union[str, None] = None) -> None:
         """
         Context Exception Initialization
         Args:
@@ -162,7 +162,7 @@ class BaseErrorCodes(ContextException):
     """
 
     @classmethod
-    def invalid_input(cls, detail: str | None = None) -> "InvalidInputError":
+    def invalid_input(cls, detail: Union[str, None] = None) -> "InvalidInputError":
         """
         Input Validation Error (Error Code: 1001)
         Args:
@@ -173,7 +173,7 @@ class BaseErrorCodes(ContextException):
         return InvalidInputError(detail)
 
     @classmethod
-    def not_found(cls, detail: str | None = None) -> "NotFoundError":
+    def not_found(cls, detail: Union[str, None] = None) -> "NotFoundError":
         """
         Resource Not Found Error (Error Code: 3001)
         Args:
@@ -184,7 +184,7 @@ class BaseErrorCodes(ContextException):
         return NotFoundError(detail)
 
     @classmethod
-    def access_denied(cls, detail: str | None = None) -> "AccessDeniedError":
+    def access_denied(cls, detail: Union[str, None] = None) -> "AccessDeniedError":
         """
         Access Denied Error (Error Code: 2001)
         Args:
@@ -195,7 +195,7 @@ class BaseErrorCodes(ContextException):
         return AccessDeniedError(detail)
 
     @classmethod
-    def configuration_error(cls, detail: str | None = None) -> "ConfigurationError":
+    def configuration_error(cls, detail: Union[str, None] = None) -> "ConfigurationError":
         """
         Configuration Error (Error Code: 5001)
         Args:
@@ -206,7 +206,7 @@ class BaseErrorCodes(ContextException):
         return ConfigurationError(detail)
 
     @classmethod
-    def runtime_failure(cls, detail: str | None = None) -> "RuntimeFailure":
+    def runtime_failure(cls, detail: Union[str, None] = None) -> "RuntimeFailure":
         """
         Runtime Failure (Error Code: 4001)
         Args:
@@ -217,7 +217,7 @@ class BaseErrorCodes(ContextException):
         return RuntimeFailure(detail)
 
     @classmethod
-    def timeout_failure(cls, detail: str | None = None) -> "TimeoutFailure":
+    def timeout_failure(cls, detail: Union[str, None] = None) -> "TimeoutFailure":
         """
         Timeout Failure (Error Code: 4002)
         Args:

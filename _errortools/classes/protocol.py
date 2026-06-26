@@ -1,6 +1,6 @@
 import sys
 from types import GenericAlias
-from typing import Any, Callable, Protocol, Self, Sequence, TypeVar, overload, runtime_checkable
+from typing import Any, Callable, Protocol, Self, Sequence, TypeVar, Union, overload, runtime_checkable
 
 __all__ = [
     "ExceptionLike",
@@ -47,7 +47,7 @@ class SystemExitLike(ExceptionLike, Protocol):
     .. versionadded:: 3.2
     """
 
-    code: int | str | None
+    code: Union[int, str, None]
 
 
 @runtime_checkable
@@ -67,13 +67,13 @@ class OSErrorLike(ExceptionLike, Protocol):
     .. versionadded:: 3.2
     """
 
-    errno: int | None
-    strerror: str | None
-    filename: str | bytes | None
-    filename2: str | bytes | None
+    errno: Union[int, None]
+    strerror: Union[str, None]
+    filename: Union[str, bytes, None]
+    filename2: Union[str, bytes, None]
 
     if sys.platform == "win32":
-        winerror: int | None
+        winerror: Union[int, None]
 
 
 if sys.version_info >= (3, 10):
@@ -85,7 +85,7 @@ if sys.version_info >= (3, 10):
         .. versionadded:: 3.2
         """
 
-        name: str | None
+        name: Union[str, None]
         obj: Any
 
     @runtime_checkable
@@ -95,7 +95,7 @@ if sys.version_info >= (3, 10):
         .. versionadded:: 3.2
         """
 
-        name: str | None
+        name: Union[str, None]
 
 
 @runtime_checkable
@@ -105,13 +105,13 @@ class ImportErrorLike(ExceptionLike, Protocol):
     .. versionadded:: 3.2
     """
 
-    def __init__(self, *args: object, name: str | None = None, path: str | None = None) -> None: ...
+    def __init__(self, *args: object, name: Union[str, None] = None, path: Union[str, None] = None) -> None: ...
 
-    name: str | None
-    path: str | None
+    name: Union[str, None]
+    path: Union[str, None]
     msg: str
     if sys.version_info >= (3, 12):
-        name_from: str | None
+        name_from: Union[str, None]
 
 
 @runtime_checkable
@@ -122,15 +122,15 @@ class SyntaxErrorLike(ExceptionLike, Protocol):
     """
 
     msg: str
-    filename: str | None
-    lineno: int | None
-    offset: int | None
-    text: str | None
+    filename: Union[str, None]
+    lineno: Union[int, None]
+    offset: Union[int, None]
+    text: Union[str, None]
     print_file_and_line: None
 
     if sys.version_info >= (3, 10):
-        end_lineno: int | None
-        end_offset: int | None
+        end_lineno: Union[int, None]
+        end_offset: Union[int, None]
 
 
 @runtime_checkable
@@ -203,37 +203,43 @@ class BaseExceptionGroupLike(ExceptionLike, Protocol):
     @property
     def message(self) -> str: ...
     @property
-    def exceptions(self) -> tuple[_BaseExceptionT_co | BaseExceptionGroup[_BaseExceptionT_co], ...]: ...
+    def exceptions(self) -> tuple[Union[_BaseExceptionT_co, BaseExceptionGroup[_BaseExceptionT_co]], ...]: ...
 
     @overload
     def subgroup(
-        self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...],
-        /) -> ExceptionGroup[_ExceptionT] | None: ...
+        self, matcher_value: Union[type[_ExceptionT], tuple[type[_ExceptionT], ...]],
+        /,
+    ) -> Union[ExceptionGroup[_ExceptionT], None]: ...
 
     @overload
     def subgroup(
-        self, matcher_value: type[_BaseExceptionT] | tuple[type[_BaseExceptionT], ...],
-        /) -> BaseExceptionGroup[_BaseExceptionT] | None: ...
+        self, matcher_value: Union[type[_BaseExceptionT], tuple[type[_BaseExceptionT], ...]],
+        /,
+    ) -> Union[BaseExceptionGroup[_BaseExceptionT], None]: ...
 
     @overload
     def subgroup(
-        self, matcher_value: Callable[[_BaseExceptionT_co | Self], bool],
-        /) -> BaseExceptionGroup[_BaseExceptionT_co] | None: ...
+        self, matcher_value: Callable[[Union[_BaseExceptionT_co, Self]], bool],
+        /,
+    ) -> Union[BaseExceptionGroup[_BaseExceptionT_co], None]: ...
 
     @overload
     def split(
-        self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...],
-        /) -> tuple[ExceptionGroup[_ExceptionT] | None, BaseExceptionGroup[_BaseExceptionT_co] | None]: ...
+        self, matcher_value: Union[type[_ExceptionT], tuple[type[_ExceptionT], ...]],
+        /,
+    ) -> tuple[Union[ExceptionGroup[_ExceptionT], None], Union[BaseExceptionGroup[_BaseExceptionT_co], None]]: ...
 
     @overload
     def split(
-        self, matcher_value: type[_BaseExceptionT] | tuple[type[_BaseExceptionT], ...],
-        /) -> tuple[BaseExceptionGroup[_BaseExceptionT] | None, BaseExceptionGroup[_BaseExceptionT_co] | None]: ...
+        self, matcher_value: Union[type[_BaseExceptionT], tuple[type[_BaseExceptionT], ...]],
+        /,
+    ) -> tuple[Union[BaseExceptionGroup[_BaseExceptionT], None], Union[BaseExceptionGroup[_BaseExceptionT_co], None]]: ...
 
     @overload
     def split(
-        self, matcher_value: Callable[[_BaseExceptionT_co | Self], bool],
-        /) -> tuple[BaseExceptionGroup[_BaseExceptionT_co] | None, BaseExceptionGroup[_BaseExceptionT_co] | None]: ...
+        self, matcher_value: Callable[[Union[_BaseExceptionT_co, Self]], bool],
+        /,
+    ) -> tuple[Union[BaseExceptionGroup[_BaseExceptionT_co], None], Union[BaseExceptionGroup[_BaseExceptionT_co], None]]: ...
 
     # In reality it is `NonEmptySequence`:
     @overload
@@ -253,28 +259,32 @@ class ExceptionGroupLike(ExceptionLike, Protocol):
     def __new__(cls, message: str, exceptions: Sequence[_ExceptionT_co], /) -> Self: ...
     def __init__(self, message: str, exceptions: Sequence[_ExceptionT_co], /) -> None: ...
     @property
-    def exceptions(self) -> tuple[_ExceptionT_co | ExceptionGroup[_ExceptionT_co], ...]: ...
+    def exceptions(self) -> tuple[Union[_ExceptionT_co, ExceptionGroup[_ExceptionT_co]], ...]: ...
 
     # We accept a narrower type, but that's OK.
     @overload
     def subgroup(
-        self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...],
-        /) -> ExceptionGroup[_ExceptionT] | None: ...
+        self, matcher_value: Union[type[_ExceptionT], tuple[type[_ExceptionT], ...]],
+        /,
+    ) -> Union[ExceptionGroup[_ExceptionT], None]: ...
 
     @overload
     def subgroup(
-        self, matcher_value: Callable[[_ExceptionT_co | Self], bool],
-        /) -> ExceptionGroup[_ExceptionT_co] | None: ...
+        self, matcher_value: Callable[[Union[_ExceptionT_co, Self]], bool],
+        /,
+    ) -> Union[ExceptionGroup[_ExceptionT_co], None]: ...
 
     @overload
     def split(
-        self, matcher_value: type[_ExceptionT] | tuple[type[_ExceptionT], ...],
-        /) -> tuple[ExceptionGroup[_ExceptionT] | None, ExceptionGroup[_ExceptionT_co] | None]: ...
+        self, matcher_value: Union[type[_ExceptionT], tuple[type[_ExceptionT], ...]],
+        /,
+    ) -> tuple[Union[ExceptionGroup[_ExceptionT], None], Union[ExceptionGroup[_ExceptionT_co], None]]: ...
 
     @overload
     def split(
-        self, matcher_value: Callable[[_ExceptionT_co | Self], bool],
-        /) -> tuple[ExceptionGroup[_ExceptionT_co] | None, ExceptionGroup[_ExceptionT_co] | None]: ...
+        self, matcher_value: Callable[[Union[_ExceptionT_co, Self]], bool],
+        /,
+    ) -> tuple[Union[ExceptionGroup[_ExceptionT_co], None], Union[ExceptionGroup[_ExceptionT_co], None]]: ...
 
 
 if sys.version_info < (3, 11):

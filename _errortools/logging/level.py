@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import ClassVar, Final
+from typing import ClassVar, Final, Union
 
 
 @dataclass(frozen=True)
@@ -69,7 +69,7 @@ _NAME_MAP: Final[dict[str, Level]] = {lv.name: lv for lv in LEVELS}
 _NO_MAP: Final[dict[int, Level]] = {lv.no: lv for lv in LEVELS}
 
 
-def get_level(name_or_no: str | int) -> Level:
+def get_level(name_or_no: Union[str, int]) -> Level:
     """Return a `Level` by name (case-insensitive) or numeric value.
 
     Raises:

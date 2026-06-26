@@ -97,7 +97,7 @@ class Warnable(ABC):
 
     @classmethod
     @abstractmethod
-    def emit(cls, detail: str | None = None, stacklevel: int = 2) -> None:
+    def emit(cls, detail: Union[str, None] = None, stacklevel: int = 2) -> None:
         """Issue this warning via ``warnings.warn``.
 
         Args:
