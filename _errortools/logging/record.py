@@ -8,7 +8,7 @@ import traceback
 from dataclasses import dataclass, field
 from datetime import datetime
 from types import TracebackType
-from typing import Any
+from typing import Any, Union
 
 if sys.version_info >= (3, 9):
     from datetime import UTC
@@ -51,7 +51,7 @@ class Record:
     thread_id: int
     thread_name: str
     process_id: int
-    exception: tuple[type[BaseException], BaseException, TracebackType | None] | None
+    exception: Union[tuple[type[BaseException], BaseException, Union[TracebackType, None]], None]
     extra: dict[str, Any] = field(default_factory=dict)
 
     # ------------------------------------------------------------------
@@ -59,7 +59,7 @@ class Record:
     # ------------------------------------------------------------------
 
     @property
-    def exc_text(self) -> str | None:
+    def exc_text(self) -> Union[str, None]:
         """Formatted traceback string, or ``None`` if no exception."""
         if self.exception is None:
             return None

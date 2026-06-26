@@ -7,7 +7,7 @@ import threading
 from abc import ABC, abstractmethod
 from datetime import datetime
 from pathlib import Path
-from typing import IO, Any
+from typing import IO, Any, Union
 
 if sys.version_info >= (3, 9):
     from datetime import UTC
@@ -29,7 +29,7 @@ def _supports_color(stream: IO[str]) -> bool:
     return hasattr(stream, "isatty") and stream.isatty()
 
 
-def _format_record(record: Record, colorize: bool, fmt: str | None) -> str:
+def _format_record(record: Record, colorize: bool, fmt: Union[str, None]) -> str:
     """Render a `record.Record` to a string.
 
     Args:
@@ -111,10 +111,10 @@ class StreamSink(BaseSink):
 
     def __init__(
         self,
-        stream: IO[str] | None = None,
+        stream: Union[IO[str], None] = None,
         level: Level = Level.DEBUG,
-        colorize: bool | None = None,
-        fmt: str | None = None,
+        colorize: Union[bool, None] = None,
+        fmt: Union[str, None] = None,
     ) -> None:
         self._stream = stream or sys.stderr
         self.level = level
@@ -149,12 +149,12 @@ class FileSink(BaseSink):
 
     def __init__(
         self,
-        path: str | Path,
+        path: Union[str, Path],
         level: Level = Level.DEBUG,
         rotation: int = 0,
         retention: int = 0,
         encoding: str = "utf-8",
-        fmt: str | None = None,
+        fmt: Union[str, None] = None,
     ) -> None:
         self._path = Path(path)
         self.level = level

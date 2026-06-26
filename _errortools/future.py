@@ -7,7 +7,7 @@ if sys.version_info <= (3, 10):
     from typing_extensions import TypeAlias
 else:
     from typing import TypeAlias
-from typing import Literal
+from typing import Literal, Union
 
 # Try to import C speedup
 try:
@@ -21,7 +21,7 @@ except ImportError:
         lst.append(exc)
 
     def fast_suppress_exit(
-        typ: type[BaseException] | None, excs: type[BaseException] | tuple[type[BaseException], ...]
+        typ: Union[type[BaseException], None], excs: Union[type[BaseException], tuple[type[BaseException], ...]]
     ) -> bool:
         return typ is not None and issubclass(typ, excs)
 
@@ -47,7 +47,7 @@ class super_fast_ignore:
     def __enter__(self) -> None:
         return
 
-    def __exit__(self, typ: _ExcType | None, *_) -> bool:
+    def __exit__(self, typ: Union[_ExcType, None], *_) -> bool:
         return bool(fast_suppress_exit(typ, self.excs))
 
 
@@ -68,12 +68,12 @@ class super_fast_catch:
 
     def __init__(self, *excs: _ExcType) -> None:
         self.excs = excs if excs else (BaseException,)
-        self.exception: BaseException | None = None
+        self.exception: Union[BaseException, None] = None
 
     def __enter__(self) -> super_fast_catch:
         return self
 
-    def __exit__(self, typ: _ExcType | None, val, *_) -> bool:
+    def __exit__(self, typ: Union[_ExcType, None], val, *_) -> bool:
         if typ is None or not issubclass(typ, self.excs):
             return False
         self.exception = val
@@ -98,7 +98,7 @@ class super_fast_reraise:
 
     def __init__(
         self,
-        catch: _ExcType | tuple[_ExcType, ...],
+        catch: Union[_ExcType, tuple[_ExcType, ...]],
         raise_as: _ExcType,
     ) -> None:
         self.catch = catch if isinstance(catch, tuple) else (catch,)
@@ -107,7 +107,7 @@ class super_fast_reraise:
     def __enter__(self) -> None:
         return
 
-    def __exit__(self, typ: _ExcType | None, val, *_) -> Literal[False]:
+    def __exit__(self, typ: Union[_ExcType, None], val, *_) -> Literal[False]:
         if typ is None or not issubclass(typ, self.catch):
             return False
         raise self.raise_as(str(val)) from val

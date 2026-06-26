@@ -16,6 +16,7 @@ pyproject.toml               @more-abc/core-dev-team
 
 AUTHORS.txt                  @more-abc/core-dev-team
 LICENSE.txt                  @more-abc/core-dev-team
+AGENTS_PREVIEW.md            @more-abc/core-dev-team
 
 .readthedocs.yaml            @more-abc/doc
 /docs/                       @more-abc/doc
