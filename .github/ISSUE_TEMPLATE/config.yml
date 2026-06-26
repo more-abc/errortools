@@ -11,4 +11,8 @@ contact_links:
     url: https://github.com/more-abc/errortools/discussions
     about: Ask questions and discuss with other community members.
 
+  - name: Technical Support
+    url: mailto:errortools-support@proton.me
+    about: Reach out for further project-related inquiries.
+
 issue_body_requires_title: true
