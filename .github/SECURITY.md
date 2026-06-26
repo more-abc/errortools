@@ -8,6 +8,7 @@ The latest version on PyPI is currently supported with security updates.
 
 If you discover a security vulnerability in errortools, please report it
 through a **GitHub Security Advisory** or contact the maintainer privately.
+maintainer vulnerability contact email: <errortools-support@proton.me>
 
 Please do **not** disclose the vulnerability publicly until it has been addressed.
 

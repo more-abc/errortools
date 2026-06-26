@@ -19,3 +19,6 @@ Describe your use case, expected behavior, and benefits to the project.
 ## No Support
 We do not provide custom development, one-on-one technical consulting,
 or urgent production support for free.
+
+## Support email
+Reach out to this email for discussions or other inquiries: <errortools-support@proton.me>
