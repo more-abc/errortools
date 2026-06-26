@@ -72,7 +72,7 @@ import doctest
 import importlib
 import pathlib
 import sys
-from typing import Iterable
+from typing import Iterable, Union
 
 __all__ = [
     "run_doctests",
@@ -108,7 +108,7 @@ def list_doctest_modules() -> list[str]:
 
 
 def run_doctests(
-    modules: Iterable[str] | None = None,
+    modules: Union[Iterable[str], None] = None,
     *,
     verbose: bool = False,
     raise_on_error: bool = False,

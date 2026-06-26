@@ -7,6 +7,8 @@ Covers:
   - Error (ABC for module-level Error exceptions named "Error")
 """
 
+from typing import Union
+
 import pytest
 import warnings
 import copy
@@ -101,7 +103,7 @@ class TestErrorCodeable:
 class DeprecatedFeatureWarning(Warnable, Warning):
     default_detail = "This feature is deprecated"
 
-    def __init__(self, message: str | None = None):
+    def __init__(self, message: Union[str, None] = None):
         self.message = message or self.default_detail
         super().__init__(self.message)
 
@@ -109,7 +111,7 @@ class DeprecatedFeatureWarning(Warnable, Warning):
         return self.message
 
     @classmethod
-    def emit(cls, detail: str | None = None, stacklevel: int = 2) -> None:
+    def emit(cls, detail: Union[str, None] = None, stacklevel: int = 2) -> None:
         msg = detail or cls.default_detail
         warnings.warn(cls(msg), stacklevel=stacklevel)
 
@@ -122,7 +124,7 @@ class TestWarnable:
             default_detail = "Deprecated feature usage"
 
             @classmethod
-            def emit(cls, detail: str | None = None, stacklevel: int = 2) -> None:
+            def emit(cls, detail: Union[str, None] = None, stacklevel: int = 2) -> None:
                 msg = detail or cls.default_detail
                 warnings.warn(cls(msg), stacklevel=stacklevel)
 

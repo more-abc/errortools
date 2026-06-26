@@ -5,7 +5,7 @@ import sys
 if sys.version_info <= (3, 10):
     from typing_extensions import TypeAlias
 else:
-    from typing import TypeAlias
+    from typing import TypeAlias, Union
 from typing import Any, Generic, NamedTuple, Optional, TypeVar
 
 _T = TypeVar("_T", bound=Callable[..., Any])
@@ -17,14 +17,14 @@ class CacheInfo(NamedTuple):
 
     hits: int
     misses: int
-    maxsize: int | None
+    maxsize: Union[int, None]
     currsize: int
 
 
 class ErrorCacheWrapper(Generic[_T]):
     """Wrapper class for error-cached functions."""
 
-    def __init__(self, func: _T, maxsize: int | None = 128) -> None:
+    def __init__(self, func: _T, maxsize: Union[int, None] = 128) -> None:
         self.__wrapped__ = func  # Required for inspect module compatibility
         self._func_name = func.__name__
 

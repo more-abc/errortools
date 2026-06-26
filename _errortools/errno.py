@@ -1,9 +1,10 @@
 """Lightweight utilities for errno error code inspection and handling."""
 
 import errno
+from typing import Union
 
 
-def get_errno_name(code: int) -> str | None:
+def get_errno_name(code: int) -> Union[str, None]:
     """Get the symbolic name for an errno code.
 
     Args:

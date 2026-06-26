@@ -20,7 +20,7 @@ import argparse
 import os
 import sys
 from collections.abc import Callable, Sequence
-from typing import Final
+from typing import Final, Union
 
 from _errortools._cli import _cmd_log, _print_info
 from _errortools.metadata import (
@@ -38,7 +38,7 @@ from _errortools.version import __version__
 # ---------------------------------------------------------------------------
 
 
-def _detect_mode(argv0: str | None = None) -> str:
+def _detect_mode(argv0: Union[str, None] = None) -> str:
     """Return the CLI family inferred from ``argv0``.
 
     The detection uses the *basename* of the executable/script rather
@@ -145,7 +145,7 @@ def _build_logger_parser() -> argparse.ArgumentParser:
 # ---------------------------------------------------------------------------
 
 
-def parse_args(args: Sequence[str] | None = None) -> argparse.Namespace:
+def parse_args(args: Union[Sequence[str], None] = None) -> argparse.Namespace:
     """Parse command-line arguments for the active CLI family."""
     if _CLI_MODE == "logger":
         return _build_logger_parser().parse_args(args)
@@ -242,7 +242,7 @@ def _dispatch_errortools(args: argparse.Namespace) -> None:
     _build_errortools_parser().parse_args(["--help"])
 
 
-def main(argv: Sequence[str] | None = None) -> None:
+def main(argv: Union[Sequence[str], None] = None) -> None:
     """Module entry point dispatched to the active CLI family."""
     if argv is None:
         argv = sys.argv[1:]

@@ -175,7 +175,7 @@ CI workflows (see `.github/workflows/`) re-run these on every PR:
 1. **Never modify `dist/`, `*.egg-info/`, `htmlcov/`, `.mypy_cache/`, `.pytest_cache/`, or `.venv/`.** They are generated.
 2. **Prefer the public API**: changes to `_errortools/` are fine; user-facing symbols must be re-exported in `errortools/__init__.py` and listed in `__all__`.
 3. **Keep backward compatibility**. Deprecated names go through `_DEPRECATED_NAMES` in `errortools/__init__.py`, **never delete exported symbols outright**.
-4. **Python 3.8 compatibility is mandatory**: no `match` statements, no PEP 604 union syntax (`X | Y`), no `Self` from `typing`. Use `Optional`, `Union`, `Tuple`, `List` from `typing`, and import modern syntax from `typing_extensions` if needed.
+4. **Python 3.8 compatibility is mandatory**: no `match` statements, no PEP 604 union syntax (`Union[X, Y]`), no `Self` from `typing`. Use `Optional`, `Union` from `typing`, and import modern syntax from `typing_extensions` if needed.
 5. **Use `from __future__ import annotations` in new files** to keep annotations lazy.
 6. **Google-style docstrings** on every public symbol. Include an `Example:` block (doctest-friendly) where reasonable.
 
@@ -248,7 +248,7 @@ CI workflows (see `.github/workflows/`) re-run these on every PR:
 ## 7. Anti-patterns to Avoid
 
 - ❌ Editing anything under `errortools/` **except** `__init__.py` and the three lazy submodule accessors (`future.py`, `logging.py`, `partial.py`).
-<!-- - ❌ Using `X | None` in public type hints (project supports Python 3.8). -->
+<!-- - ❌ Using `Union[X, None]` in public type hints (project supports Python 3.8). -->
 - ❌ Catching `BaseException` indiscriminately — narrow with explicit tuples.
 - ❌ Adding mutable default arguments; use `None` + sentinel.
 - ❌ Swallowing exceptions silently in new code; document any deliberate suppression.

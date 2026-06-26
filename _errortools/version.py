@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from types import NotImplementedType
-from typing import Final
+from typing import Final, Union
 
 __all__ = [
     "VersionInfo",
@@ -94,7 +94,7 @@ class VersionInfo:
             return NotImplemented
         return self.to_tuple() == other.to_tuple()
 
-    def __ne__(self, other: object) -> bool | NotImplementedType:
+    def __ne__(self, other: object) -> Union[bool, NotImplementedType]:
         result = self.__eq__(other)
         if result is NotImplemented:
             return result  # type: ignore[no-any-return]
@@ -167,10 +167,10 @@ def get_version_tuple(version: str) -> tuple[int, int, int]:
 # The structured form of the current release.  ``__version_info__`` is the
 # canonical, comparable representation; ``__version_tuple__`` is a
 # backwards-compatible plain-tuple alias derived from it via ``to_tuple()``.
-__version__: Final[str] = "3.5.4"
+__version__: Final[str] = "3.5.5"
 __version_info__: Final[VersionInfo] = VersionInfo.from_str(__version__)
 __version_tuple__: Final[tuple[int, int, int]] = __version_info__.to_tuple()
-__commit_id__: Final[str | None] = None
+__commit_id__: Final[Union[str, None]] = None
 
 # Convenient lower-case aliases mirroring the dunder names.  They point
 # to the *same* objects so identity-based assertions (e.g. ``x is y``)
@@ -178,7 +178,7 @@ __commit_id__: Final[str | None] = None
 version: Final[str] = __version__
 version_info: Final[VersionInfo] = __version_info__
 version_tuple: Final[tuple[int, int, int]] = __version_tuple__
-commit_id: Final[str | None] = __commit_id__
+commit_id: Final[Union[str, None]] = __commit_id__
 
 
 if __name__ == "__main__":
