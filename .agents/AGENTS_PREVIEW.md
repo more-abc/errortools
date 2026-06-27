@@ -2,7 +2,7 @@
 
 > **Preview document for AI coding agents (Cline / Cursor / Copilot / Claude Code / etc.)**
 > A concise, machine-oriented guide for working on the `errortools` codebase.
-> For human contributors, see [`CONTRIBUTING.md`](.github/CONTRIBUTING.md).
+> For human contributors, see [`CONTRIBUTING.md`](../.github/CONTRIBUTING.md).
 ---
 
 > Something need change or refactor? Contact email <errortools.agent-preview@proton.me>
