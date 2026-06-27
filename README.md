@@ -103,3 +103,8 @@ with logger.catch():
 ## Documentation
 
 Full docs: [docs](https://errortools.readthedocs.io) | License: [LICENSE](LICENSE.txt)
+
+## Email
+Main email: <errortools@proton.me>
+Support email: <errortools-support@proton.me>
+Security email: <errortools-security@proton.me>
