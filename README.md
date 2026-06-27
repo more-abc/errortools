@@ -108,3 +108,4 @@ Full docs: [docs](https://errortools.readthedocs.io) | License: [LICENSE](LICENS
 Main email: <errortools@proton.me>
 Support email: <errortools-support@proton.me>
 Security email: <errortools-security@proton.me>
+Agents contact email: <errortools.agent-preview@proton.me>
