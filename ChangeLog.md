@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+## v3.5.6 - 2026-06-27
+- Move `_print_info` and `_cmd_log` function from `_errortools/_cli.py` to `_errortools/cli.py` and delete `_errortools/_cli.py`.
+
 ## v3.5.5 - 2026-06-26
 - Change PEP 604 union type hints (e.g. `a | b`) to `Union[a, b]` form across all source files for compatibility with Python 3.8 and 3.9.
 
