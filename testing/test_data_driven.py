@@ -15,7 +15,7 @@ import warnings
 
 import pytest
 
-from testing.data import loader
+from testing.data.json import loader
 
 # ---------------------------------------------------------------------------
 # Helpers

@@ -60,7 +60,6 @@ errortools/
 │   ├── extending/ · faq/ · getting_started/ · user_guide/ · whatsnew/
 │
 ├── .github/                     # GitHub config: workflows, issue & PR templates, ...
-├── .vscode/                     # Editor settings (project-local)
 ├── pyproject.toml               # Build / pytest / mypy / black config
 ├── .flake8 · .pre-commit-config.yaml · .editorconfig
 ├── ChangeLog.md · README.md · AUTHORS.txt · LICENSE.txt

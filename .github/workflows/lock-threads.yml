@@ -21,11 +21,11 @@ jobs:
         with:
           github-token: ${{ github.token }}
 
-          issue-inactive-days: 365
-          pr-inactive-days: 30
+          issue-inactive-days: 730
+          pr-inactive-days: 60
 
-          issue-exclude-labels: "help wanted, keep-open"
-          pr-exclude-labels: "keep-open"
+          issue-exclude-labels: "help wanted, keep-open, !, ?"
+          pr-exclude-labels: "keep-open, ?, !"
 
           add-issue-labels: old
           add-pr-labels: old
