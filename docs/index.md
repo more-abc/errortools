@@ -6,6 +6,8 @@
 
 A lightweight Python exception handling utility library.
 
+> Something need change or refactor? Contact email <errortools.docs@proton.me>
+
 ## Overview
 
 **errortools** provides a comprehensive toolkit for working with Python exceptions, warnings, and logging. It offers both high-level convenience functions and low-overhead utilities for performance-critical code.

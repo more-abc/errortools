@@ -1,3 +1,5 @@
+> Something need change or refactor? Contact email <errortools.docs@proton.me>
+
 This directory contains "issue reproducers" which are short scripts that reproduce a specific bug report filed against `errortools`.
 
 Write a self-contained script that triggers the bug with the minimum amount of setup.

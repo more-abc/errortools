@@ -2,6 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
+> Something need change or refactor? Contact email <errortools.docs@proton.me>
 
 ## v3.5.7 - 2026-06-27 ~ 2026-??-??
 WAIT

@@ -1,5 +1,7 @@
 # Code of Conduct
 
+> Something need change or refactor? Contact email <errortools.docs@proton.me>
+
 ## 1. Purpose
 This Code of Conduct outlines expectations for all members, contributors, and participants in this project community. Our goal is to foster an open, respectful, inclusive, and collaborative environment for everyone, regardless of age, background, experience level, identity, or perspective.
 

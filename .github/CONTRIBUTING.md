@@ -2,6 +2,8 @@
 
 Thank you for your interest in contributing to **errortools**! We welcome contributions from the community, including bug reports, feature requests, documentation improvements, and code submissions.
 
+> Something need change or refactor? Contact email <errortools.docs@proton.me>
+
 ## Getting Started
 
 ### Prerequisites

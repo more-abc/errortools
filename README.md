@@ -11,6 +11,8 @@ A lightweight Python exception handling utility library.
 ![Total commits badge](https://img.shields.io/github/commit-activity/t/more-abc/errortools)
 ![OS support](https://img.shields.io/badge/OS-macOS%20Linux%20Windows-red)
 
+> Something need change or refactor? Contact email <errortools.docs@proton.me>
+
 ## Installation
 ### Use pip...
 ```bash

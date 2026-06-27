@@ -11,6 +11,8 @@
 > For human contributors, see
 > [`.github/CONTRIBUTING.md`](.github/CONTRIBUTING.md).
 
+> Something need change or refactor? Contact email <errortools.docs@proton.me>
+
 ---
 
 ## 1. Why this project exists

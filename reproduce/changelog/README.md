@@ -1,3 +1,5 @@
+> Something need change or refactor? Contact email <errortools.docs@proton.me>
+
 This directory contains "newsfragments" which are short files that contain a small markdown-formatted text that will be added to the next `ChangeLog.md`.
 
 Write a precise paragraph reproducing what this PR implements.
