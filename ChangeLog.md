@@ -2,8 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
 
+## v3.5.7 - 2026-06-27 ~ 2026-??-??
+WAIT
+
+> Starting now, the format for version logs will **follow these rules**. Each minor release can contain 3 to 4 commits,
+> which will be aggregated together under one minor version during iteration.
 
 ## v3.5.6 - 2026-06-27
 - Move `_print_info` and `_cmd_log` function from `_errortools/_cli.py` to `_errortools/cli.py` and delete `_errortools/_cli.py`.
