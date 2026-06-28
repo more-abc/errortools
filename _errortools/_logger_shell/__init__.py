@@ -9,6 +9,7 @@ from __future__ import annotations
 import code
 import logging
 import sys
+from typing import Any
 
 from _errortools.logging import (
     BaseLogger,
@@ -20,6 +21,17 @@ from _errortools.logging import (
     Record,
     StreamSink,
 )
+
+
+class EasterEgg(object):
+    def __repr__(self) -> str:
+        return "You find me! Use easteregg() to see something..."
+
+    def __call__(self) -> Any:
+        logger.info("I'm just a fool for you")
+
+
+easteregg: EasterEgg = EasterEgg()
 
 BAMMER: str = """errortools Logger Shell REPL {sys.version} on {sys.platform}
 Pre-imported shortcuts: info, debug, error, warning, critical, trace, success, exception, catch
@@ -57,5 +69,7 @@ def start_shell() -> None:
         "Handler": logging.Handler,
         "Filter": logging.Filter,
         "Formatter": logging.Formatter,
+        # easteregg
+        "easteregg": easteregg,
     }
     code.interact(banner=BANNER, local=namespace, exitmsg="")

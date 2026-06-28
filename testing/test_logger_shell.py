@@ -4,7 +4,7 @@ import logging
 from unittest.mock import MagicMock, patch
 
 from _errortools.logging import BaseLogger
-from _errortools._logger_shell import start_shell
+from _errortools._logger_shell import start_shell, EasterEgg
 
 # =============================================================================
 # Namespace contents
@@ -67,3 +67,9 @@ class TestLoggerShellNamespace:
             banner = mock_interact.call_args.kwargs["banner"]
             assert banner
             assert "Logger Shell" in banner
+
+
+class TestLoggerShellEasterEgg:
+    def test_easteregg_repr(self):
+        e = EasterEgg()
+        assert repr(e) == "You find me! Use easteregg() to see something..."
