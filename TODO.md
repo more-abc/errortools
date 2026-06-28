@@ -10,3 +10,11 @@ You may skip checkboxes, but you must use percentage progress bars to track prog
 
 ## Tasks
 Write down your unfinished tasks below.
+
+### Code
+### Tests
+### Documentation
+### Agents
+### Project Config
+### GitHub Repository Settings
+### Others
