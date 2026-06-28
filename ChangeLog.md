@@ -12,6 +12,7 @@ WAIT
 - Add an easteregg in logger shell.
 - Add `EasterEgg` in `_errortools/_logger_shell` dir.
 - Add `HistoryHook` in `_errortools/_logger_shell` dir than add Display hook that rotates `_`, `__`, `___` history variables.
+- Import `TracebackType` and `FrameType` from `types` module in `_errortools/typing.py` to speedup. [[#69](https://github.com/more-abc/errortools/issues/69)]
 
 > Starting now, the format for version logs will **follow these rules**. Each minor release can contain 3 to 4 commits,
 > which will be aggregated together under one minor version during iteration.
