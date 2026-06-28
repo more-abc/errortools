@@ -21,9 +21,13 @@ from _errortools.logging import (
     StreamSink,
 )
 
-from .banner import BAMMER
+BAMMER: str = """errortools Logger Shell REPL {sys.version} on {sys.platform}
+Pre-imported shortcuts: info, debug, error, warning, critical, trace, success, exception, catch
+Pre-imported types: logger, Level, LEVELS, BaseLogger, Record, StreamSink, FileSink, CallableSink
+Pre-imported std-lib: Logger, Handler, Filter, Formatter
+Type "help", "copyright", "credits" or "license" for more information."""
 
-_BANNER: str = str.format(BAMMER, sys=sys)
+BANNER: str = str.format(BAMMER, sys=sys)
 
 
 def start_shell() -> None:
@@ -54,4 +58,4 @@ def start_shell() -> None:
         "Filter": logging.Filter,
         "Formatter": logging.Formatter,
     }
-    code.interact(banner=_BANNER, local=namespace, exitmsg="")
+    code.interact(banner=BANNER, local=namespace, exitmsg="")
