@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import code
 import logging
-import sys  # noqa: F401
+import sys
 
 from _errortools.logging import (
     BaseLogger,
