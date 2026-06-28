@@ -2,14 +2,14 @@
 
 > **Pre-completion verification checklist for AI coding agents working on `errortools`.**
 >
-> This document is the companion to [`AGENTS_PREVIEW.md`](../AGENTS_PREVIEW.md).
+> This document is the companion to [`AGENTS_PREVIEW.md`](AGENTS_PREVIEW.md).
 > Use it **before** declaring a task done: tick every box that applies, explain
 > any that you cannot tick, and link evidence (commands run, files touched,
 > test names, etc.) in your final report.
 >
 > **Audience:** Cline / Cursor / Copilot / Claude Code / similar agents.
 > **Maintainers:** see [`.github/CONTRIBUTING.md`](../.github/CONTRIBUTING.md) and
-> the agent contact email in [`AGENTS_PREVIEW.md`](../AGENTS_PREVIEW.md#0).
+> the agent contact email in [`AGENTS_PREVIEW.md`](AGENTS_PREVIEW.md#0).
 >
 > > Something need change or refactor? Contact email <errortools.agent-preview@proton.me>
 
