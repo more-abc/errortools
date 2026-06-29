@@ -2,6 +2,7 @@
 # Tips:
 #   Contributors are not sorted by initials,
 #   but by contribution time.
+# Something need change or refactor? Contact email <errortools.docs@proton.me>
 # Here are the real contributors
 aiwonderland
 qorexdev
