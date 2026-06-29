@@ -11,7 +11,7 @@
 > **Maintainers:** see [`.github/CONTRIBUTING.md`](../.github/CONTRIBUTING.md) and
 > the agent contact email in [`AGENTS_PREVIEW.md`](AGENTS_PREVIEW.md#0).
 >
-> > Something need change or refactor? Contact email <errortools.agent-preview@proton.me>
+> Something need change or refactor? Contact email <errortools.agent-preview@proton.me>
 
 ---
 
