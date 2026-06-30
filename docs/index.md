@@ -107,9 +107,3 @@ hidden:
 
 faq/mascot
 ```
-
-## Indices and tables
-
-- {ref}`genindex`
-- {ref}`modindex`
-- {ref}`search`
