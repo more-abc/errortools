@@ -109,6 +109,10 @@ _DEPRECATED_NAMES: dict[str, tuple[str, str]] = {
     "LookupError_": ("LookupError_", "Use NotFoundError directly."),
     "RuntimeError_": ("RuntimeError_", "Use RuntimeFailure or TimeoutFailure directly."),
     "fast_ignore": ("fast_ignore", "Use errortools.future.super_fast_ignore instead."),
+    "partial": (
+        "partial",
+        "Just use the original functions directly.",
+    ),
 }
 
 
@@ -129,7 +133,7 @@ def __getattr__(name: str):
         )
         return globals()[f"_{name}"] if f"_{name}" in globals() else globals().get(name)
 
-    if name in ("future", "logging", "partial"):
+    if name in ("future", "logging"):
         return importlib.import_module(f"_errortools.{name}")
 
     try:

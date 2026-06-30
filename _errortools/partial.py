@@ -1,9 +1,14 @@
-"""Partial function presets for errortools."""
+"""Partial function presets for errortools.
+
+.. remove:: 5.0
+.. deprecated:: 3.5.0
+        This submodule is deprecated as it is functionally redundant."""
 
 from __future__ import annotations
 
 from functools import partial
 from typing import Callable
+import warnings
 
 from .ignore import (
     ignore,
@@ -15,6 +20,11 @@ from .ignore import (
 )
 from .decorator.cache import error_cache
 
+warnings.warn(
+    "partial submodule is deprecated as it is functionally redundant.",
+    DeprecationWarning,
+    stacklevel=2,
+)
 # ------------------------------------------------------------------
 # ignore: Common exception shortcuts
 # ------------------------------------------------------------------
