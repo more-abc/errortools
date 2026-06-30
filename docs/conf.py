@@ -29,6 +29,7 @@ and pytest documentation projects:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 from __future__ import annotations
+from _errortools.version import __version_tuple__
 
 import os
 import sys
@@ -39,7 +40,6 @@ _ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, _ROOT)
 sys.path.insert(0, os.path.dirname(_ROOT))
 
-from _errortools.version import __version_tuple__
 
 project = "errortools"
 author = "aiwonderland and the more-abc team"
