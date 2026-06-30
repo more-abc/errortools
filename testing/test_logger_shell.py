@@ -209,7 +209,11 @@ class TestHistoryHook:
         assert hook.v1 is None
         assert hook.v2 is None
         assert hook.v3 is None
-        assert hook.original_hook is sys.displayhook
+        # ``original_hook`` is always the *real* default displayhook,
+        # never another ``HistoryHook`` wrapper.  This holds even when
+        # ``sys.displayhook`` was previously set to a ``HistoryHook``
+        # (e.g. by an earlier test that did not clean up).
+        assert not isinstance(hook.original_hook, HistoryHook)
 
     def test_rotation(self):
         hook = HistoryHook()
@@ -228,6 +232,40 @@ class TestHistoryHook:
         assert hook.v1 == "third"
         assert hook.v2 == "second"
         assert hook.v3 is sentinel
+
+    def test_skips_none_value(self):
+        # CPython's default displayhook is a no-op for ``None``; the
+        # ``HistoryHook`` should match that behaviour and leave the
+        # rotation untouched.
+        hook = HistoryHook()
+        hook("first")
+        hook(None)
+        assert hook.v1 == "first"
+        assert hook.v2 is None
+        assert hook.v3 is None
+
+    def test_walks_past_existing_historyhook(self):
+        # If ``sys.displayhook`` is already a ``HistoryHook`` (e.g.
+        # because a prior REPL session left it installed), a new
+        # ``HistoryHook`` must still delegate to the real default
+        # displayhook, not to the previous wrapper.
+        #
+        # Probe for the real default first; ``HistoryHook.__init__``
+        # already walks past any pre-existing ``HistoryHook`` chain,
+        # so this works even when ``sys.displayhook`` was polluted by
+        # a previous test.
+        real_default = HistoryHook().original_hook
+        assert not isinstance(real_default, HistoryHook)
+
+        # Pretend a previous REPL never restored ``sys.displayhook``.
+        outer = HistoryHook()
+        sys.displayhook = outer
+        try:
+            inner = HistoryHook()
+            assert inner.original_hook is real_default
+            assert inner.original_hook is not outer
+        finally:
+            sys.displayhook = self._original_displayhook
 
     def test_start_shell_installs_hook_by_default(self):
         original = sys.displayhook
