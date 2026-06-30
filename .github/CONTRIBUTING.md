@@ -159,6 +159,7 @@ We are committed to providing a welcoming and inclusive environment. Please be r
 Feel free to:
 - [Open an discussion](https://github.com/more-abc/errortools/discussions) for questions
 - [Create a issue](https://github.com/more-abc/errortools/issues) or [discussion](https://github.com/more-abc/errortools/discussions) for feature ideas
+- Send an email to <errortools-support@proton.me>
 - Reach out to maintainers for guidance
 
 Thank you for contributing! 🎉
