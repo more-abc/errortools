@@ -1,3 +1,4 @@
+# autopep8: off
 """Sphinx configuration for the errortools documentation.
 
 This configuration follows the conventions used by the official Python
