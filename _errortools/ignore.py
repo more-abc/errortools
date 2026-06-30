@@ -71,11 +71,11 @@ ignore = ErrorIgnoreWrapper
         >>> print(err.traceback)     # Formatted traceback string
 
     Note:
-        Use  `fast_ignore` or  `super_fast_ignore`(in `future` submodule) for zero-overhead
+        Use  ~~`fast_ignore`~~ or  `super_fast_ignore`(in `future` submodule) for zero-overhead
         suppression when metadata collection is not needed.
 
     See Also:
-        -  `fast_ignore` — minimal overhead, no metadata
+        -  ~~`fast_ignore` — minimal overhead, no metadata~~
         -  `ignore_subclass` — suppress exceptions including subclasses
         -  `retry` — automatic retry on exception
     """
@@ -99,6 +99,7 @@ class fast_ignore:
         ...     d = {}
         ...     _ = d["missing"]
 
+    .. remove:: 5.2
     .. deprecated:: 3.0.0
         This class is deprecated as it is functionally redundant.
     """
