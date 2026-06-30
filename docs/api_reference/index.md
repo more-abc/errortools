@@ -1,371 +1,186 @@
 # API Reference
 
-Complete API documentation for errortools.
+Complete reference documentation for every public symbol in
+**errortools**.  The pages below are generated from the docstrings in
+the source tree using {mod}`sphinx.ext.autodoc`; if you spot anything
+missing or inaccurate, please open an issue on GitHub.
 
 ```{toctree}
 ---
 maxdepth: 2
 caption: Contents
 ---
+
 version
 ```
 
-## Version Utilities
+## Package layout
 
-Lightweight helpers for representing, parsing, and comparing the
-package's own ``(major, minor, patch)`` version triple programmatically.
+errortools is shipped as a single ``errortools`` package that re-exports
+the contents of its submodules.  The reference below follows the same
+layout — every page corresponds to one subpackage or module.
 
-- [`VersionInfo`](version.md#versioninfo) — a hashable, totally-ordered
-  dataclass for an individual version triple.
-- [`get_version_tuple`](version.md#get_version_tuple) — parse a
-  dotted-decimal version string into a ``(major, minor, patch)`` tuple.
-- The module-level constants
-  [`__version__`](version.md#module-level-constants) /
-  [`__version_tuple__`](version.md#module-level-constants) /
-  [`__commit_id__`](version.md#module-level-constants) (with their
-  lower-case aliases) expose the *current* package release.
+```{toctree}
+---
+maxdepth: 1
+caption: Subpackages
+glob:
+---
 
-See [Version Utilities](version.md) for the full reference.
-
-## Exception Handling
-
-### ignore()
-
-```python
-ignore(*exceptions: type[Exception]) -> IgnoreContext
+../api_*
 ```
 
-Context manager and decorator for suppressing exceptions with metadata.
+## Conventions
 
-**Parameters:**
-- `*exceptions`: Exception types to suppress
+Every documented object follows the same conventions as the standard
+library and the [pytest](https://docs.pytest.org/) API reference:
 
-**Returns:** `IgnoreContext` with attributes:
-- `be_ignore: bool` - Whether an exception was suppressed
-- `name: str | None` - Exception class name
-- `count: int` - Number of suppressed exceptions
-- `exception: Exception | None` - The exception instance
-- `traceback: str | None` - Formatted traceback
+* Type hints use modern {pep}`585` syntax (``list[int]``,
+  ``type[Exception]``) where possible.
+* Docstrings follow the
+  [Google style](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html);
+  sections like `Args`, `Returns`, `Raises`, and `Example` are
+  rendered as a structured parameter list.
+* Cross-references use Sphinx roles — ``{func}`~errortools.ignore.ignore```,
+  ``{class}`~errortools.classes.PureBaseException```, etc.  They
+  resolve to the corresponding entry on this page.
 
-### fast_ignore()
+## Exception handling
 
-```python
-fast_ignore(*exceptions: type[Exception]) -> contextlib.suppress
+### {mod}`errortools.ignore`
+
+Context managers and decorators that suppress exceptions and warnings.
+
+```{eval-rst}
+.. automodule:: errortools.ignore
+   :members:
+   :undoc-members:
+   :show-inheritance:
 ```
 
-Lightweight exception suppression without metadata.
+### {mod}`errortools.raises`
 
-### ignore_subclass()
+Helpers for raising one or many exceptions at once.
 
-```python
-ignore_subclass(base: type[Exception]) -> IgnoreContext
+```{eval-rst}
+.. automodule:: errortools.raises
+   :members:
+   :undoc-members:
+   :show-inheritance:
 ```
-
-Suppress any subclass of a base exception type.
-
-### ignore_warns()
-
-```python
-ignore_warns(*categories: type[Warning]) -> warnings.catch_warnings
-```
-
-Suppress warnings by category.
-
-## Raising Exceptions
-
-### raises()
-
-```python
-raises(
-    exceptions: list[type[Exception]],
-    messages: list[str]
-) -> None
-```
-
-Raise exceptions from lists (raises first exception).
-
-### raises_all()
-
-```python
-raises_all(
-    exceptions: list[type[Exception]],
-    messages: list[str]
-) -> None
-```
-
-Batch raise multiple exceptions as ExceptionGroup.
-
-### reraise()
-
-```python
-reraise(
-    from_exc: type[Exception] | tuple[type[Exception], ...],
-    to_exc: type[Exception]
-) -> contextlib.AbstractContextManager
-```
-
-Convert exception types on the fly.
-
-### assert_raises()
-
-```python
-assert_raises(
-    callable: Callable,
-    exceptions: list[type[Exception]],
-    *args,
-    **kwargs
-) -> Exception
-```
-
-Assert a callable raises specific exceptions.
 
 ## Decorators
 
-### @retry()
+### {mod}`errortools.decorator`
 
-```python
-retry(
-    times: int,
-    on: type[Exception] | tuple[type[Exception], ...],
-    delay: float = 0.0
-) -> Callable
+Call-stack wrappers — retry, timeout, cache, and deprecation.
+
+```{eval-rst}
+.. automodule:: errortools.decorator
+   :members:
+   :undoc-members:
+   :show-inheritance:
 ```
 
-Automatically retry on failure.
+### {mod}`errortools.descriptor`
 
-### @timeout()
+Error-aware descriptors used to attach metadata to exceptions.
 
-```python
-timeout(seconds: float) -> Callable
+```{eval-rst}
+.. automodule:: errortools.descriptor
+   :members:
+   :undoc-members:
+   :show-inheritance:
 ```
 
-Cancel async functions after timeout.
+## Custom exceptions
 
-### @error_cache()
+### {mod}`errortools.classes`
 
-```python
-error_cache(maxsize: int | None = 128) -> Callable
+Structured exception and warning classes, plus the
+{class}`~errortools.classes.BaseErrorCodes` factory.
+
+```{eval-rst}
+.. automodule:: errortools.classes
+   :members:
+   :undoc-members:
+   :show-inheritance:
 ```
 
-Cache exceptions by function arguments.
+## Future module
 
-### @deprecated()
+### {mod}`errortools.future`
 
-```python
-deprecated(message: str) -> Callable
+Zero-overhead exception handling for hot paths.
+
+```{eval-rst}
+.. automodule:: errortools.future
+   :members:
+   :undoc-members:
+   :show-inheritance:
 ```
-
-Mark functions as deprecated.
-
-### @experimental()
-
-```python
-experimental(message: str) -> Callable
-```
-
-Mark functions as experimental.
-
-## Custom Exceptions
-
-### PureBaseException
-
-```python
-class PureBaseException(Exception):
-    code: int
-    default_detail: str
-    detail: str
-```
-
-Base exception with error codes.
-
-### ContextException
-
-```python
-class ContextException(PureBaseException):
-    trace_id: str
-    context: dict
-    chain: list[dict]
-    traceback: str
-
-    def with_context(self, **kwargs) -> Self
-    def with_cause(self, cause: Exception) -> Self
-```
-
-Exception with trace IDs and context.
-
-### BaseErrorCodes
-
-Factory class for predefined error codes:
-
-```python
-class BaseErrorCodes:
-    @staticmethod
-    def invalid_input(detail: str = "") -> InvalidInputError
-
-    @staticmethod
-    def access_denied(detail: str = "") -> AccessDeniedError
-
-    @staticmethod
-    def not_found(detail: str = "") -> NotFoundError
-
-    @staticmethod
-    def runtime_failure(detail: str = "") -> RuntimeFailure
-
-    @staticmethod
-    def timeout_failure(detail: str = "") -> TimeoutFailure
-
-    @staticmethod
-    def configuration_error(detail: str = "") -> ConfigurationError
-```
-
-## Warnings
-
-### BaseWarning
-
-```python
-class BaseWarning(UserWarning):
-    default_detail: str
-
-    @classmethod
-    def emit(cls, detail: str = "") -> None
-
-    @staticmethod
-    def deprecated(detail: str) -> DeprecatedWarning
-
-    @staticmethod
-    def performance(detail: str) -> PerformanceWarning
-
-    @staticmethod
-    def resource(detail: str) -> ResourceUsageWarning
-
-    @staticmethod
-    def runtime_behaviour(detail: str) -> RuntimeBehaviourWarning
-
-    @staticmethod
-    def configuration(detail: str) -> ConfigurationWarning
-```
-
-## Future Module
-
-### super_fast_ignore()
-
-```python
-super_fast_ignore(*exceptions: type[Exception]) -> contextlib.suppress
-```
-
-Minimal overhead exception suppression.
-
-### super_fast_catch()
-
-```python
-super_fast_catch(exception: type[Exception]) -> CatchContext
-```
-
-Lightweight exception capture.
-
-**Returns:** `CatchContext` with attribute:
-- `exception: Exception | None`
-
-### super_fast_reraise()
-
-```python
-super_fast_reraise(
-    from_exc: type[Exception] | tuple[type[Exception], ...],
-    to_exc: type[Exception]
-) -> contextlib.AbstractContextManager
-```
-
-Lightweight exception type conversion.
-
-### ExceptionCollector
-
-```python
-class ExceptionCollector:
-    has_errors: bool
-    count: int
-    exceptions: list[Exception]
-
-    def catch(self, callable: Callable, *args, **kwargs) -> None
-    def raise_all(self, message: str) -> None
-```
-
-Batch exception collector.
 
 ## Logging
 
-### logger
+### {mod}`errortools.logging`
 
-```python
-logger.trace(message: str, *args, **kwargs) -> None
-logger.debug(message: str, *args, **kwargs) -> None
-logger.info(message: str, *args, **kwargs) -> None
-logger.success(message: str, *args, **kwargs) -> None
-logger.warning(message: str, *args, **kwargs) -> None
-logger.error(message: str, *args, **kwargs) -> None
-logger.critical(message: str, *args, **kwargs) -> None
+A Loguru-inspired structured logger with no external dependencies.
 
-logger.add(
-    sink: str | IO | Callable,
-    level: str | int = "DEBUG",
-    rotation: int | None = None,
-    retention: int | None = None
-) -> int
-
-logger.remove(sink_id: int | None = None) -> None
-logger.set_level(level: str | int) -> None
-logger.bind(**kwargs) -> BaseLogger
-logger.exception(message: str) -> None
-logger.opt(exception: bool = False) -> BaseLogger
-logger.catch(
-    *exceptions: type[Exception],
-    reraise: bool = False
-) -> contextlib.AbstractContextManager
+```{eval-rst}
+.. automodule:: errortools.logging
+   :members:
+   :undoc-members:
+   :show-inheritance:
 ```
 
-### Level
+## Type aliases
 
-```python
-class Level(IntEnum):
-    TRACE = 5
-    DEBUG = 10
-    INFO = 20
-    SUCCESS = 25
-    WARNING = 30
-    ERROR = 40
-    CRITICAL = 50
+The following aliases are exposed in {mod}`errortools.typing` and
+{mod}`errortools.classes` for IDE-friendly code.
+
+```{eval-rst}
+.. autodata:: errortools.typing.ExceptionType
+   :no-value:
 ```
 
-## Type Aliases
+```{eval-rst}
+.. autodata:: errortools.typing.WarningType
+   :no-value:
+```
 
-```python
-ExceptionType = type[Exception]
-WarningType = type[Warning]
-AnyErrorCode = int | str
-BaseErrorCodesType = type[BaseErrorCodes]
-PureBaseExceptionType = type[PureBaseException]
-ContextExceptionType = type[ContextException]
-TracebackType = types.TracebackType
-FrameType = types.FrameType
+```{eval-rst}
+.. autodata:: errortools.typing.AnyErrorCode
+   :no-value:
 ```
 
 ## Protocols
 
-```python
-# For `Exception` classes
-ExceptionLike
-SystemExitLike
-StopIterationLike
-OSErrorLike
-AttributeErrorLike
-NameErrorLike
-ImportErrorLike
-SyntaxErrorLike
-BlockingIOErrorLike
-UnicodeDecodeErrorLike
-UnicodeEncodeErrorLike
-UnicodeTranslateErrorLike
-BaseExceptionGroupLike
-ExceptionGroupLike
-# For `GroupErrors` class
-GroupErrorsLike
+Lightweight {pep}`544` protocols describing duck-typed exception
+contracts.
+
+```{eval-rst}
+.. automodule:: errortools.classes.protocol
+   :members:
+   :undoc-members:
+   :show-inheritance:
+```
+
+## Version utilities
+
+Lightweight helpers for representing, parsing, and comparing the
+package's own ``(major, minor, patch)`` version triple programmatically.
+
+- {class}`~errortools.version.VersionInfo` — a hashable, totally-ordered
+  dataclass for an individual version triple.
+- {func}`~errortools.version.get_version_tuple` — parse a
+  dotted-decimal version string into a ``(major, minor, patch)`` tuple.
+
+See {doc}`version` for the full reference, or read the source-level
+documentation:
+
+```{eval-rst}
+.. automodule:: errortools.version
+   :members:
+   :undoc-members:
+   :show-inheritance:
 ```

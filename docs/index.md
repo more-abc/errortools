@@ -4,48 +4,72 @@
   <img src="_static/img/main.png" alt="errortools logo" width="220">
 </p>
 
-A lightweight Python exception handling utility library.
+**errortools** is a lightweight Python toolkit for exception handling,
+warnings, and structured logging.  It offers both high-level convenience
+APIs and zero-overhead helpers for performance-critical code paths.
 
-> Something need change or refactor? Contact email <errortools.docs@proton.me>
+> Something need change or refactor? Contact email
+> <errortools.docs@proton.me>
 
-## Overview
+---
 
-**errortools** provides a comprehensive toolkit for working with Python exceptions, warnings, and logging. It offers both high-level convenience functions and low-overhead utilities for performance-critical code.
-
-## Key Features
-
-- **Exception Handling**: Context managers and decorators for graceful error suppression
-- **Batch Operations**: Raise multiple exceptions at once with `raises_all()` and `ExceptionGroup`
-- **Retry & Timeout**: Automatic retry logic and async timeout decorators
-- **Custom Exceptions**: Structured exception classes with error codes, trace IDs, and context
-- **Future Module**: Zero-overhead exception handling for hot paths
-- **Logging**: Loguru-inspired structured logger with no external dependencies
-- **Type Safety**: Full type hints and type aliases for better IDE support
-
-## Quick Example
+## At a glance
 
 ```python
-from errortools import ignore, retry, BaseErrorCodes
+from errortools import ignore, retry
+from errortools.classes import BaseErrorCodes
 from errortools.logging import logger
 
 # Suppress exceptions with metadata
 with ignore(KeyError) as err:
     _ = {}["missing"]
-
-print(err.be_ignore)  # True
-print(err.exception)  # KeyError('missing')
+print(err.exception)        # KeyError('missing')
 
 # Automatic retry on failure
 @retry(times=3, on=ConnectionError, delay=1.0)
-def connect(host: str):
-    ...
+def connect(host: str): ...
 
 # Structured exceptions with error codes
-raise BaseErrorCodes.not_found("user #42")  # NotFoundError [3001]
+raise BaseErrorCodes.not_found("user #42")   # NotFoundError [3001]
 
-# Structured logging
+# Structured logging — no external dependencies
 logger.info("Server started on port {}", 8080)
 ```
+
+## Key features
+
+- **Exception handling.** Context managers and decorators for graceful
+  error suppression — see {doc}`user_guide/exception_handling`.
+- **Batch raising.** Raise one or many exceptions at once with
+  {func}`~errortools.raises.raises` and
+  {func}`~errortools.raises.raises_all` — see
+  {doc}`user_guide/raising_exceptions`.
+- **Decorators.** Automatic retry (`@retry`), async timeout
+  (`@timeout`), and error-caching (`@error_cache`) —
+  see {doc}`user_guide/decorators`.
+- **Custom exceptions.** Structured exception classes with error
+  codes, trace IDs, and rich context — see
+  {doc}`user_guide/custom_exceptions`.
+- **Future module.** Zero-overhead exception handling for hot paths —
+  see {doc}`user_guide/future_module`.
+- **Logging.** A [Loguru](https://github.com/Delgan/loguru)-inspired
+  structured logger with **no external dependencies** — see
+  {doc}`user_guide/logging`.
+- **Warnings.** A small library of `Warning` subclasses for common
+  deprecation / performance scenarios — see
+  {doc}`user_guide/warnings`.
+- **Type safety.** Full type hints and `typing` aliases for
+  IDE-friendly code — see {doc}`api_reference/index`.
+
+## Why errortools?
+
+| Concern | Standard library | errortools |
+| --- | --- | --- |
+| Suppress an exception with metadata | `try / except` boilerplate | `with ignore(KeyError) as err:` |
+| Retry on failure | DIY loop | `@retry(times=3, on=ConnectionError)` |
+| Structured error code | subclass `Exception` by hand | `BaseErrorCodes.not_found("user")` |
+| Zero-overhead `suppress` | `contextlib.suppress` | `super_fast_ignore(ValueError)` |
+| Structured logging | `logging` dictConfig | `logger.info("port {}", 8080)` |
 
 ## Installation
 
@@ -53,12 +77,16 @@ logger.info("Server started on port {}", 8080)
 pip install errortools
 ```
 
-## Documentation Structure
+For development installs and contributing see
+{doc}`getting_started/installation`.
+
+## Where to go next
 
 ```{toctree}
 ---
 maxdepth: 2
 caption: Contents
+glob:
 ---
 
 getting_started/index
@@ -68,7 +96,20 @@ cli_tools/index
 examples/index
 extending/index
 faq/index
-faq/mascot
 emeps/index
 whatsnew/index
 ```
+
+```{toctree}
+---
+hidden:
+---
+
+faq/mascot
+```
+
+## Indices and tables
+
+- {ref}`genindex`
+- {ref}`modindex`
+- {ref}`search`
