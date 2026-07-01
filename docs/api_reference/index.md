@@ -20,16 +20,6 @@ errortools is shipped as a single ``errortools`` package that re-exports
 the contents of its submodules.  The reference below follows the same
 layout — every page corresponds to one subpackage or module.
 
-```{toctree}
----
-maxdepth: 1
-caption: Subpackages
-glob:
----
-
-../api_*
-```
-
 ## Conventions
 
 Every documented object follows the same conventions as the standard
@@ -41,71 +31,10 @@ library and the [pytest](https://docs.pytest.org/) API reference:
   [Google style](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html);
   sections like `Args`, `Returns`, `Raises`, and `Example` are
   rendered as a structured parameter list.
-* Cross-references use Sphinx roles — ``{func}`~errortools.ignore.ignore```,
-  ``{class}`~errortools.classes.PureBaseException```, etc.  They
+* Cross-references use Sphinx roles — ``{func}`~errortoolsignore```,
+  ``{class}`~errortools.PureBaseException```, etc.  They
   resolve to the corresponding entry on this page.
 
-## Exception handling
-
-### {mod}`errortools.ignore`
-
-Context managers and decorators that suppress exceptions and warnings.
-
-```{eval-rst}
-.. automodule:: errortools.ignore
-   :members:
-   :undoc-members:
-   :show-inheritance:
-```
-
-### {mod}`errortools.raises`
-
-Helpers for raising one or many exceptions at once.
-
-```{eval-rst}
-.. automodule:: errortools.raises
-   :members:
-   :undoc-members:
-   :show-inheritance:
-```
-
-## Decorators
-
-### {mod}`errortools.decorator`
-
-Call-stack wrappers — retry, timeout, cache, and deprecation.
-
-```{eval-rst}
-.. automodule:: errortools.decorator
-   :members:
-   :undoc-members:
-   :show-inheritance:
-```
-
-### {mod}`errortools.descriptor`
-
-Error-aware descriptors used to attach metadata to exceptions.
-
-```{eval-rst}
-.. automodule:: errortools.descriptor
-   :members:
-   :undoc-members:
-   :show-inheritance:
-```
-
-## Custom exceptions
-
-### {mod}`errortools.classes`
-
-Structured exception and warning classes, plus the
-{class}`~errortools.classes.BaseErrorCodes` factory.
-
-```{eval-rst}
-.. automodule:: errortools.classes
-   :members:
-   :undoc-members:
-   :show-inheritance:
-```
 
 ## Future module
 
@@ -135,52 +64,29 @@ A Loguru-inspired structured logger with no external dependencies.
 
 ## Type aliases
 
-The following aliases are exposed in {mod}`errortools.typing` and
-{mod}`errortools.classes` for IDE-friendly code.
 
 ```{eval-rst}
-.. autodata:: errortools.typing.ExceptionType
+.. autodata:: errortools.ExceptionType
    :no-value:
 ```
 
 ```{eval-rst}
-.. autodata:: errortools.typing.WarningType
+.. autodata:: errortools.WarningType
    :no-value:
 ```
 
 ```{eval-rst}
-.. autodata:: errortools.typing.AnyErrorCode
+.. autodata:: errortools.AnyErrorCode
    :no-value:
 ```
 
-## Protocols
-
-Lightweight {pep}`544` protocols describing duck-typed exception
-contracts.
-
-```{eval-rst}
-.. automodule:: errortools.classes.protocol
-   :members:
-   :undoc-members:
-   :show-inheritance:
-```
 
 ## Version utilities
 
 Lightweight helpers for representing, parsing, and comparing the
 package's own ``(major, minor, patch)`` version triple programmatically.
 
-- {class}`~errortools.version.VersionInfo` — a hashable, totally-ordered
+- {class}`~errortools.VersionInfo` — a hashable, totally-ordered
   dataclass for an individual version triple.
-- {func}`~errortools.version.get_version_tuple` — parse a
+- {func}`~errortools.get_version_tuple` — parse a
   dotted-decimal version string into a ``(major, minor, patch)`` tuple.
-
-See {doc}`version` for the full reference, or read the source-level
-documentation:
-
-```{eval-rst}
-.. automodule:: errortools.version
-   :members:
-   :undoc-members:
-   :show-inheritance:
-```

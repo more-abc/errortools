@@ -13,8 +13,7 @@ or a REPL and they will work without further setup.
 ## A 30-second tour
 
 ```python
-from errortools import ignore, retry
-from errortools.classes import BaseErrorCodes
+from errortools import ignore, retry, BaseErrorCodes
 from errortools.logging import logger
 
 # 1. Suppress an exception, then introspect it
@@ -120,7 +119,7 @@ including the "subclass vs. tuple" rule and the
 
 ## Retrying and timing out
 
-### Automatic retry — {func}`~errortoolsretry`
+### Automatic retry — {func}`~errortools.retry`
 
 {func}`~errortools.retry` retries a callable on the
 configured exception, with an optional delay between attempts.

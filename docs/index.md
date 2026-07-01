@@ -16,8 +16,7 @@ APIs and zero-overhead helpers for performance-critical code paths.
 ## At a glance
 
 ```python
-from errortools import ignore, retry
-from errortools.classes import BaseErrorCodes
+from errortools import ignore, retry, BaseErrorCodes
 from errortools.logging import logger
 
 # Suppress exceptions with metadata
@@ -41,8 +40,8 @@ logger.info("Server started on port {}", 8080)
 - **Exception handling.** Context managers and decorators for graceful
   error suppression — see {doc}`user_guide/exception_handling`.
 - **Batch raising.** Raise one or many exceptions at once with
-  {func}`~errortools.raises.raises` and
-  {func}`~errortools.raises.raises_all` — see
+  {func}`~errortools.raises` and
+  {func}`~errortools.raises_all` — see
   {doc}`user_guide/raising_exceptions`.
 - **Decorators.** Automatic retry (`@retry`), async timeout
   (`@timeout`), and error-caching (`@error_cache`) —
