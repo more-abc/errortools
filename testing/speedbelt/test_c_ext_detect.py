@@ -18,15 +18,11 @@ from errortools_speedbelt.support_c_ext import (
 
 class TestIsWindowsStorePython:
     def test_windows_store_python_suffix(self, monkeypatch):
-        monkeypatch.setattr(
-            sys, "executable", r"C:\Users\foo\AppData\Local\Microsoft\WindowsApps\python.exe"
-        )
+        monkeypatch.setattr(sys, "executable", r"C:\Users\foo\AppData\Local\Microsoft\WindowsApps\python.exe")
         assert _is_windows_store_python() is True
 
     def test_case_insensitive_suffix(self, monkeypatch):
-        monkeypatch.setattr(
-            sys, "executable", r"C:\Users\foo\WindowsApps\PYTHON.EXE"
-        )
+        monkeypatch.setattr(sys, "executable", r"C:\Users\foo\WindowsApps\PYTHON.EXE")
         assert _is_windows_store_python() is True
 
     def test_regular_python_executable(self, monkeypatch):
@@ -40,9 +36,7 @@ class TestIsWindowsStorePython:
 
 class TestHasCtypes:
     def test_when_ctypes_present(self, monkeypatch):
-        monkeypatch.setattr(
-            importlib.util, "find_spec", lambda name: MagicMock() if name == "ctypes" else None
-        )
+        monkeypatch.setattr(importlib.util, "find_spec", lambda name: MagicMock() if name == "ctypes" else None)
         assert _has_ctypes() is True
 
     def test_when_ctypes_missing(self, monkeypatch):
@@ -134,27 +128,21 @@ class TestHasCCompiler:
         assert _has_c_compiler() is True
 
     def test_no_compiler_on_path(self, monkeypatch):
-        monkeypatch.setattr(
-            "errortools_speedbelt.support_c_ext.which", lambda _: None
-        )
+        monkeypatch.setattr("errortools_speedbelt.support_c_ext.which", lambda _: None)
         assert _has_c_compiler() is False
 
     def test_which_raises_oserror(self, monkeypatch):
         def raising_which(_):
             raise OSError("bad PATH")
 
-        monkeypatch.setattr(
-            "errortools_speedbelt.support_c_ext.which", raising_which
-        )
+        monkeypatch.setattr("errortools_speedbelt.support_c_ext.which", raising_which)
         assert _has_c_compiler() is False
 
     def test_which_raises_valueerror(self, monkeypatch):
         def raising_which(_):
             raise ValueError("bad PATHEXT")
 
-        monkeypatch.setattr(
-            "errortools_speedbelt.support_c_ext.which", raising_which
-        )
+        monkeypatch.setattr("errortools_speedbelt.support_c_ext.which", raising_which)
         assert _has_c_compiler() is False
 
     def test_first_compiler_found_short_circuits(self, monkeypatch):
@@ -166,9 +154,7 @@ class TestHasCCompiler:
                 return "/usr/bin/gcc"
             return None
 
-        monkeypatch.setattr(
-            "errortools_speedbelt.support_c_ext.which", tracking_which
-        )
+        monkeypatch.setattr("errortools_speedbelt.support_c_ext.which", tracking_which)
         assert _has_c_compiler() is True
         assert calls == ["gcc"]
 
@@ -180,9 +166,7 @@ class TestDetectCExtSupport:
         mock_stdin = MagicMock()
         mock_stdin.isatty.return_value = True
         monkeypatch.setattr(sys, "stdin", mock_stdin)
-        monkeypatch.setattr(
-            importlib.util, "find_spec", lambda name: MagicMock() if name == "ctypes" else None
-        )
+        monkeypatch.setattr(importlib.util, "find_spec", lambda name: MagicMock() if name == "ctypes" else None)
         monkeypatch.setattr(
             "errortools_speedbelt.support_c_ext.which",
             lambda cmd: "/usr/bin/gcc" if cmd == "gcc" else None,
@@ -190,9 +174,7 @@ class TestDetectCExtSupport:
         assert _detect_c_ext_support() is True
 
     def test_windows_store_short_circuits_false(self, monkeypatch):
-        monkeypatch.setattr(
-            sys, "executable", r"C:\Users\foo\WindowsApps\python.exe"
-        )
+        monkeypatch.setattr(sys, "executable", r"C:\Users\foo\WindowsApps\python.exe")
         assert _detect_c_ext_support() is False
 
     def test_missing_ctypes_short_circuits_false(self, monkeypatch):
@@ -218,12 +200,8 @@ class TestDetectCExtSupport:
         mock_stdin = MagicMock()
         mock_stdin.isatty.return_value = True
         monkeypatch.setattr(sys, "stdin", mock_stdin)
-        monkeypatch.setattr(
-            importlib.util, "find_spec", lambda name: MagicMock() if name == "ctypes" else None
-        )
-        monkeypatch.setattr(
-            "errortools_speedbelt.support_c_ext.which", lambda cmd: None
-        )
+        monkeypatch.setattr(importlib.util, "find_spec", lambda name: MagicMock() if name == "ctypes" else None)
+        monkeypatch.setattr("errortools_speedbelt.support_c_ext.which", lambda cmd: None)
         assert _detect_c_ext_support() is False
 
 
