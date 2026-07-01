@@ -9,33 +9,41 @@ else:
 
 from typing import Any, Generic, TypeVar, Optional
 
+try:
+    from errortools_speedbelt._ignore_speed import (  # type: ignore
+        check_and_record,
+        IgnoredInfo as IgnoredError,
+    )
+except ImportError:
+    check_and_record = None
+
+    class IgnoredError:  # type: ignore[no-redef]
+        """Information holder for ignored exceptions."""
+
+        __slots__ = (
+            "name",
+            "be_ignore",
+            "count",
+            "traceback",
+            "exception",
+        )
+
+        def __init__(self) -> None:
+            self.name: Optional[str] = None
+            self.be_ignore: bool = False
+            self.count: int = 0
+            self.traceback: Optional[str] = None
+            self.exception: Optional[Exception] = None
+
+        def reset(self) -> None:
+            self.name = None
+            self.be_ignore = False
+            self.traceback = None
+            self.exception = None
+
+
 _T = TypeVar("_T", bound=Callable[..., Any])
 _ExcType: TypeAlias = type[Exception]
-
-
-class IgnoredError:
-    """Information holder for ignored exceptions."""
-
-    __slots__ = (
-        "name",
-        "be_ignore",
-        "count",
-        "traceback",
-        "exception",
-    )
-
-    def __init__(self) -> None:
-        self.name: Optional[str] = None
-        self.be_ignore: bool = False
-        self.count: int = 0
-        self.traceback: Optional[str] = None
-        self.exception: Optional[Exception] = None
-
-    def reset(self) -> None:
-        self.name = None
-        self.be_ignore = False
-        self.traceback = None
-        self.exception = None
 
 
 class ErrorIgnoreWrapper(Generic[_T]):
@@ -98,6 +106,8 @@ class ErrorIgnoreWrapper(Generic[_T]):
         exc_val: Optional[Exception],
         exc_tb: Optional[Any],
     ) -> bool:
+        if check_and_record is not None:
+            return check_and_record(exc_type, exc_val, exc_tb, self._info, self._excs)  # type: ignore[no-any-return]
         if exc_type is None:
             return False
 

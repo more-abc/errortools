@@ -62,6 +62,11 @@ name = "errortools_speedbelt._speedup"
 sources = ["errortools_speedbelt/_speedup.c"]
 
 
+[[tool.setuptools.ext-modules]]
+name = "errortools_speedbelt._ignore_speed"
+sources = ["errortools_speedbelt/_ignore_speed.c"]
+
+
 [tool.black]
 line-length = 120
 target-version = ["py313"]
