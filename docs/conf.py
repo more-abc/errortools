@@ -40,7 +40,7 @@ _ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, _ROOT)
 sys.path.insert(0, os.path.dirname(_ROOT))
 
-from _errortools.version import __version_tuple__
+from _errortools.version import __version_tuple__  # noqa: E402
 
 project = "errortools"
 author = "aiwonderland and the more-abc team"
