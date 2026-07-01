@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 > Something need change or refactor? Contact email <errortools.docs@proton.me>
 
+
+## Release v3.6.0 - 2026-07-01
+- Release 3.6.0
+
 ## v3.5.8 - 2026-06-28 ~ 2026-07-01
 - Fix bugs in `_logger_shell.HistoryHook` (in logger shell, `_`, `__` and `___`).
 - Deprecated `errortools.partial` submodule.
