@@ -4,8 +4,10 @@ All notable changes to this project will be documented in this file.
 
 > Something need change or refactor? Contact email <errortools.docs@proton.me>
 
-## v3.5.8 - 2026-06-28 ~ 2026-??-??
-WAIT
+## v3.5.8 - 2026-06-28 ~ 2026-07-01
+- Fix bugs in `_logger_shell.HistoryHook` (in logger shell, `_`, `__` and `___`).
+- Deprecated `errortools.partial` submodule.
+- Add remove time in `fast_ignore` class.
 
 ## v3.5.7 - 2026-06-27 ~ 2026-06-28
 - Refactor logger shell.
