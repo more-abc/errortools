@@ -1,6 +1,8 @@
 """
 errortools-speedbelt — High-speed core for errortools.
 Downloaded alongside the :mod:`errortools` module.
+
+.. versionadded:: 3.6
 """
 
 from typing import Final
