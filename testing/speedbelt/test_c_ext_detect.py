@@ -5,7 +5,6 @@ import os
 import sys
 from unittest.mock import MagicMock
 
-import pytest
 
 from errortools_speedbelt.support_c_ext import (
     ERRORTOOLS_SUPPORTS_C_EXTENSIONS,
