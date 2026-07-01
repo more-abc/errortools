@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "errortools"
-version = "3.6.0"
+version = "3.6.1"
 authors = [
   { name = "Evan Yang", email = "quantbit@126.com" }
 ]
@@ -53,13 +53,13 @@ _errortools = ["py.typed"]
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["errortools", "_errortools", "testing"]
+include = ["errortools", "_errortools", "testing", "errortools_speedbelt"]
 exclude = ["htmlcov", ".*", "docs"]
 
 
 [[tool.setuptools.ext-modules]]
-name = "_errortools._speedup"
-sources = ["_errortools/_speedup.c"]
+name = "errortools_speedbelt._speedup"
+sources = ["errortools_speedbelt/_speedup.c"]
 
 
 [tool.black]

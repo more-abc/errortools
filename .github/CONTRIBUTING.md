@@ -132,6 +132,7 @@ errortools/
 │   ├── typing.py         # Type aliases
 │   └── ...
 ├── errortools/           # Public API (exports)
+├── errortools_speedbelt/ # C speedup code
 ├── testing/              # Test suite
 ├── .github/              # GitHub templates and workflows
 ├── .flcke8               # Settings for flake8

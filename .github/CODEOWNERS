@@ -1,6 +1,7 @@
-/testing/                   @more-abc/core-dev-team
+/testing/                    @more-abc/core-dev-team
 /_errortools/                @more-abc/core-dev-team
 /errortools/                 @more-abc/core-dev-team
+/errortools_speedbelt/       @more-abc/core-dev-team
 /.github/                    @more-abc/core-dev-team
 
 README.md                    @more-abc/core-dev-team @more-abc/doc

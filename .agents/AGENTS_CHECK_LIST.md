@@ -41,6 +41,7 @@
 - [ ] Read [`.flake8`](../.flake8), [`.pre-commit-config.yaml`](../.pre-commit-config.yaml), [`.editorconfig`](../.editorconfig).
 - [ ] Read [`ChangeLog.md`](../ChangeLog.md) for the latest released + unreleased entries.
 - [ ] Read [`errortools/__init__.py`](../errortools/__init__.py) — confirm what is publicly exported and which names go through `_DEPRECATED_NAMES`.
+- [ ] Read [`errortools_speedbelt/`](../errortools_speedbelt/__init__.py) — Optional C-extension source.
 - [ ] Skim the existing test directory (`testing/`) to find the matching test file/area before adding a new one.
 - [ ] Skim the relevant `docs/` subfolder (or the closest example) before changing public docs.
 

@@ -65,7 +65,7 @@ errortools/
 ├── pyproject.toml               # Build / pytest / mypy / black config
 ├── .flake8 · .pre-commit-config.yaml · .editorconfig
 ├── ChangeLog.md · README.md · AUTHORS.txt · LICENSE.txt
-└── _errortools/_speedup.c       # Optional C-extension source (built into .pyd/.so)
+└── errortools_speedbelt/        # Optional C-extension source (built into .pyd/.so)
 ```
 
 > **Rule of thumb**: real logic lives in `_errortools/`. Anything new exported publicly is added to `_errortools/...` and re-exported through `errortools/__init__.py`.
@@ -81,7 +81,7 @@ errortools/
 | `ignore(*excs, default=...)` | `_errortools/ignore.py` | Context manager; rich metadata via `as`-binding. |
 | `ignore_subclass(*excs)` | `_errortools/ignore.py` | Match subclasses, not the exact types. |
 | `ignore_warns(...)` | `_errortools/ignore.py` | Suppress `Warning`s rather than `Exception`s. |
-| `super_fast_ignore` / `super_fast_catch` / `super_fast_reraise` | `_errortools/future.py` | Zero-overhead, `__slots__`-only context managers; optionally backed by C extension `_errortools._speedup`. |
+| `super_fast_ignore` / `super_fast_catch` / `super_fast_reraise` | `_errortools/future.py` | Zero-overhead, `__slots__`-only context managers; optionally backed by C extension `errortools_speedbelt._speedup`. |
 | `ExceptionCollector` | `_errortools/future.py` | Collect N exceptions → raise as `ExceptionGroup`. |
 
 ### 3.2 Raising & conversion

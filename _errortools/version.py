@@ -167,7 +167,7 @@ def get_version_tuple(version: str) -> tuple[int, int, int]:
 # The structured form of the current release.  ``__version_info__`` is the
 # canonical, comparable representation; ``__version_tuple__`` is a
 # backwards-compatible plain-tuple alias derived from it via ``to_tuple()``.
-__version__: Final[str] = "3.6.0"
+__version__: Final[str] = "3.6.1"
 __version_info__: Final[VersionInfo] = VersionInfo.from_str(__version__)
 __version_tuple__: Final[tuple[int, int, int]] = __version_info__.to_tuple()
 __commit_id__: Final[Union[str, None]] = None

@@ -11,7 +11,7 @@ from typing import Literal, Union
 
 # Try to import C speedup
 try:
-    from _errortools._speedup import (  # type: ignore[import-not-found]
+    from errortools_speedbelt._speedup import (  # type: ignore[import-not-found]
         fast_append_exception,
         fast_suppress_exit,
     )
