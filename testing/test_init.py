@@ -9,6 +9,7 @@ import warnings
 
 import pytest
 
+import _errortools.warning_types
 import errortools
 from _errortools.version import VersionInfo
 
@@ -19,13 +20,13 @@ from _errortools.version import VersionInfo
 
 class TestErrortoolsDeprecationWarning:
     def test_is_subclass_of_deprecation_warning(self):
-        assert issubclass(errortools.ErrortoolsDeprecationWarning, DeprecationWarning)
+        assert issubclass(_errortools.warning_types.ErrortoolsDeprecationWarning, DeprecationWarning)
 
     def test_is_in_dunder_all(self):
         assert "ErrortoolsDeprecationWarning" in errortools.__all__
 
     def test_no_args_uses_unspecified_defaults(self):
-        w = errortools.ErrortoolsDeprecationWarning()
+        w = _errortools.warning_types.ErrortoolsDeprecationWarning()
         assert w.raw_message == ""
         assert w.use_instead_message == ""
         assert w.deprecated_version == "<unspecified>"
@@ -35,7 +36,7 @@ class TestErrortoolsDeprecationWarning:
         )
 
     def test_single_message_arg_is_supported(self):
-        w = errortools.ErrortoolsDeprecationWarning("errortools.foo is deprecated")
+        w = _errortools.warning_types.ErrortoolsDeprecationWarning("errortools.foo is deprecated")
         assert w.raw_message == "errortools.foo is deprecated"
         assert w.use_instead_message == ""
         assert w.deprecated_version == "<unspecified>"
@@ -45,15 +46,15 @@ class TestErrortoolsDeprecationWarning:
     def test_warning_subclass_zero_or_one_argument(self):
         with warnings.catch_warnings(record=True) as caught:
             warnings.simplefilter("always")
-            warnings.warn("hello world", errortools.ErrortoolsDeprecationWarning)
+            warnings.warn("hello world", _errortools.warning_types.ErrortoolsDeprecationWarning)
         assert len(caught) == 1
         rec = caught[0]
-        assert issubclass(rec.category, errortools.ErrortoolsDeprecationWarning)
+        assert issubclass(rec.category, _errortools.warning_types.ErrortoolsDeprecationWarning)
         assert "hello world" in str(rec.message)
         assert "Deprecated in errortools" in str(rec.message)
 
     def test_uses_string_versions(self):
-        w = errortools.ErrortoolsDeprecationWarning(
+        w = _errortools.warning_types.ErrortoolsDeprecationWarning(
             "msg",
             use_instead="use X instead",
             removed_version="5.0",
@@ -66,7 +67,7 @@ class TestErrortoolsDeprecationWarning:
         assert "v3.0" in w.formatted_message
 
     def test_accepts_version_info(self):
-        w = errortools.ErrortoolsDeprecationWarning(
+        w = _errortools.warning_types.ErrortoolsDeprecationWarning(
             "msg",
             removed_version=VersionInfo(5, 0, 0),
             deprecated_version=VersionInfo(3, 1, 2),
@@ -75,7 +76,7 @@ class TestErrortoolsDeprecationWarning:
         assert w.deprecated_version == "3.1.2"
 
     def test_version_strings_are_stripped(self):
-        w = errortools.ErrortoolsDeprecationWarning(
+        w = _errortools.warning_types.ErrortoolsDeprecationWarning(
             "msg",
             removed_version="  5.0  ",
             deprecated_version=" 3.0 ",
@@ -84,7 +85,7 @@ class TestErrortoolsDeprecationWarning:
         assert w.deprecated_version == "3.0"
 
     def test_repr_contains_all_fields(self):
-        w = errortools.ErrortoolsDeprecationWarning("msg", use_instead="use X")
+        w = _errortools.warning_types.ErrortoolsDeprecationWarning("msg", use_instead="use X")
         r = repr(w)
         assert "ErrortoolsDeprecationWarning(" in r
         assert "message=" in r
@@ -93,7 +94,7 @@ class TestErrortoolsDeprecationWarning:
         assert "removed_version=" in r
 
     def test_has_slots_declared(self):
-        slots = errortools.ErrortoolsDeprecationWarning.__slots__
+        slots = _errortools.warning_types.ErrortoolsDeprecationWarning.__slots__
         # Every documented attribute must be a declared slot.
         assert "raw_message" in slots
         assert "use_instead_message" in slots
@@ -102,7 +103,7 @@ class TestErrortoolsDeprecationWarning:
         assert "formatted_message" in slots
 
     def test_slot_attributes_round_trip(self):
-        w = errortools.ErrortoolsDeprecationWarning("msg")
+        w = _errortools.warning_types.ErrortoolsDeprecationWarning("msg")
         # Reading a known slot attribute works.
         assert w.raw_message == "msg"
         assert w.formatted_message.startswith("msg")
@@ -117,27 +118,27 @@ class TestErrortoolsDeprecationWarning:
             assert hasattr(w, attr)
 
     def test_formatted_message_is_str(self):
-        w = errortools.ErrortoolsDeprecationWarning("hello")
+        w = _errortools.warning_types.ErrortoolsDeprecationWarning("hello")
         assert isinstance(w.formatted_message, str)
 
     def test_emit_classmethod_emits_warning(self):
         with warnings.catch_warnings(record=True) as caught:
             warnings.simplefilter("always")
-            errortools.ErrortoolsDeprecationWarning.emit(
+            _errortools.warning_types.ErrortoolsDeprecationWarning.emit(
                 "via emit()",
                 use_instead="use Z",
                 removed_version="5.0",
             )
         assert len(caught) == 1
         rec = caught[0]
-        assert issubclass(rec.category, errortools.ErrortoolsDeprecationWarning)
+        assert issubclass(rec.category, _errortools.warning_types.ErrortoolsDeprecationWarning)
         assert "via emit()" in str(rec.message)
         assert "use Z" in str(rec.message)
 
     def test_emit_default_stacklevel_points_past_impl(self):
         with warnings.catch_warnings(record=True) as caught:
             warnings.simplefilter("always")
-            errortools.ErrortoolsDeprecationWarning.emit("hello")
+            _errortools.warning_types.ErrortoolsDeprecationWarning.emit("hello")
         assert len(caught) == 1
         filename = caught[0].filename
         # The default stacklevel must climb out of the implementation
@@ -150,9 +151,9 @@ class TestErrortoolsDeprecationWarning:
 
     def test_filter_by_subclass_via_warnings_filterwarnings(self):
         with warnings.catch_warnings():
-            warnings.simplefilter("error", errortools.ErrortoolsDeprecationWarning)
-            with pytest.raises(errortools.ErrortoolsDeprecationWarning):
-                errortools.ErrortoolsDeprecationWarning.emit("filterable")
+            warnings.simplefilter("error", _errortools.warning_types.ErrortoolsDeprecationWarning)
+            with pytest.raises(_errortools.warning_types.ErrortoolsDeprecationWarning):
+                _errortools.warning_types.ErrortoolsDeprecationWarning.emit("filterable")
 
 
 # =============================================================================
@@ -163,13 +164,13 @@ class TestErrortoolsDeprecationWarning:
 class TestDeprecatedNamesDispatcher:
     def test_input_error_emits_warning_with_structured_version(self):
         with warnings.catch_warnings(record=True) as caught:
-            warnings.simplefilter("always", errortools.ErrortoolsDeprecationWarning)
+            warnings.simplefilter("always", _errortools.warning_types.ErrortoolsDeprecationWarning)
             errortools.InputError  # noqa: B018
-        rec = next(c for c in caught if issubclass(c.category, errortools.ErrortoolsDeprecationWarning))
+        rec = next(c for c in caught if issubclass(c.category, _errortools.warning_types.ErrortoolsDeprecationWarning))
         # ``rec.message`` *is* the ``ErrortoolsDeprecationWarning`` instance —
         # that's how the structured fields are carried in transit.
         inst = rec.message
-        assert isinstance(inst, errortools.ErrortoolsDeprecationWarning)
+        assert isinstance(inst, _errortools.warning_types.ErrortoolsDeprecationWarning)
         assert inst.deprecated_version == "3.0"
         assert inst.removed_version == "5.0"
         assert inst.use_instead_message == "Use InvalidInputError directly."
@@ -179,7 +180,7 @@ class TestDeprecatedNamesDispatcher:
         from _errortools.classes.errorcodes import InvalidInputError
 
         with warnings.catch_warnings():
-            warnings.simplefilter("ignore", errortools.ErrortoolsDeprecationWarning)
+            warnings.simplefilter("ignore", _errortools.warning_types.ErrortoolsDeprecationWarning)
             value = errortools.InputError  # noqa: B018
         assert value is InvalidInputError
 
@@ -225,10 +226,12 @@ class TestDeprecatedNamesDispatcher:
     def test_emits_deprecation_warning_each_access(self):
         """The dispatcher must warn on every access (no caching of warning state)."""
         with warnings.catch_warnings(record=True) as caught:
-            warnings.simplefilter("always", errortools.ErrortoolsDeprecationWarning)
+            warnings.simplefilter("always", _errortools.warning_types.ErrortoolsDeprecationWarning)
             errortools.InputError  # noqa: B018
             errortools.AccessError  # noqa: B018
-        deprecations = [c for c in caught if issubclass(c.category, errortools.ErrortoolsDeprecationWarning)]
+        deprecations = [
+            c for c in caught if issubclass(c.category, _errortools.warning_types.ErrortoolsDeprecationWarning)
+        ]
         assert len(deprecations) == 2
 
     def test_unknown_attribute_still_raises_attribute_error(self):
@@ -246,7 +249,7 @@ class TestDeprecatedNamesDispatcher:
     def test_typed_alias_round_trip_isinstance(self):
         """``isinstance`` works through the deprecated alias (it IS the canonical class)."""
         with warnings.catch_warnings():
-            warnings.simplefilter("ignore", errortools.ErrortoolsDeprecationWarning)
+            warnings.simplefilter("ignore", _errortools.warning_types.ErrortoolsDeprecationWarning)
             cls = errortools.InputError  # noqa: B018
         err: object = cls("bad input")  # raises if constructor is strict
         assert isinstance(err, cls)
@@ -301,7 +304,7 @@ class TestPublicAPISurface:
         assert isinstance(errortools.__version_info__, VersionInfo)
 
     def test_repr_warning_is_dev_friendly(self):
-        w = errortools.ErrortoolsDeprecationWarning("alpha", removed_version="5.0")
+        w = _errortools.warning_types.ErrortoolsDeprecationWarning("alpha", removed_version="5.0")
         # repr should round-trip the meaningful fields
         text = repr(w)
         assert "'alpha'" in text
