@@ -163,7 +163,7 @@ def _detect_c_ext_support() -> bool:
 #: Downstream code should treat this as read-only — rebinding
 #: the name (e.g. from a test) will not re-run the detection.
 ERRORTOOLS_SUPPORTS_C_EXTENSIONS: Final[bool] = _detect_c_ext_support()
-"""Detect whether the current Python environment can build and load
+"""A constant that detect whether the current Python environment can build and load
 the C extension shipped with :mod:`errortools_speedbelt`.
 
 The companion module :mod:`errortools_speedbelt._speedup` is a small
