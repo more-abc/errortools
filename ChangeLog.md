@@ -4,8 +4,9 @@ All notable changes to this project will be documented in this file.
 
 > Something need change or refactor? Contact email <errortools.docs@proton.me>
 
-## v3.6.1 - 2026-07-01 ~ 2026-??-??
-WAIT
+## v3.6.1 - 2026-07-01 ~ 2026-07-02
+- Add `errortools_speedbelt` module that downloaded alongside the `errortools` module as a high-speed C core for errortools.
+- Add C extension for `ErrorIgnoreWrapper` class that used in `ignore` function.
 
 ## Release v3.6.0 - 2026-07-01
 - Release 3.6.0
