@@ -42,10 +42,10 @@ Subclass instances are NOT suppressed when only the parent class is
 listed - ``ignore`` uses exact-type matching::
 
     >>> with ignore(LookupError):
-    ...     raise KeyError("subclass but not suppressed")
+    ...     raise RuntimeError("subclass but not suppressed")
     Traceback (most recent call last):
     ...
-    KeyError: 'subclass but not suppressed'
+    RuntimeError: subclass but not suppressed
 
 
 ignore() - captured metadata
