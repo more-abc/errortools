@@ -53,7 +53,7 @@ _errortools = ["py.typed"]
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["errortools", "_errortools", "testing", "errortools_speedbelt"]
+include = ["errortools*", "_errortools*", "testing*", "errortools_speedbelt*"]
 exclude = ["htmlcov", ".*", "docs"]
 
 
