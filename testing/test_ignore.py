@@ -31,9 +31,9 @@ class TestIgnore:
                 raise RuntimeError("not suppressed")
 
     def test_subclass_not_suppressed(self):
-        with pytest.raises(KeyError):
+        with pytest.raises(RuntimeError):
             with ignore(LookupError):
-                raise KeyError("subclass should not be suppressed")
+                raise RuntimeError("subclass should not be suppressed")
 
     def test_no_exception_passes_through(self):
         result = []
