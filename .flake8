@@ -8,3 +8,9 @@ exclude =
 ignore = E203,E501,W503
 per-file-ignores =
     _errortools/classes/protocol.py:E704,W504
+    # `ErrortoolsDeprecationWarning` accepts keyword-only fields (use_instead,
+    # removed_version, deprecated_version) so callers can attach structured
+    # metadata.  The B042 rule was written for normal ``Exception`` subclasses
+    # caught and re-raised by user code; this one is only ever constructed by
+    # ``warnings.warn`` and is the reason the project ships the public class.
+    errortools/__init__.py:B042
