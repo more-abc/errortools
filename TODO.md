@@ -31,7 +31,7 @@ Write down your unfinished tasks below.
     - [] performance
     - [] refactor
     - [] add label
-- [] Refactor [`ISSUE_TEMPLATE/config.yml`](.github/ISSUE_TEMPLATE/config.yml).
+- [] ~~Refactor [`ISSUE_TEMPLATE/config.yml`](.github/ISSUE_TEMPLATE/config.yml).~~
 - [] Refactor [`CONTRIBUTING.md`](.github/CONTRIBUTING.md)
 
 ### Others
