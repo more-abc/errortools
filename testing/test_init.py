@@ -261,9 +261,9 @@ class TestDeprecationCatalogue:
     """The three-table ``_DEPRECATED_*`` catalogue is structurally consistent."""
 
     def test_names_keys_match_resolvers_and_versions(self):
-        n = set(errortools._DEPRECATED_NAMES)
-        v = set(errortools._DEPRECATED_VERSIONS)
-        r = set(errortools._DEPRECATED_RESOLVERS)
+        n = set(_errortools.warning_types._DEPRECATED_NAMES)
+        v = set(_errortools.warning_types._DEPRECATED_VERSIONS)
+        r = set(_errortools.warning_types._DEPRECATED_RESOLVERS)
         assert n == v == r, (
             f"Mismatch:\n  _DEPRECATED_NAMES only: {n - r}\n  "
             f"_DEPRECATED_RESOLVERS only: {r - n}\n  "
@@ -271,11 +271,11 @@ class TestDeprecationCatalogue:
         )
 
     def test_each_resolver_is_callable_zero_args(self):
-        for name, resolver in errortools._DEPRECATED_RESOLVERS.items():
+        for name, resolver in _errortools.warning_types._DEPRECATED_RESOLVERS.items():
             assert callable(resolver), f"{name!r} resolver must be callable"
 
     def test_each_version_pair_is_two_strings(self):
-        for name, (deprecated, removed) in errortools._DEPRECATED_VERSIONS.items():
+        for name, (deprecated, removed) in _errortools.warning_types._DEPRECATED_VERSIONS.items():
             assert isinstance(deprecated, str) and deprecated, f"{name!r} deprecated version invalid"
             assert isinstance(removed, str) and removed, f"{name!r} removed version invalid"
 

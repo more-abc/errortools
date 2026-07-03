@@ -6,7 +6,7 @@ from __future__ import annotations
 
 import importlib
 import sys
-from typing import Any, Callable, Union
+from typing import Any
 
 from _errortools.raises import raises, assert_raises, raises_all, reraise
 from _errortools.ignore import (
@@ -106,146 +106,11 @@ from _errortools.metadata import (
     __uid__,
 )
 from _errortools.warning_types import ErrortoolsDeprecationWarning
-
-# ---------------------------------------------------------------------------
-# Deprecation catalogue
-# ---------------------------------------------------------------------------
-#
-# Three small tables drive the lazy ``__getattr__`` dispatcher:
-#
-# * ``_DEPRECATED_NAMES``  — the public-facing ``(display_name, reason)``
-#   pair, kept in the same 2-tuple shape documented in
-#   ``.agents/skills/deprecate-public-name.md`` so existing skill tooling
-#   stays compatible.
-# * ``_DEPRECATED_VERSIONS`` — structured ``(deprecated_in, removed_in)``
-#   metadata surfaced via ``ErrortoolsDeprecationWarning`` on access.
-#   Missing entries degrade to ``"<unspecified>"``.
-# * ``_DEPRECATED_RESOLVERS`` — zero-argument callables that lazily fetch
-#   the canonical replacement object.  Callables (rather than direct
-#   references) keep import-time cost identical while restoring the
-#   transparent alias-return behaviour that the original dispatcher
-#   silently lost (it used to fall through to ``globals().get(name)``
-#   which returned ``None`` for every entry without a private alias).
-_DEPRECATED_NAMES: dict[str, tuple[str, str]] = {
-    "InputError": ("InputError", "Use InvalidInputError directly."),
-    "AccessError": ("AccessError", "Use AccessDeniedError directly."),
-    "LookupError_": ("LookupError_", "Use NotFoundError directly."),
-    "RuntimeError_": ("RuntimeError_", "Use RuntimeFailure or TimeoutFailure directly."),
-    "fast_ignore": ("fast_ignore", "Use errortools.future.super_fast_ignore instead."),
-    "partial": (
-        "partial",
-        "Just use the original functions directly.",
-    ),
-}
-
-_DEPRECATED_VERSIONS: dict[str, tuple[str, str]] = {
-    "InputError": ("3.0", "5.0"),
-    "AccessError": ("3.0", "5.0"),
-    "LookupError_": ("3.0", "5.0"),
-    "RuntimeError_": ("3.0", "5.0"),
-    "fast_ignore": ("3.5.0", "5.2"),
-    "partial": ("3.5.8", "5.0"),
-}
-
-
-def _resolve_input_error() -> Any:
-    from _errortools.classes.errorcodes import InvalidInputError as _cls
-
-    return _cls
-
-
-def _resolve_access_error() -> Any:
-    from _errortools.classes.errorcodes import AccessDeniedError as _cls
-
-    return _cls
-
-
-def _resolve_lookup_error() -> Any:
-    from _errortools.classes.errorcodes import NotFoundError as _cls
-
-    return _cls
-
-
-def _resolve_runtime_error() -> Any:
-    # ``RuntimeError_`` was a type alias of ``Union[RuntimeFailure, TimeoutFailure]``;
-    # ``isinstance`` callers benefit from the concrete first member while
-    # ``type``-context usage keeps working through the existing aliases.
-    return RuntimeFailure
-
-
-def _resolve_fast_ignore() -> Any:
-    from _errortools.ignore import fast_ignore as _cls
-
-    return _cls
-
-
-def _resolve_partial() -> Any:
-    # ``partial`` is re-exported from ``_errortools.partial`` via the public
-    # ``errortools.partial`` submodule shim.  Loading it here re-emits that
-    # module's own ``DeprecationWarning`` while still returning the module.
-    return importlib.import_module("errortools.partial")
-
-
-_DEPRECATED_RESOLVERS: dict[str, Callable[[], Any]] = {
-    "InputError": _resolve_input_error,
-    "AccessError": _resolve_access_error,
-    "LookupError_": _resolve_lookup_error,
-    "RuntimeError_": _resolve_runtime_error,
-    "fast_ignore": _resolve_fast_ignore,
-    "partial": _resolve_partial,
-}
-
-
-def _normalize_version(value: Union[str, VersionInfo, None]) -> str:
-    """Coerce a version spec into its canonical string form.
-
-    Args:
-        value: Either a :class:`_errortools.version.VersionInfo`, a
-            dotted-decimal string, or ``None``.
-
-    Returns:
-        The canonical string form.  ``None`` maps to the
-        :data:`ErrortoolsDeprecationWarning._UNSPECIFIED` sentinel so
-        warnings remain searchable even when version metadata is
-        unknown.
-    """
-    if value is None:
-        return ErrortoolsDeprecationWarning._UNSPECIFIED
-    if isinstance(value, VersionInfo):
-        return str(value)
-    return value.strip()
+from _errortools.warning_types import _deprecated_getattr
+from _errortools.warning_types import _DEPRECATED_NAMES
 
 
 # Public alias for the deprecated-name dispatcher so tests can introspect it.
-def _deprecated_getattr(name: str) -> Any:
-    """Internal dispatcher used by the module-level :func:`__getattr__`.
-
-    Returns the resolved replacement *and* emits the structured
-    :class:`ErrortoolsDeprecationWarning` for the given deprecated name.
-    Falls back to ``None`` only if no resolver is registered (the slot
-    in ``_DEPRECATED_RESOLVERS`` is missing).
-    """
-    attr_name, reason = _DEPRECATED_NAMES[name]
-    deprecated_in, removed_in = _DEPRECATED_VERSIONS.get(
-        name,
-        (ErrortoolsDeprecationWarning._UNSPECIFIED, ErrortoolsDeprecationWarning._UNSPECIFIED),
-    )
-    ErrortoolsDeprecationWarning.emit(
-        message=f"errortools.{attr_name} is deprecated. {reason}",
-        use_instead=reason,
-        deprecated_version=deprecated_in,
-        removed_version=removed_in,
-        stacklevel=2,
-    )
-    resolver = _DEPRECATED_RESOLVERS.get(name)
-    if resolver is None:
-        return None
-    try:
-        return resolver()
-    except Exception:  # noqa: BLE001 — resolvers must never raise to the user.
-        return None
-
-
 def __getattr__(name: str) -> Any:
     """Module-level :pep:`562` lazy-attribute dispatcher.
 
