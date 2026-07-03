@@ -24,14 +24,14 @@ Write down your unfinished tasks below.
 - [] Add .pre-commit-hooks.yaml (If used).
 
 ### GitHub Repository Settings
-- [] Refactor [all issue templates](.github/ISSUE_TEMPLATE/).
-    - [] bug
-    - [] docs
-    - [] feature_request
-    - [] performance
-    - [] refactor
-    - [] add label
-- [] ~~Refactor [`ISSUE_TEMPLATE/config.yml`](.github/ISSUE_TEMPLATE/config.yml).~~
+- [ ] Refactor [all issue templates](.github/ISSUE_TEMPLATE/).
+    - [ ] bug
+    - [ ] docs
+    - [ ] feature_request
+    - [ ] performance
+    - [ ] refactor
+    - [ ] add label
+- [ ] ~~Refactor [`ISSUE_TEMPLATE/config.yml`](.github/ISSUE_TEMPLATE/config.yml).~~
 - [X] Refactor [`CONTRIBUTING.md`](.github/CONTRIBUTING.md)
 
 ### Others
