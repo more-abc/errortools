@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 > Something need change or refactor? Contact email <errortools.docs@proton.me>
 
+
+## Release v4.0.0 - 2026-07-04
+- Release 4.0.0
+
 ## v3.6.4 - 2026-07-04 ~ 2026-07-04
 - Add main entry point in `errortools_speedbelt` submodule.
 
