@@ -29,6 +29,7 @@ def _normalize_version(value: Union[str, VersionInfo, None]) -> str:
         return str(value)
     return value.strip()
 
+
 class ErrortoolsWarning(Warning):
     """Base class for all warnings emitted by pytest."""
 
