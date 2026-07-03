@@ -52,11 +52,11 @@ unacceptable behaviour, and reporting process are in
 | **Package name** | `errortools` |
 | **License** | MIT (see [`LICENSE.txt`](../LICENSE.txt)) |
 | **Python support** | `>=3.8`; type-checked against 3.13; 3.14 wheels shipped |
-| **Runtime dependencies** | Exactly two: `namebyauthor==1.2.0`, `typing_extensions>=4.16.0` |
+| **Runtime dependencies** | Exactly two: `namebyauthor`, `typing_extensions` |
 | **Code style** | Google docstrings; `black` (line-length 120); `flake8`; `mypy` |
 | **Layout** | Two-package: `errortools/` (thin public re-export) → `_errortools/` (real implementation) |
 | **CLI** | `python -m errortools …` and `logger …` (console script from `[project.scripts]`) |
-| **Test runner** | `pytest` with coverage on `_errortools/` |
+| **Test runner** | `pytest` with coverage on `testing/` |
 | **Optional C extension** | `errortools_speedbelt._speedup` / `._ignore_speed` — pure-Python fallback is always present |
 
 For a deeper orientation, see
@@ -92,8 +92,7 @@ source .venv/bin/activate
 pip install -e .[dev]
 
 # 4. (Optional) Install the extra lint tools referenced in CI
-pip install pytest pytest-cov black flake8 mypy autoflake autopep8 pyflakes \
-            flake8-comprehensions flake8-bugbear
+pip install pytest pytest-cov black flake8 mypy autoflake autopep8 pyflakes flake8-comprehensions flake8-bugbear
 ```
 
 > **Tip.** The CI workflows under `.github/workflows/` are the source of truth
