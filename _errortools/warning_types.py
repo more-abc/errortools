@@ -210,7 +210,7 @@ _DEPRECATED_VERSIONS: dict[str, tuple[str, str]] = {
     "LookupError_": ("3.0", "5.0"),
     "RuntimeError_": ("3.0", "5.0"),
     "fast_ignore": ("3.5.0", "5.2"),
-    "partial": ("3.5.8", "5.0"),
+    "partial": ("3.5", "5.0"),
 }
 # ---------------------------------------------------------------------------
 # Deprecation catalogue
