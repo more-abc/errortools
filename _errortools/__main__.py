@@ -36,12 +36,6 @@ def _debug_info() -> None:
     print(f"  Prefix:    {sys.prefix}")
     print(f"  Exec:      {sys.executable}")
 
-    try:
-        __import__("_errortools._speedup")
-        print("  C speedup: available")
-    except ImportError:
-        print("  C speedup: not available (pure Python fallback)")
-
 
 def _reset_cache() -> None:
     root = Path(__file__).resolve().parent.parent

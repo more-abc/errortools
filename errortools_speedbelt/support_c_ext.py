@@ -150,18 +150,18 @@ def _detect_c_ext_support() -> bool:
     return True
 
 
-#: ``True`` if the running interpreter can compile and load the
-#: :mod:`errortools_speedbelt._speedup` C extension, ``False``
-#: otherwise.
-#:
-#: This is a *one-shot* evaluation that happens at import time:
-#: it caches the result of :func:`_detect_c_ext_support` so that
-#: the rest of the package can ask the simple question
-#: ``ERRORTOOLS_SUPPORTS_C_EXTENSIONS`` without paying the
-#: detection cost on every lookup.
-#:
-#: Downstream code should treat this as read-only — rebinding
-#: the name (e.g. from a test) will not re-run the detection.
+# ``True`` if the running interpreter can compile and load the
+# :mod:`errortools_speedbelt._speedup` C extension, ``False``
+# otherwise.
+#
+# This is a *one-shot* evaluation that happens at import time:
+# it caches the result of :func:`_detect_c_ext_support` so that
+# the rest of the package can ask the simple question
+# ``ERRORTOOLS_SUPPORTS_C_EXTENSIONS`` without paying the
+# detection cost on every lookup.
+#
+# Downstream code should treat this as read-only — rebinding
+# the name (e.g. from a test) will not re-run the detection.
 ERRORTOOLS_SUPPORTS_C_EXTENSIONS: Final[bool] = _detect_c_ext_support()
 """A constant that detect whether the current Python environment can build and load
 the C extension shipped with :mod:`errortools_speedbelt`.
