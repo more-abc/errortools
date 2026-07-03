@@ -107,11 +107,6 @@ class fast_ignore:
     __slots__ = ("_excs",)
 
     def __init__(self, *excs: ExceptionType) -> None:
-        warnings.warn(
-            "fast_ignore is deprecated as it is functionally redundant.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
         for exc in excs:
             if not isinstance(exc, type) or not issubclass(exc, BaseException):
                 raise TypeError(f"Expected Exception subclass, got {exc!r}")
