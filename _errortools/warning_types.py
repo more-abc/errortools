@@ -29,8 +29,13 @@ def _normalize_version(value: Union[str, VersionInfo, None]) -> str:
         return str(value)
     return value.strip()
 
+class ErrortoolsWarning(Warning):
+    """Base class for all warnings emitted by pytest."""
 
-class ErrortoolsDeprecationWarning(DeprecationWarning):
+    __module__ = "errortools"
+
+
+class ErrortoolsDeprecationWarning(ErrortoolsWarning, DeprecationWarning):
     """Base class for warnings about deprecated features in ``errortools``.
 
     Subclassing :class:`DeprecationWarning` (rather than emitting a bare
