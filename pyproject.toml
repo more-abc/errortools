@@ -80,6 +80,7 @@ python_classes = ["Test*"]
 python_functions = ["test_*"]
 filterwarnings = [
     "ignore::DeprecationWarning",
+    "ignore::errortools.ErrortoolsPytestExperimentalApiWarning"
 ]
 addopts = [
     "-v",
