@@ -79,7 +79,7 @@ class ErrortoolsDeprecationWarning(DeprecationWarning):
     __module__ = "errortools"
     _UNSPECIFIED: str = "<unspecified>"
 
-    def __init__(
+    def __init__(  # noqa: B042
         self,
         message: str = "",
         use_instead: str = "",
