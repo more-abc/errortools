@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 > Something need change or refactor? Contact email <errortools.docs@proton.me>
 
+## v3.6.4 - 2026-07-04 ~ 2026-07-04
+- Add main entry point in `errortools_speedbelt` submodule.
+
 ## v3.6.3 - 2026-07-02 ~ 2026-07-04
 - Add base warning class `ErrortoolsWarning` and experimental warning `ErrortoolsPytestExperimentalApiWarning` in `_errortools/warning_types.py`.
 - Delete useless `DeprecationWarning`warning in `fast_ignore` and `partial` submodule.
