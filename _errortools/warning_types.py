@@ -1,13 +1,11 @@
 """Warning types and function toolset for :mod:`errortools` module."""
 
 import importlib
+import warnings
 from typing import Any, Callable, Union
 
 from _errortools.classes.errorcodes import RuntimeFailure
 from _errortools.version import VersionInfo
-
-
-import warnings
 
 
 def _normalize_version(value: Union[str, VersionInfo, None]) -> str:
