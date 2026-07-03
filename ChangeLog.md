@@ -4,8 +4,9 @@ All notable changes to this project will be documented in this file.
 
 > Something need change or refactor? Contact email <errortools.docs@proton.me>
 
-## v3.6.3 - 2026-07-02 ~ 2026-07-??
-WAIT
+## v3.6.3 - 2026-07-02 ~ 2026-07-04
+- Add base warning class `ErrortoolsWarning` and experimental warning `ErrortoolsPytestExperimentalApiWarning` in `_errortools/warning_types.py`.
+- Delete useless `DeprecationWarning`warning in `fast_ignore` and `partial` submodule.
 
 ## v3.6.2 - 2026-07-02 ~ 2026-07-02
 - Optimize `ErrortoolsDeprecationWarning` in `errortools/__init__.py`: add `__slots__`, make all constructor parameters keyword-optional (so `warnings.warn(..., ErrortoolsDeprecationWarning)` no longer raises `TypeError`), introduce `formatted_message`, a `__repr__`, an `emit()` classmethod, and a private `_normalize_version` helper. Add a dedicated regression test module `testing/test_init.py` (21 tests covering the structured constructor, the `__getattr__` deprecation dispatcher, and module-surface smoke tests).
