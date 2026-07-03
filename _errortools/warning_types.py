@@ -2,7 +2,7 @@
 
 import importlib
 import warnings
-from typing import Any, Callable, Union
+from typing import Any, Callable, Union, final
 
 from _errortools.classes.errorcodes import RuntimeFailure
 from _errortools.version import VersionInfo
@@ -34,6 +34,7 @@ class ErrortoolsWarning(Warning):
     __module__ = "errortools"
 
 
+@final
 class ErrortoolsDeprecationWarning(ErrortoolsWarning, DeprecationWarning):
     """Base class for warnings about deprecated features in ``errortools``.
 
