@@ -1,7 +1,9 @@
 """Future-focused lightweight exception handling utilities."""
 
 from __future__ import annotations
+
 import sys
+import warnings
 
 if sys.version_info <= (3, 10):
     from typing_extensions import TypeAlias
@@ -26,6 +28,8 @@ except ImportError:
         return typ is not None and issubclass(typ, excs)
 
 
+from .warning_types import ErrortoolsPytestExperimentalApiWarning
+
 __all__ = [
     "super_fast_ignore",
     "super_fast_catch",
@@ -34,6 +38,12 @@ __all__ = [
 ]
 
 _ExcType: TypeAlias = type[BaseException]
+
+warnings.warn(
+    "This submodule provides an experimental API subject to breaking changes; do not rely on it as stable functionality.",
+    ErrortoolsPytestExperimentalApiWarning,
+    stacklevel=2,
+)
 
 
 class super_fast_ignore:

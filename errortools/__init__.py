@@ -105,7 +105,11 @@ from _errortools.metadata import (
     __slug__,
     __uid__,
 )
-from _errortools.warning_types import ErrortoolsDeprecationWarning, ErrortoolsWarning
+from _errortools.warning_types import (
+    ErrortoolsDeprecationWarning,
+    ErrortoolsWarning,
+    ErrortoolsPytestExperimentalApiWarning,
+)
 from _errortools.warning_types import _deprecated_getattr
 from _errortools.warning_types import _DEPRECATED_NAMES
 
@@ -217,6 +221,7 @@ __all__ = [
     "UnicodeEncodeErrorLike",
     "UnicodeTranslateErrorLike",
     "ErrortoolsWarning",
+    "ErrortoolsPytestExperimentalApiWarning",
     "ErrortoolsDeprecationWarning",
     "VersionInfo",
     "get_version_tuple",

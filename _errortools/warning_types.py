@@ -163,6 +163,17 @@ class ErrortoolsDeprecationWarning(ErrortoolsWarning, DeprecationWarning):
         )
 
 
+@final
+class ErrortoolsPytestExperimentalApiWarning(ErrortoolsWarning, FutureWarning):
+    """Warning category used to denote experiments in :mod:`errortools`.
+
+    Use sparingly as the API might change or even be removed completely in a
+    future version.
+    """
+
+    __module__ = "errortools"
+
+
 def _resolve_partial() -> Any:
     # ``partial`` is re-exported from ``_errortools.partial`` via the public
     # ``errortools.partial`` submodule shim.  Loading it here re-emits that
