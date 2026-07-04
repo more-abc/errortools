@@ -45,7 +45,6 @@ from __future__ import annotations
 import argparse
 import ast
 import configparser
-import fnmatch
 import json
 import pathlib
 import re

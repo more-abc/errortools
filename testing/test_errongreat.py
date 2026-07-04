@@ -17,7 +17,6 @@ Static source fixtures used by the suite live under
 
 from __future__ import annotations
 
-import io
 import json
 import pathlib
 
@@ -26,9 +25,6 @@ import pytest
 from _errortools import errongreat
 from _errortools.errongreat import (
     Config,
-    R001_NO_DIRECT_LOGGER_ERROR_WARNING,
-    R002_NO_BARE_OR_TOO_BROAD_EXCEPT,
-    R003_NO_SILENT_EXCEPT,
     RULE_IDS,
     Violation,
     load_config,
