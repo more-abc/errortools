@@ -45,6 +45,7 @@ Documentation = "https://errortools.readthedocs.io/"
 
 [project.scripts]
 logger = "_errortools.cli:main"
+errongreat = "_errortools.errongreat:main"
 
 
 [tool.setuptools.package-data]

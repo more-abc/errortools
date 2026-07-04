@@ -18,8 +18,15 @@ Write down your unfinished tasks below.
 
 ### Code
 ### Tests
+- [ ] Add tests for `errongreat` cli.
+
 ### Documentation
+- [ ] Add documentation for `errongreat` cli.
+
 ### Agents
+- [ ] Add skills for `errongreat` cli.
+- [ ] Update check lists for `errongreat` cli.
+
 ### Project Config
 - [] Add .pre-commit-hooks.yaml (If used).
 
