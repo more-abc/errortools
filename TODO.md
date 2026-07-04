@@ -18,7 +18,7 @@ Write down your unfinished tasks below.
 
 ### Code
 ### Tests
-- [ ] Add tests for `errongreat` cli.
+- [X] Add tests for `errongreat` cli.
 
 ### Documentation
 - [ ] Add documentation for `errongreat` cli.
@@ -38,7 +38,6 @@ Write down your unfinished tasks below.
     - [ ] performance
     - [ ] refactor
     - [ ] add label
-- [ ] ~~Refactor [`ISSUE_TEMPLATE/config.yml`](.github/ISSUE_TEMPLATE/config.yml).~~
 - [X] Refactor [`CONTRIBUTING.md`](.github/CONTRIBUTING.md)
 
 ### Others

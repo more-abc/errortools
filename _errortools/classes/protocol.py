@@ -207,39 +207,49 @@ class BaseExceptionGroupLike(ExceptionLike, Protocol):
 
     @overload
     def subgroup(
-        self, matcher_value: Union[type[_ExceptionT], tuple[type[_ExceptionT], ...]],
+        self,
+        matcher_value: Union[type[_ExceptionT], tuple[type[_ExceptionT], ...]],
         /,
     ) -> Union[ExceptionGroup[_ExceptionT], None]: ...
 
     @overload
     def subgroup(
-        self, matcher_value: Union[type[_BaseExceptionT], tuple[type[_BaseExceptionT], ...]],
+        self,
+        matcher_value: Union[type[_BaseExceptionT], tuple[type[_BaseExceptionT], ...]],
         /,
     ) -> Union[BaseExceptionGroup[_BaseExceptionT], None]: ...
 
     @overload
     def subgroup(
-        self, matcher_value: Callable[[Union[_BaseExceptionT_co, Self]], bool],
+        self,
+        matcher_value: Callable[[Union[_BaseExceptionT_co, Self]], bool],
         /,
     ) -> Union[BaseExceptionGroup[_BaseExceptionT_co], None]: ...
 
     @overload
     def split(
-        self, matcher_value: Union[type[_ExceptionT], tuple[type[_ExceptionT], ...]],
+        self,
+        matcher_value: Union[type[_ExceptionT], tuple[type[_ExceptionT], ...]],
         /,
     ) -> tuple[Union[ExceptionGroup[_ExceptionT], None], Union[BaseExceptionGroup[_BaseExceptionT_co], None]]: ...
 
     @overload
     def split(
-        self, matcher_value: Union[type[_BaseExceptionT], tuple[type[_BaseExceptionT], ...]],
+        self,
+        matcher_value: Union[type[_BaseExceptionT], tuple[type[_BaseExceptionT], ...]],
         /,
-    ) -> tuple[Union[BaseExceptionGroup[_BaseExceptionT], None], Union[BaseExceptionGroup[_BaseExceptionT_co], None]]: ...
+    ) -> tuple[
+        Union[BaseExceptionGroup[_BaseExceptionT], None], Union[BaseExceptionGroup[_BaseExceptionT_co], None]
+    ]: ...
 
     @overload
     def split(
-        self, matcher_value: Callable[[Union[_BaseExceptionT_co, Self]], bool],
+        self,
+        matcher_value: Callable[[Union[_BaseExceptionT_co, Self]], bool],
         /,
-    ) -> tuple[Union[BaseExceptionGroup[_BaseExceptionT_co], None], Union[BaseExceptionGroup[_BaseExceptionT_co], None]]: ...
+    ) -> tuple[
+        Union[BaseExceptionGroup[_BaseExceptionT_co], None], Union[BaseExceptionGroup[_BaseExceptionT_co], None]
+    ]: ...
 
     # In reality it is `NonEmptySequence`:
     @overload
@@ -264,25 +274,29 @@ class ExceptionGroupLike(ExceptionLike, Protocol):
     # We accept a narrower type, but that's OK.
     @overload
     def subgroup(
-        self, matcher_value: Union[type[_ExceptionT], tuple[type[_ExceptionT], ...]],
+        self,
+        matcher_value: Union[type[_ExceptionT], tuple[type[_ExceptionT], ...]],
         /,
     ) -> Union[ExceptionGroup[_ExceptionT], None]: ...
 
     @overload
     def subgroup(
-        self, matcher_value: Callable[[Union[_ExceptionT_co, Self]], bool],
+        self,
+        matcher_value: Callable[[Union[_ExceptionT_co, Self]], bool],
         /,
     ) -> Union[ExceptionGroup[_ExceptionT_co], None]: ...
 
     @overload
     def split(
-        self, matcher_value: Union[type[_ExceptionT], tuple[type[_ExceptionT], ...]],
+        self,
+        matcher_value: Union[type[_ExceptionT], tuple[type[_ExceptionT], ...]],
         /,
     ) -> tuple[Union[ExceptionGroup[_ExceptionT], None], Union[ExceptionGroup[_ExceptionT_co], None]]: ...
 
     @overload
     def split(
-        self, matcher_value: Callable[[Union[_ExceptionT_co, Self]], bool],
+        self,
+        matcher_value: Callable[[Union[_ExceptionT_co, Self]], bool],
         /,
     ) -> tuple[Union[ExceptionGroup[_ExceptionT_co], None], Union[ExceptionGroup[_ExceptionT_co], None]]: ...
 

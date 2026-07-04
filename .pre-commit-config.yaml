@@ -10,7 +10,11 @@ repos:
 
       # python
       - id: check-builtin-literals
+        exclude: ^testing/data/errongreat/
+      - id: check-builtin-literals
+        exclude: ^testing/data/errongreat/
       - id: check-ast
+        exclude: ^testing/data/errongreat/
 
       # config files
       - id: check-yaml

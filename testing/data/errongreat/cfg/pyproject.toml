@@ -1,0 +1,6 @@
+[tool.errongreat]
+select = ["R001", "R002"]
+ignore = []
+exclude = ["tmp/*"]
+extend-exclude = ["*.bak"]
+per-file-ignores = { "tests/legacy.py" = ["R003"], "skip_me.py" = ["R001", "R002"] }

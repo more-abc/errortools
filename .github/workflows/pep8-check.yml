@@ -33,7 +33,7 @@ jobs:
           pip install flake8 black autopep8 pyflakes flake8-comprehensions flake8-bugbear
 
       - name: Run black (format code)
-        run: black .
+        run: black _errortools errortools errortools_speedbelt testing --exclude "testing/data/errongreat/"
 
       - name: Run autopep8 (auto fix)
         run: autopep8 . --recursive --in-place --pep8-passes 2000 --verbose

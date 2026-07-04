@@ -511,16 +511,14 @@ class Config:
 
 
 def _glob_match(pattern: str, path: str) -> bool:
-    """Return ``True`` when *path* matches *pattern* under either absolute or
-    basename semantics.
+    """Return ``True`` when *path* matches *pattern*.
 
-    :func:`fnmatch.fnmatch` is used because it is part of the standard
-    library and supports the shell-style glob syntax most users expect.
-    The function also tries a basename-only match so patterns like
-    ``tests/*`` match files anywhere whose last segment starts with
-    ``tests/``.
+    :meth:`pathlib.PurePath.match` is used because it correctly restricts
+    the ``*`` wildcard to a single path segment (``*`` does **not** cross
+    ``/`` boundaries), which matches the intuitive semantics of exclusion
+    patterns.
     """
-    return fnmatch.fnmatch(path, pattern) or fnmatch.fnmatch(pathlib.Path(path).name, pattern)
+    return pathlib.PurePath(path).match(pattern)
 
 
 # ---------------------------------------------------------------------------
@@ -804,6 +802,7 @@ def _covered_lines_for_directive(
     directive_lineno: int,
     start_lineno: int,
     node_at_start: Union[ast.AST, None],
+    node_at_directive: Union[ast.AST, None] = None,
 ) -> frozenset[int]:
     """Return the set of line numbers a directive at *directive_lineno* suppresses.
 
@@ -818,11 +817,22 @@ def _covered_lines_for_directive(
        handler line belonging to that ``try``.  This is what lets a
        directive placed above ``try:`` also silence R002/R003 violations
        reported on the corresponding ``except:`` line.
+    4. When the directive sits on the same line as a ``def`` / ``class``
+       definition, the coverage is extended to every line inside the
+       block so that a single trailing comment can silence an entire
+       function or class.
     """
     covered: set[int] = {directive_lineno}
     if start_lineno == directive_lineno + 1:
         covered.add(start_lineno)
-    if isinstance(node_at_start, ast.Try):
+    if isinstance(
+        node_at_directive,
+        (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef),
+    ):
+        end = getattr(node_at_directive, "end_lineno", None)
+        if end is not None:
+            covered.update(range(directive_lineno, end + 1))
+    elif isinstance(node_at_start, ast.Try):
         for handler in node_at_start.handlers:
             if handler is not None:
                 covered.add(handler.lineno)
@@ -856,7 +866,8 @@ def _scan_ignore_comments(
         if start_lineno is None:
             continue
         node_at_start = line_to_node.get(start_lineno)
-        covered = _covered_lines_for_directive(lineno, start_lineno, node_at_start)
+        node_at_directive = line_to_node.get(lineno)
+        covered = _covered_lines_for_directive(lineno, start_lineno, node_at_start, node_at_directive)
 
         rules_str = match.group(1)
         if rules_str is None:
@@ -1095,6 +1106,8 @@ def _build_parser() -> argparse.ArgumentParser:
 
     parser.add_argument(
         "path",
+        nargs="?",
+        default=None,
         help="File or directory to scan.",
     )
     parser.add_argument(
@@ -1276,6 +1289,10 @@ def main(argv: Union[Sequence[str], None] = None) -> int:
         if args.show_config:
             print(_format_config(config))
             return 0
+
+        if args.path is None:
+            parser.error("the following arguments are required: path")
+            return 2
 
         violations = scan_path(args.path, recursive=args.recursive, config=config)
         violations = _filter_by_rules(violations, args.rule)
