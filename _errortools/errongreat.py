@@ -1268,6 +1268,24 @@ def _format_config(config: Config) -> str:
     return "\n".join(lines)
 
 
+def _cli_output(violations: Sequence[Violation], args: argparse.Namespace) -> int:
+    """Print *violations* according to the requested format and return the exit code."""
+    if args.format == "json":
+        print(_format_json(violations))
+    else:
+        print(_format_text(violations, args.path))
+        if violations:
+            count_by_rule: dict[str, int] = {}
+            for v in violations:
+                count_by_rule[v.rule_id] = count_by_rule.get(v.rule_id, 0) + 1
+            summary = ", ".join(f"{rule}={count_by_rule[rule]}" for rule in sorted(count_by_rule))
+            print(
+                f"\n{args.path}: {len(violations)} violation(s) — {summary}",
+                file=sys.stderr,
+            )
+    return 1 if violations else 0
+
+
 def main(argv: Union[Sequence[str], None] = None) -> int:
     """Entry point for ``python -m _errortools.errongreat``.
 
@@ -1295,20 +1313,7 @@ def main(argv: Union[Sequence[str], None] = None) -> int:
 
         violations = scan_path(args.path, recursive=args.recursive, config=config)
         violations = _filter_by_rules(violations, args.rule)
-        if args.format == "json":
-            print(_format_json(violations))
-        else:
-            print(_format_text(violations, args.path))
-            if violations:
-                count_by_rule: dict[str, int] = {}
-                for v in violations:
-                    count_by_rule[v.rule_id] = count_by_rule.get(v.rule_id, 0) + 1
-                summary = ", ".join(f"{rule}={count_by_rule[rule]}" for rule in sorted(count_by_rule))
-                print(
-                    f"\n{args.path}: {len(violations)} violation(s) — {summary}",
-                    file=sys.stderr,
-                )
-        return 1 if violations else 0
+        return _cli_output(violations, args)
     except FileNotFoundError as exc:
         sys.stderr.write(f"errongreat: {exc}\n")
         return 2
